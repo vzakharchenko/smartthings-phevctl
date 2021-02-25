@@ -59,7 +59,7 @@ function connectAuthentication(server) {
       return done(null, false, { message: 'Incorrect password.' });
     }),
   ));
-  server.use('/login', express.static('login'));
+  server.use('/login', express.static(`${__dirname}/login`));
 
   server.post('/login',
     passport.authenticate('local', { failureRedirect: '/login' }),

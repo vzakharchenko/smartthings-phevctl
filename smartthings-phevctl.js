@@ -38,11 +38,12 @@ const connectionType = connectAuthentication(appUI);
 config.connectionType = connectionType;
 saveConfig(config);
 
+appUI.use('/', protect(), cors(corsOptions), express.static(`${__dirname}/ui`));
+
 appUI.get('/ui/settings', protect(), cors(corsOptions), async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   await getSettings(req, res);
 });
-appUI.use('/', protect(), cors(corsOptions), express.static('./ui'));
 
 appUI.get('/ui/smartthings/check', protect(), cors(corsOptions), async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });

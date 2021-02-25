@@ -21,6 +21,8 @@
     "start": "craco start",
     "build": "craco build",
     "build:prod": "NODE_ENV=production  craco build",
+    "lint": "eslint --quiet --ext .js src",
+    "lint:fix": "eslint --fix --quiet --ext .js src",
     "test": "craco test"
   },
   "eslintConfig": {

@@ -28,6 +28,7 @@ ENV NPM_CONFIG_LOGLEVEL warn
 
 COPY entrypoint.sh /opt/entrypoint.sh
 RUN  chmod +x /opt/entrypoint.sh
-EXPOSE 5000
+EXPOSE 8080
+EXPOSE 8099
 ENTRYPOINT ["/opt/entrypoint.sh"]
 #CMD [ "pm2-runtime", "start", "pm2.json" ]

@@ -1,5 +1,9 @@
 # Smartthings Remote control for Outlander PHEV
 
+[![Node.js CI](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/build.yml/badge.svg)](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/build.yml)    
+[![docker](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/docker.yml/badge.svg)](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/docker.yml)  
+[![NPM](https://nodei.co/npm/smartthings-phevctl.png)](https://npmjs.org/package/smartthings-phevctl)  
+
 ## Server Docker Installation 
 ```
 docker run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 vassio/smartthings-phevctl

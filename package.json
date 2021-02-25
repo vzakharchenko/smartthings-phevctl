@@ -1,0 +1,89 @@
+{
+  "name": "smartthings-phevctl",
+  "version": "1.0.0",
+  "description": "smartthings remote ctrl",
+  "main": "smartthings-phevctl.js",
+  "scripts": {
+    "start": "node smartthings-phevctl.js",
+    "lint": "eslint --quiet --ext .js lib authenticationConnection.js smartthings-phevctl.js ./remote-ctrl-ui/src",
+    "lint:fix": "eslint --fix --quiet --ext .js lib authenticationConnection.js smartthings-phevctl.js ./remote-ctrl-ui/src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vzakharchenko/smartthings-phevctl.git"
+  },
+  "keywords": [
+    "smartthings",
+    "outlander",
+    "phev",
+    "mitsubishi",
+    "outlanderPhev",
+    "phevctl"
+  ],
+  "author": "vzakharchenko",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/vzakharchenko/smartthings-phevctl/issues"
+  },
+  "homepage": "https://github.com/vzakharchenko/smartthings-phevctl#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-ensure-login": "^0.1.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "cron": "^1.8.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "keycloak-connect": "^12.0.3",
+    "mkdirp": "^1.0.4",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "querystring": "^0.2.1",
+    "ws": "^7.4.3"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.20.0",
+    "eslint-config": "^0.3.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-native": "^3.10.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaVersion": 7,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "plugins": [
+      "react",
+      "react-native"
+    ],
+    "extends": "airbnb",
+    "rules": {
+      "no-undef": 0,
+      "react/prop-types": 0,
+      "import/extensions": 0,
+      "react/destructuring-assignment": 0,
+      "import/prefer-default-export": 0,
+      "import/no-extraneous-dependencies": 0,
+      "jsx-a11y/control-has-associated-label": 0,
+      "no-await-in-loop": 0,
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
+        }
+      ]
+    }
+  }
+}

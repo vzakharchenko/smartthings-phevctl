@@ -1,0 +1,40 @@
+const Labels = {
+    servicePort: 'Service Port',
+    uiPort: 'UI Port',
+    smartthingsAppId: 'Smartthings Application Id',
+    smartthingsAppSecret: 'Smartthings Application Secret',
+    save: 'Save',
+    settings: 'Settings',
+    devices: 'Devices',
+    addDevice: 'Add Device',
+    users: 'Users',
+    addUser: 'Add User',
+    actionId: 'Action',
+    deviceLabel: 'Device Label',
+    cooling10Mins: 'Cooling 10 Mins',
+    cooling20Mins: 'Cooling 20 Mins',
+    cooling30Mins: 'Cooling 30 Mins',
+    windscreen10Mins: 'Windscreen 10 Mins',
+    windscreen20Mins: 'Windscreen 20 Mins',
+    windscreen30Mins: 'Windscreen 30 Mins',
+    heating10Mins: 'Heating 10 Mins',
+    heating20Mins: 'Heating 20 Mins',
+    heating30Mins: 'Heating 30 Mins',
+    airconOn: 'Air conditioner On',
+    airconOff: 'Air conditioner Off',
+    headlightsOn: 'Headlights On',
+    headlightsOff: 'Headlights Off',
+    parkinglightsOn: 'Parkinglights On',
+    parkinglightsOff: 'Parkinglights Off',
+    username: 'Username',
+    password: 'Password',
+    delete: 'Delete',
+    shard: 'Smartthings Portal Shard',
+    macAddress: 'Outlander PHEV Client Mac Address',
+    keycloakJson: 'Securing Applications using keycloak.json',
+}
+
+export function getLabels() {
+    return Labels;
+}
+

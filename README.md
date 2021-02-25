@@ -1,6 +1,10 @@
 # Smartthings Remote control for Outlander PHEV
 
-## Server Installation
+## Server Docker Installation 
+```
+docker run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 vassio/smartthings-phevctl
+```
+## Server Manual Installation
 ```
 sudo touch /bin/phevctl
 sudo echo "docker run papawattu/phevctl $*">/bin/phevctl

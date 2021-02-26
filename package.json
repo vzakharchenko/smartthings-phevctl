@@ -1,6 +1,6 @@
 {
   "name": "smartthings-phevctl",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "smartthings remote ctrl",
   "main": "smartthings-phevctl.js",
   "scripts": {
@@ -18,6 +18,7 @@
     "phev",
     "mitsubishi",
     "outlanderPhev",
+    "outlander-phev",
     "phevctl"
   ],
   "author": "vzakharchenko",

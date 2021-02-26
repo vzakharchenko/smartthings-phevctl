@@ -1,11 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
-import {RemoteCtrlMain} from "./components/RemoteCtrlMain";
+import { RemoteCtrlMain } from './components/RemoteCtrlMain';
 
 function App() {
   return (
     <div>
-      <RemoteCtrlMain/>
+      <RemoteCtrlMain />
     </div>
   );
 }

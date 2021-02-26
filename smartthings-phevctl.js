@@ -2,6 +2,7 @@ const express = require('express');
 
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { installCrons } = require('./lib/cronConnection');
 const { saveConfig, readConfig } = require('./lib/env');
 const { syncDevice } = require('./lib/settingManager');
 const { addDevice } = require('./lib/settingManager');
@@ -84,6 +85,7 @@ appUI.get('/ui/settings/syncDevices', protect(), cors(corsOptions), async (req, 
 startApplication();
 appUI.listen(uiPort, () => {
   console.info(`HTTP smartthings phevctl UI listening on port ${uiPort}`);
+  installCrons();
 });
 
 process.on('exit', () => {

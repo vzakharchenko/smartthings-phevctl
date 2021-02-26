@@ -42,7 +42,6 @@ def on() {
 }
 
 def off() {
-    forceOff();
 }
 
 def installed() {

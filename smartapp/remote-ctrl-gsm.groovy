@@ -152,24 +152,13 @@ def getAllDevices() {
 
 
 def deviceHandler(evt) {
-    apiGet("/${app.id}/${state.accessToken}/execute?deviceId=${evt.getDevice().getDeviceNetworkId()}",null);
+    apiGet("/${app.id}/${state.accessToken}/execute?deviceId=${evt.getDevice().getDeviceNetworkId()}");
 }
 
-
-def apiGet(path, query) {
-    def url = "${IP}:${port}";
-    log.debug "request:  ${url}${path} query= ${query}"
-    def result = new physicalgraph.device.HubAction(
-            method: 'GET',
-            path: path,
-            headers: [
-                    HOST  : url,
-                    Accept: "*/*"
-            ],
-            query: query
-    )
-
-    return sendHubCommand(result)
+def apiGet(path) {
+    def url = "http://${IP}:${port}";
+    log.debug "request:  ${url}${path}"
+    httpGet(uri: "${url}${path}");
 }
 
 def debug(message) {

@@ -42,7 +42,7 @@ def on() {
 }
 
 def off() {
-    forceOn();
+    forceOff();
 }
 
 def installed() {

@@ -2,6 +2,7 @@ const express = require('express');
 
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { testDevice } = require('./lib/settingManager');
 const { installCrons } = require('./lib/cronConnection');
 const { saveConfig, readConfig } = require('./lib/env');
 const { syncDevice } = require('./lib/settingManager');
@@ -75,6 +76,11 @@ appUI.post('/ui/settings/deleteDevice', protect(), cors(corsOptions), async (req
 appUI.post('/ui/settings/addDevice', protect(), cors(corsOptions), async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   await addDevice(req, res);
+});
+
+appUI.post('/ui/settings/testDevice', protect(), cors(corsOptions), async (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  await testDevice(req, res);
 });
 
 appUI.get('/ui/settings/syncDevices', protect(), cors(corsOptions), async (req, res) => {

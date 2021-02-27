@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { Alert, Button, Table } from 'antd';
+import {
+  Alert, Button, Select, Table,
+} from 'antd';
 import Paragraph from 'antd/es/typography/Paragraph';
 import MaskedInput from 'antd-mask-input';
 import TextArea from 'antd/es/input/TextArea';
@@ -14,6 +16,8 @@ export class SmartthingsSettings extends React.Component {
       smartthingsAppId: '',
       smartthingsAppSecret: '',
       macAddress: '',
+      actionTimeout: 0,
+      language: 'English',
       changed: false,
       loading: false,
       error: '',
@@ -33,6 +37,8 @@ export class SmartthingsSettings extends React.Component {
         smartthingsAppSecret,
         macAddress,
         keycloakJson,
+        language,
+        actionTimeout,
         shard,
       } = this.state;
       this.setState({ loading: true });
@@ -54,6 +60,12 @@ export class SmartthingsSettings extends React.Component {
       }
       if (uiPort) {
         copyConfig.portUI = uiPort;
+      }
+      if (actionTimeout) {
+        copyConfig.actionTimeout = actionTimeout;
+      }
+      if (language) {
+        copyConfig.language = language;
       }
       try {
         let res = await fetchBackend(`/ui/smartthings/check?appId=${smartthingsAppId}&secret=${smartthingsAppSecret}`);
@@ -139,6 +151,20 @@ export class SmartthingsSettings extends React.Component {
             if (data.name === 'shard') {
               return value;
             }
+            if (data.name === 'language') {
+              return (
+                <Select
+                  defaultValue={this.state.language}
+                  style={{ width: 200 }}
+                  onChange={(lang) => {
+                    this.setState({ lang, changed: true });
+                  }}
+                >
+                  <Select.Option value="English">English</Select.Option>
+                  <Select.Option value="Russian">Russian</Select.Option>
+                </Select>
+              );
+            }
             return (
               <Paragraph editable={{
                 onChange: (newValue) => {
@@ -170,6 +196,8 @@ export class SmartthingsSettings extends React.Component {
         macAddress: settings.data.macAddress,
         shard: settings.data.smartthings.shard,
         authenticationType: settings.data.connectionType,
+        actionTimeout: settings.data.smartthings.timeout,
+        language: settings.data.language || 'English',
       });
     }
 
@@ -199,6 +227,14 @@ export class SmartthingsSettings extends React.Component {
             name: 'keycloakJson',
             value: '',
           },
+          {
+            name: 'actionTimeout',
+            value: settings.data.smartthings.timeout,
+          },
+          // {
+          //   name: 'language',
+          //   value: settings.data.language,
+          // },
         ];
         return (
           <div>

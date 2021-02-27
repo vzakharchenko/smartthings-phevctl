@@ -3,6 +3,7 @@ import {
   Button, Select, Spin, Table,
 } from 'antd';
 import Paragraph from 'antd/es/typography/Paragraph';
+import { PoweroffOutlined } from '@ant-design/icons';
 import { getLabels } from '../utils/Localization';
 import { fetchBackend, sendToBackend } from '../utils/restCalls';
 import { CONTENTS } from './Constants';
@@ -55,6 +56,18 @@ export class SmartthingsViewDevice extends React.Component {
       }
     }
 
+    async onTestClick() {
+      const {
+        deviceId,
+      } = this.state;
+      this.setState({ loading: true });
+      try {
+        await sendToBackend('/ui/settings/testDevice', 'POST', { id: deviceId });
+      } finally {
+        this.setState({ loading: false });
+      }
+    }
+
     onActionChange(actionId) {
       this.setState({ actionId, canSave: this.validation(null, actionId) });
     }
@@ -99,8 +112,17 @@ export class SmartthingsViewDevice extends React.Component {
                   <Select.Option value="heating30Mins">{getLabels().heating30Mins}</Select.Option>
                 </Select>
               );
-            } if (data.name === 'deviceId') {
+            } if (data.name === 'deviceId' || data.name === 'deviceLabel') {
               return value;
+            } if (data.name === 'testDevice') {
+              return (
+                <Button
+                  type="primary"
+                  icon={<PoweroffOutlined />}
+                  loading={this.state.loading}
+                  onClick={() => this.onTestClick()}
+                />
+              );
             }
             return (
               <Paragraph editable={{
@@ -162,6 +184,10 @@ export class SmartthingsViewDevice extends React.Component {
         {
           name: 'actionId',
           value: actionId,
+        },
+        {
+          name: 'testDevice',
+          value: '',
         },
       ];
 

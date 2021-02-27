@@ -1,6 +1,6 @@
 {
   "name": "smartthings-phevctl",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "smartthings remote ctrl",
   "main": "smartthings-phevctl.js",
   "scripts": {

@@ -11,7 +11,7 @@
 1. [Install Server using Docker](https://github.com/vzakharchenko/smartthings-phevctl#server-docker-installation) or  [Manual Installation](https://github.com/vzakharchenko/smartthings-phevctl#server-manual-installation)
 2. [create Device Handler](https://github.com/vzakharchenko/smartthings-phevctl#create-custom-dht)
 3. [create smartapp](https://github.com/vzakharchenko/smartthings-phevctl#create-smartapp)
-4. [Confugure smartthings application on android or apple](https://github.com/vzakharchenko/smartthings-phevctl#configure-smartthings-application)
+4. [Configure smartthings application on android or apple](https://github.com/vzakharchenko/smartthings-phevctl#configure-smartthings-application)
 5. [Get "Smartthings Application Id" and "Smartthings Application Secret"](https://github.com/vzakharchenko/smartthings-phevctl#get-smartthings-application-id-and-smartthings-application-secret)
 6. [Configure Server](https://github.com/vzakharchenko/smartthings-phevctl#configure-server)
 7. [Add Smartthings devices](https://github.com/vzakharchenko/smartthings-phevctl#add-a-new-smartthings-device)
@@ -31,6 +31,7 @@ sudo npm i smartthings-phevctl -g
 sudo pm2 start `npm root -g`/smartthings-phevctl/smartthings-phevctl.js
 sudo pm2 save
 ```
+
 
 ## Smartthings installation
 
@@ -74,6 +75,10 @@ sudo pm2 save
 ### Add a new Smartthings device
 1. select devices->add Device ![](./img/addDevice.png)
 2. Device will be appear om Smartthings App
+
+## Local Network Installation(under NAT)
+- install [Smartthings Hub)[https://www.samsung.com/us/smart-home/smartthings/hubs/] on location.
+- during installation smartapp select hub.
 
 # Authentication
 ## Local authentication (default)

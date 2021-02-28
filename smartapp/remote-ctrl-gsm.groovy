@@ -26,10 +26,13 @@ definition(
 
 preferences {
     section("Setup my device with this IP") {
-        input "IP", "text", multiple: false, required: false
+        input "IP", "text", multiple: false, required: true
     }
     section("Setup my device with this Port") {
-        input "port", "number", multiple: false, required: false
+        input "port", "number", multiple: false, required: true
+    }
+    section("Setup my device with smartthings hub (optional)") {
+        input "hub", "capability.hub", multiple: false, required: false
     }
 }
 
@@ -58,7 +61,9 @@ def getToken() {
 }
 
 def initialize() {
-    // TODO: subscribe to attributes, devices, locations, etc.
+    def devices = getAllDevices().each {
+        subscribe(it, "switch.on", deviceHandler);
+    }
 }
 
 mappings {
@@ -152,13 +157,33 @@ def getAllDevices() {
 
 
 def deviceHandler(evt) {
-    apiGet("/${app.id}/${state.accessToken}/execute?deviceId=${evt.getDevice().getDeviceNetworkId()}");
+    if (hub){
+        apiHubGet("/${app.id}/${state.accessToken}/execute?deviceId=${evt.getDevice().getDeviceNetworkId()}",null)
+    } else {
+        apiGet("/${app.id}/${state.accessToken}/execute?deviceId=${evt.getDevice().getDeviceNetworkId()}");
+    }
 }
 
 def apiGet(path) {
     def url = "http://${IP}:${port}";
-    log.debug "request:  ${url}${path}"
+    debug("request:  ${url}${path}");
     httpGet(uri: "${url}${path}");
+}
+
+def apiHubGet(path, query) {
+    def url = "${IP}:${port}";
+    debug("request:  ${url}${path} query= ${query}")
+    def result = new physicalgraph.device.HubAction(
+            method: 'GET',
+            path: path,
+            headers: [
+                    HOST  : url,
+                    Accept: "*/*"
+            ],
+            query: query
+    )
+
+    return sendHubCommand(result)
 }
 
 def debug(message) {

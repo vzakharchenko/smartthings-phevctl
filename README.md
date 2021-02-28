@@ -82,6 +82,7 @@ sudo pm2 save
 
 # Authentication
 ## Local authentication (default)
+default login/password: ```admin/admin``` 
 ### change password for user
 ![](./img/users1.png)
 

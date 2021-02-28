@@ -17,6 +17,7 @@
 7. [Add Smartthings devices](https://github.com/vzakharchenko/smartthings-phevctl#add-a-new-smartthings-device)
 
 ## Server Docker Installation
+- Supported Architectures: amd64,x86-64,arm64,ppc64le,arm/v7
 ```
 docker run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 vassio/smartthings-phevctl
 ```
@@ -53,7 +54,7 @@ sudo pm2 save
 
 ### Configure Smartthings application
 
-1. open smartthings application in Phone (Android)[https://play.google.com/store/apps/details?id=com.samsung.android.oneconnect&hl=en&gl=US] or (Apple)[https://apps.apple.com/us/app/smartthings/id1222822904]
+1. open smartthings application in Phone [Android](https://play.google.com/store/apps/details?id=com.samsung.android.oneconnect) or [Apple](https://apps.apple.com/us/app/smartthings/id1222822904)
 2. select location ![](./img/smartthings1.png)
 3. add SmartApp ![](./img/smartthings2.png)
 4. add "remote-ctrl-gsm" ![](./img/smartthings3.png)
@@ -82,7 +83,7 @@ sudo pm2 save
 
 # Authentication
 ## Local authentication (default)
-default login/password: ```admin/admin``` 
+default login/password: ```admin/admin```
 ### change password for user
 ![](./img/users1.png)
 

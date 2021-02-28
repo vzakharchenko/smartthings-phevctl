@@ -1,11 +1,13 @@
 import * as React from 'react';
 import {
-  Alert, Button, Select, Table,
+  Alert, Button, Image, Select, Table,
 } from 'antd';
 import Paragraph from 'antd/es/typography/Paragraph';
 import MaskedInput from 'antd-mask-input';
 import TextArea from 'antd/es/input/TextArea';
-import { getLabels } from '../utils/Localization';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import Modal from 'antd/es/modal/Modal';
+import { getLabels, setLanguage } from '../utils/Localization';
 import { fetchBackend, sendToBackend } from '../utils/restCalls';
 
 export class SmartthingsSettings extends React.Component {
@@ -22,6 +24,7 @@ export class SmartthingsSettings extends React.Component {
       loading: false,
       error: '',
       keycloakJson: '',
+      isModalVisible: false,
     };
 
     async componentDidMount() {
@@ -62,7 +65,7 @@ export class SmartthingsSettings extends React.Component {
         copyConfig.portUI = uiPort;
       }
       if (actionTimeout) {
-        copyConfig.actionTimeout = actionTimeout;
+        copyConfig.smartthings.timeout = actionTimeout;
       }
       if (language) {
         copyConfig.language = language;
@@ -104,7 +107,68 @@ export class SmartthingsSettings extends React.Component {
           title: 'Name',
           dataIndex: 'name',
           key: 'name',
-          render: (text) => <a>{getLabels()[text] || text}</a>,
+          render: (text) => {
+            if (text === 'smartthingsAppId'
+                || text === 'smartthingsAppSecret') {
+              return (
+                <div>
+                  <a>{getLabels()[text] || text}</a>
+                  <Button
+                    type="text"
+                    icon={<QuestionCircleOutlined />}
+                    onClick={() => {
+                      this.setState({ isModalVisible: true });
+                    }}
+                  />
+                  <Modal
+                    title={getLabels().modalHelp + getLabels()[text] || text}
+                    visible={this.state.isModalVisible}
+                    onCancel={(
+                    ) => { this.setState({ isModalVisible: false }); }}
+                    footer={[
+                      <Button
+                        key="ok"
+                        type="primary"
+                        onClick={() => {
+                          this.setState({ isModalVisible: false });
+                        }}
+                      >
+                        Ok
+                      </Button>,
+                    ]}
+                  >
+                    <p>
+                      {getLabels().modalStep1}
+                      <Button
+                        type="link"
+                        onClick={() => {
+                          window.open('https://graph.api.smartthings.com', '_blank');
+                        }}
+                      >
+                        https://graph.api.smartthings.com/
+                      </Button>
+                    </p>
+                    <p>{getLabels().modalStep2}</p>
+                    <Image
+                      width={400}
+                      src="/img/smartapp1.png"
+                    />
+                    <p>{getLabels().modalStep3}</p>
+                    <Image
+                      width={400}
+                      src="/img/smartapp2.png"
+                    />
+                    <p>{getLabels().modalStep4 + getLabels()[text] || text}</p>
+                    <Image
+                      width={400}
+                      src="/img/smartapp3.png"
+                    />
+                  </Modal>
+                </div>
+              );
+            }
+            return <a>{getLabels()[text] || text}</a>;
+          },
         },
         {
           title: 'Value',
@@ -157,7 +221,7 @@ export class SmartthingsSettings extends React.Component {
                   defaultValue={this.state.language}
                   style={{ width: 200 }}
                   onChange={(lang) => {
-                    this.setState({ lang, changed: true });
+                    this.setState({ language: lang, changed: true });
                   }}
                 >
                   <Select.Option value="English">English</Select.Option>
@@ -187,6 +251,7 @@ export class SmartthingsSettings extends React.Component {
     async reload() {
       const { data } = await fetchBackend('/ui/settings');
       const settings = JSON.parse(data);
+      setLanguage(settings.data.language || 'English');
       this.setState({
         settings,
         servicePort: settings.data.port,
@@ -231,10 +296,10 @@ export class SmartthingsSettings extends React.Component {
             name: 'actionTimeout',
             value: settings.data.smartthings.timeout,
           },
-          // {
-          //   name: 'language',
-          //   value: settings.data.language,
-          // },
+          {
+            name: 'language',
+            value: settings.data.language,
+          },
         ];
         return (
           <div>

@@ -1,3 +1,6 @@
+import Cookies from 'js-cookie';
+import { RussianLabels } from './RussianLanguage';
+
 const Labels = {
   servicePort: 'Service Port',
   uiPort: 'UI Port',
@@ -35,8 +38,26 @@ const Labels = {
   testDevice: 'Test Action',
   actionTimeout: 'Action Timeout',
   language: 'Language',
+  modalHelp: 'Where to get ',
+  modalStep1: '1. Open ',
+  modalStep2: '2. Select smartapps in your location ',
+  modalStep3: '3. Select your smartapp ',
+  modalStep4: '4. get parameter ',
 };
 
 export function getLabels() {
+  const currentLanguage = Cookies.get('Language');
+  if (currentLanguage === 'Russian') {
+    return { ...Labels, ...RussianLabels };
+  }
   return Labels;
+}
+
+export function setLanguage(language) {
+  const currentLanguage = Cookies.get('Language');
+  if (currentLanguage !== language) {
+    if (language === 'Russian' || language === 'English') {
+      Cookies.set('Language', language);
+    }
+  }
 }

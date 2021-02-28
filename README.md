@@ -78,7 +78,7 @@ sudo pm2 save
 
 ## Local Network Installation(under NAT)
 - install [Smartthings Hub)[https://www.samsung.com/us/smart-home/smartthings/hubs/] on location.
-- during installation smartapp select hub. [](./img/smartapp10.png)
+- during installation smartapp select hub. ![](./img/smartapp10.png)
 
 # Authentication
 ## Local authentication (default)

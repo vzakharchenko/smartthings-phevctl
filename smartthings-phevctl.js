@@ -2,6 +2,7 @@ const express = require('express');
 
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { logger } = require('./lib/logger');
 const { testDevice } = require('./lib/settingManager');
 const { installCrons } = require('./lib/cronConnection');
 const { saveConfig, readConfig } = require('./lib/env');
@@ -90,7 +91,7 @@ appUI.get('/ui/settings/syncDevices', protect(), cors(corsOptions), async (req, 
 
 startApplication();
 appUI.listen(uiPort, () => {
-  console.info(`HTTP smartthings phevctl UI listening on port ${uiPort}`);
+  logger.info(`HTTP smartthings phevctl UI listening on port ${uiPort}`);
   installCrons();
 });
 

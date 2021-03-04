@@ -43,6 +43,9 @@ const Labels = {
   modalStep2: '2. Select smartapps in your location ',
   modalStep3: '3. Select your smartapp ',
   modalStep4: '4. get parameter ',
+  modelYear: 'Model Year',
+  any: 'Any',
+  phev2019: '2019',
 };
 
 export function getLabels() {

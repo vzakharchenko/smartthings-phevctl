@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { Button, Select, Table } from 'antd';
+import {
+  Button, Select, Table,
+} from 'antd';
 import Paragraph from 'antd/es/typography/Paragraph';
 import { v4 as uuidv4 } from 'uuid';
 import { getLabels } from '../utils/Localization';
@@ -12,17 +14,21 @@ export class SmartthingsAddDevice extends React.Component {
       canSave: false,
       deviceLabel: '',
       actionId: '',
+      modelYear: 'any',
     };
 
     async onSaveClick() {
       const {
         deviceLabel,
         actionId,
+        modelYear,
       } = this.state;
       this.setState({ loading: true });
       try {
         const id = uuidv4();
-        await sendToBackend('/ui/settings/addDevice', 'POST', { id, deviceLabel, actionId });
+        await sendToBackend('/ui/settings/addDevice', 'POST', {
+          id, deviceLabel, actionId, modelYear,
+        });
         await this.props.reload(CONTENTS.SmartthingsViewDevice, id);
       } finally {
         this.setState({ loading: false });
@@ -31,6 +37,14 @@ export class SmartthingsAddDevice extends React.Component {
 
     onActionChange(actionId) {
       this.setState({ actionId, canSave: this.validation(null, actionId) });
+    }
+
+    onActionYearSelectChange(modelYear) {
+      const { actionId } = this.state;
+      this.setState({
+        modelYear,
+        canSave: this.validation(null, actionId),
+      });
     }
 
     getColumns() {
@@ -73,6 +87,20 @@ export class SmartthingsAddDevice extends React.Component {
                 </Select>
               );
             }
+            if (data.name === 'modelYear') {
+              return (
+                <Select
+                  style={{ width: 200 }}
+                  onChange={(event) => {
+                    this.onActionYearSelectChange(event);
+                  }}
+                  defaultValue={this.state.modelYear || 'any'}
+                >
+                  <Select.Option value="any">{getLabels().any}</Select.Option>
+                  <Select.Option value="2019">{getLabels().phev2019}</Select.Option>
+                </Select>
+              );
+            }
             return (
               <Paragraph editable={{
                 onChange: (newValue) => {
@@ -102,6 +130,7 @@ export class SmartthingsAddDevice extends React.Component {
         canSave,
         actionId,
         deviceLabel,
+        modelYear,
       } = this.state;
 
       const data = [
@@ -114,6 +143,22 @@ export class SmartthingsAddDevice extends React.Component {
           value: actionId,
         },
       ];
+      if ([
+        'cooling10Mins',
+        'cooling20Mins',
+        'cooling30Mins',
+        'windscreen10Mins',
+        'windscreen20Mins',
+        'windscreen30Mins',
+        'heating10Mins',
+        'heating20Mins',
+        'heating30Mins',
+      ].includes(actionId)) {
+        data.push({
+          name: 'modelYear',
+          value: modelYear,
+        });
+      }
 
       return (
         <div>

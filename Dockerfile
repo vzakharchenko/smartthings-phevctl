@@ -13,7 +13,7 @@ RUN apt-get -y update && apt-get upgrade -y && apt-get -y install build-essentia
 # install phevctl
 RUN mkdir /opt/phevctl
 RUN cd /opt/phevctl && git clone https://github.com/papawattu/msg-core
-RUN cd /opt/phevctl &&  git clone https://github.com/phev-remote/phevcore.git
+RUN cd /opt/phevctl &&  git clone https://github.com/vzakharchenko/phevcore.git
 RUN cd /opt/phevctl && git clone https://github.com/DaveGamble/cJSON.git
 RUN cd /opt/phevctl && git clone https://github.com/vzakharchenko/phevctl
 RUN cd /opt/phevctl/cJSON && mkdir build && cd build && cmake .. && make && make install
@@ -22,7 +22,7 @@ RUN cd /opt/phevctl/phevcore && mkdir build && cd build && cmake .. && make && m
 RUN cd /opt/phevctl/phevctl && mkdir -p build && cd build && cmake .. && make
 RUN ln -sf /opt/phevctl/phevctl/build/phevctl /usr/bin/phevctl
 # Bundle APP files
-RUN npm i smartthings-phevctl@1.1.5 -g
+RUN npm i smartthings-phevctl@1.1.6 -g
 # Install app dependencies
 ENV NPM_CONFIG_LOGLEVEL warn
 

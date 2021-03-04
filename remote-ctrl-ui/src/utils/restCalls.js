@@ -3,6 +3,7 @@ const fetch = require('axios');
 const REACT_BACKEND_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : '';
 
 function errorHandler(response) {
+  // eslint-disable-next-line no-console
   console.error('error:', response.data);
 }
 

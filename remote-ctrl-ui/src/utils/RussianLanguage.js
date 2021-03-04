@@ -40,4 +40,7 @@ export const RussianLabels = {
   modalStep2: '2. Выбрать smartapps в вашей локации ',
   modalStep3: '3. Выберите созданное вами "remote-ctrl-gsm" ',
   modalStep4: '4. Возмите со страницы параметр ',
+  modelYear: 'Год Выпуска PHEV',
+  any: 'Любой',
+  phev2019: '2019',
 };

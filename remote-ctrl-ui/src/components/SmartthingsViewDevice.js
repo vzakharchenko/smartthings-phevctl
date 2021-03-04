@@ -16,6 +16,7 @@ export class SmartthingsViewDevice extends React.Component {
       deviceLabel: '',
       actionId: '',
       deviceId: '',
+      modelYear: '',
     };
 
     async componentDidMount() {
@@ -46,10 +47,13 @@ export class SmartthingsViewDevice extends React.Component {
         deviceLabel,
         actionId,
         deviceId,
+        modelYear,
       } = this.state;
       this.setState({ loading: true });
       try {
-        await sendToBackend('/ui/settings/addDevice', 'POST', { id: deviceId, deviceLabel, actionId });
+        await sendToBackend('/ui/settings/addDevice', 'POST', {
+          id: deviceId, deviceLabel, actionId, modelYear,
+        });
         await this.props.reload(CONTENTS.SmartthingsViewDevice, deviceId);
       } finally {
         this.setState({ loading: false });
@@ -70,6 +74,14 @@ export class SmartthingsViewDevice extends React.Component {
 
     onActionChange(actionId) {
       this.setState({ actionId, canSave: this.validation(null, actionId) });
+    }
+
+    onActionYearSelectChange(modelYear) {
+      const { actionId } = this.state;
+      this.setState({
+        modelYear,
+        canSave: this.validation(null, actionId),
+      });
     }
 
     getColumns() {
@@ -112,9 +124,25 @@ export class SmartthingsViewDevice extends React.Component {
                   <Select.Option value="heating30Mins">{getLabels().heating30Mins}</Select.Option>
                 </Select>
               );
-            } if (data.name === 'deviceId' || data.name === 'deviceLabel') {
+            }
+            if (data.name === 'modelYear') {
+              return (
+                <Select
+                  style={{ width: 200 }}
+                  onChange={(event) => {
+                    this.onActionYearSelectChange(event);
+                  }}
+                  defaultValue={this.state.modelYear || 'any'}
+                >
+                  <Select.Option value="any">{getLabels().any}</Select.Option>
+                  <Select.Option value="2019">{getLabels().phev2019}</Select.Option>
+                </Select>
+              );
+            }
+            if (data.name === 'deviceId' || data.name === 'deviceLabel') {
               return value;
-            } if (data.name === 'testDevice') {
+            }
+            if (data.name === 'testDevice') {
               return (
                 <Button
                   type="primary"
@@ -158,6 +186,7 @@ export class SmartthingsViewDevice extends React.Component {
         actionId: device.actionId,
         deviceLabel: device.deviceLabel,
         deviceId: device.id,
+        modelYear: device.modelYear,
         loadingPage: false,
       });
     }
@@ -170,6 +199,7 @@ export class SmartthingsViewDevice extends React.Component {
         actionId,
         deviceId,
         deviceLabel,
+        modelYear,
       } = this.state;
 
       const data = [
@@ -190,6 +220,23 @@ export class SmartthingsViewDevice extends React.Component {
           value: '',
         },
       ];
+
+      if ([
+        'cooling10Mins',
+        'cooling20Mins',
+        'cooling30Mins',
+        'windscreen10Mins',
+        'windscreen20Mins',
+        'windscreen30Mins',
+        'heating10Mins',
+        'heating20Mins',
+        'heating30Mins',
+      ].includes(actionId)) {
+        data.push({
+          name: 'modelYear',
+          value: modelYear,
+        });
+      }
 
       return loadingPage ? <Spin /> : (
         <div>

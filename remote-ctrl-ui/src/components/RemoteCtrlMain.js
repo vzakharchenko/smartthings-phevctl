@@ -1,9 +1,10 @@
 import * as React from 'react';
 import Sider from 'antd/lib/layout/Sider';
-import { Menu } from 'antd';
+import { Menu, Spin } from 'antd';
 import Layout, { Footer, Header } from 'antd/lib/layout/layout';
 import { AppstoreAddOutlined, DesktopOutlined, UserOutlined } from '@ant-design/icons';
 import SubMenu from 'antd/lib/menu/SubMenu';
+import Title from 'antd/es/typography/Title';
 import { RemoteCtrlContentHandler } from './RemoteCtrlContentHandler';
 import { fetchBackend } from '../utils/restCalls';
 import { getLabels } from '../utils/Localization';
@@ -15,6 +16,7 @@ export class RemoteCtrlMain extends React.Component {
       selectorPage: null,
       settings: null,
       componentId: null,
+      loading: false,
     };
 
     async componentDidMount() {
@@ -22,21 +24,27 @@ export class RemoteCtrlMain extends React.Component {
     }
 
     reload = async (selectorPage, id) => {
-      const { data } = await fetchBackend('/ui/settings');
-      let settings = JSON.parse(data);
-      if (settings.data.smartthings.appId && settings.data.smartthings.appSecret) {
-        await fetchBackend('/ui/settings/syncDevices');
+      this.setState({ loading: true });
+      const newState = {};
+      try {
+        const { data } = await fetchBackend('/ui/settings');
+        let settings = JSON.parse(data);
+        if (settings.data.smartthings.appId && settings.data.smartthings.appSecret) {
+          await fetchBackend('/ui/settings/syncDevices');
+        }
+        const res = await fetchBackend('/ui/settings');
+        settings = JSON.parse(res.data);
+        newState.settings = settings;
+        if (selectorPage) {
+          newState.selectorPage = selectorPage;
+        }
+        if (id) {
+          newState.componentId = id;
+        }
+      } finally {
+        newState.loading = false;
+        this.setState(newState);
       }
-      const res = await fetchBackend('/ui/settings');
-      settings = JSON.parse(res.data);
-      const newState = { settings };
-      if (selectorPage) {
-        newState.selectorPage = selectorPage;
-      }
-      if (id) {
-        newState.componentId = id;
-      }
-      this.setState(newState);
     }
 
     onCollapse = (collapsed) => {
@@ -71,9 +79,14 @@ export class RemoteCtrlMain extends React.Component {
 
     render() {
       const {
-        collapsed, selectorPage, componentId, settings,
+        collapsed, selectorPage, componentId, settings, loading,
       } = this.state;
-      return (
+      return loading ? (
+        <div>
+          <Spin size="large" />
+          <Title>{getLabels().loading}</Title>
+        </div>
+      ) : (
         <Layout style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
             <div className="logo" />

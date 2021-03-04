@@ -16,6 +16,7 @@ export class SmartthingsViewDevice extends React.Component {
       deviceLabel: '',
       actionId: '',
       deviceId: '',
+      updatable: false,
       modelYear: '',
     };
 
@@ -90,7 +91,13 @@ export class SmartthingsViewDevice extends React.Component {
           title: 'Name',
           dataIndex: 'name',
           key: 'name',
-          render: (text) => <a>{getLabels()[text] || text}</a>,
+          render: (text) => (
+            <a>
+              {
+            (this.state.updatable) ? getLabels().updateValue : getLabels()[text] || text
+              }
+            </a>
+          ),
         },
         {
           title: 'Value',
@@ -103,10 +110,12 @@ export class SmartthingsViewDevice extends React.Component {
                 <Select
                   defaultValue={this.state.actionId}
                   style={{ width: 200 }}
+                  disabled={this.state.updatable}
                   onChange={(event) => {
                     this.onActionChange(event);
                   }}
                 >
+                  <Select.Option value="battery">{getLabels().battery}</Select.Option>
                   <Select.Option value="airconOn">{getLabels().airconOn}</Select.Option>
                   <Select.Option value="airconOff">{getLabels().airconOff}</Select.Option>
                   <Select.Option value="headlightsOn">{getLabels().headlightsOn}</Select.Option>

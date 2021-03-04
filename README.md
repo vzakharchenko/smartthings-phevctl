@@ -7,10 +7,18 @@
 ![smartthings.gif](./img/smartthings.gif)
 ![smartthings.gif](./img/smartthings1.gif)
 
+## Features:
+- switch on/off condition/heater
+- change mode of air conditioner: heater/cool/windscreen for 10/20/30 mins,
+- show battery level
+- support google home
+- possibility to control over voice(by Google assistant)
+
 ## Cloud Installation
 - [cloud installation](https://github.com/vzakharchenko/remote-ctrl-gsm/blob/master/cloud/README.md)
 - [hetzner cloud](https://github.com/vzakharchenko/remote-ctrl-gsm/wiki/gsm-extender-hetzner-cloud)
 - [scaleway cloud](https://github.com/vzakharchenko/remote-ctrl-gsm/wiki/gsm-extender-scaleway-cloud)
+
 ## Installation Steps
 1. [Install Server using Docker](https://github.com/vzakharchenko/smartthings-phevctl#server-docker-installation) or  [Manual Installation](https://github.com/vzakharchenko/smartthings-phevctl#server-manual-installation)
 2. [create Device Handler](https://github.com/vzakharchenko/smartthings-phevctl#create-custom-dht)
@@ -44,7 +52,7 @@ sudo pm2 save
 1. open [https://graph.api.smartthings.com/](https://graph.api.smartthings.com/)
 2. open your location/ or create a new one ![](./img/dht1.png)
 3. open "My Device Handler" and "create New Device Handler"![](./img/dht2.png)
-4. select from code and add [Outlander PHEV Action.groovy](./dht/Outlander PHEV Action.groovy)![](./img/dht3.png)
+4. select from code and add [Outlander PHEV Action.groovy](./dht/Outlander PHEV Action.groovy) and [Outlander PHEV Battery.groovy](./dht/Outlander PHEV Battery.groovy) ![](./img/dht3.png)
 5. click save
 
 ### Create SmartApp

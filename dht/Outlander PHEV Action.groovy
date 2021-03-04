@@ -17,10 +17,11 @@ metadata {
         capability "Actuator"
         capability "Sensor"
         capability "Switch"
+        capability "Momentary"
         capability "Health Check"
         command "forceOn"
         command "forceOff"
-        command "parse"
+        command "update"
         command "markDeviceOnline"
         command "markDeviceOffline"
     }
@@ -38,6 +39,10 @@ metadata {
     }
 }
 def on() {
+    forceOn();
+}
+
+def push() {
     forceOn();
 }
 
@@ -69,6 +74,10 @@ def forceOff() {
     sendEvent(name: "switch", value: "off")
 }
 
+def update(value) {
+
+}
+
 private setDeviceHealth(String healthState) {
     List validHealthStates = ["online", "offline"]
     healthState = validHealthStates.contains(healthState) ? healthState : device.currentValue("healthStatus")
@@ -78,7 +87,7 @@ private setDeviceHealth(String healthState) {
 
 
 def debug(message) {
-    def debug = true;
+    def debug = false;
     if (debug) {
         log.debug message
     }

@@ -43,4 +43,7 @@ export const RussianLabels = {
   modelYear: 'Год Выпуска PHEV',
   any: 'Любой',
   phev2019: '2019',
+  battery: 'Заряд Батареи',
+  updateValue: 'Обновить Текущее Значение',
+  loading: 'Подождите идет загрузка...',
 };

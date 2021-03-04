@@ -46,6 +46,9 @@ const Labels = {
   modelYear: 'Model Year',
   any: 'Any',
   phev2019: '2019',
+  battery: 'battery',
+  updateValue: 'Update Value',
+  loading: 'Loading...',
 };
 
 export function getLabels() {

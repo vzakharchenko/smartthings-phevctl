@@ -79,6 +79,12 @@ mappings {
                 POST: "phevAddDevice"
         ]
     }
+    path("/smartapp/updateDevice") {
+        action:
+        [
+                POST: "updateDevice"
+        ]
+    }
     path("/smartapp/deleteDevice") {
         action:
         [
@@ -113,11 +119,19 @@ def phevDevices() {
     return [devices: deviceList]
 }
 
+def updateDevice() {
+    def json = request.JSON;
+    def presentDevice = getAllDevicesById(json.id)
+    presentDevice.update(json.value)
+    return [status: "ok"]
+}
+
+
 def phevAddDevice() {
     def json = request.JSON;
     def presentDevice = getAllDevicesById(json.id)
     if (presentDevice == null) {
-        presentDevice = addChildDevice("vzakharchenko", "Outlander PHEV Action", json.id, null, [label: "${json.deviceLabel}", name: "${json.deviceLabel}"])
+        presentDevice = addChildDevice("vzakharchenko", "battery".equals(json.actionId)? "Outlander PHEV Battery": "Outlander PHEV Action", json.id, null, [label: "${json.deviceLabel}", name: "${json.deviceLabel}"])
         subscribe(presentDevice, "switch.on", deviceHandler)
         presentDevice.markDeviceOnline()
         presentDevice.forceOff();
@@ -187,7 +201,7 @@ def apiHubGet(path, query) {
 }
 
 def debug(message) {
-    def debug = false;
+    def debug = fals;
     if (debug) {
         log.debug message
     }

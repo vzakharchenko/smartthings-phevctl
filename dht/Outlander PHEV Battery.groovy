@@ -36,7 +36,7 @@ def update(currentValue) {
     sendEvent(name: "battery", value: currentValue)
 }
 def update2(currentValue) {
-    sendEvent(name: "powerSource", value: currentValue == "0" ? 'battery': 'dc')
+    sendEvent(name: "powerSource", value: currentValue == "0" ? 'battery': 'mains')
 }
 
 def forceOn() {

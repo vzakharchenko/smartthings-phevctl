@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-  Alert, Button, Image, Select, Table,
+  Alert, Button, Image, InputNumber, Select, Table,
 } from 'antd';
 import Paragraph from 'antd/es/typography/Paragraph';
 import MaskedInput from 'antd-mask-input';
@@ -214,6 +214,29 @@ export class SmartthingsSettings extends React.Component {
                             }
                   placeholder="Keycloak Json"
                   autoSize={{ minRows: 3, maxRows: 5 }}
+                />
+              );
+            }
+            if (data.name === 'batteryFactory') {
+              return (
+                <InputNumber
+                  style={{
+                    width: 200,
+                  }}
+                  defaultValue={this.state.batteryFactory}
+                  min="0"
+                  max="10"
+                  step="0.0001"
+                  onChange={
+                        (newValue) => {
+                          if (newValue) {
+                            const newState = { changed: true };
+                            newState.batteryFactory = newValue;
+                            this.setState(newState);
+                          }
+                        }
+                      }
+                  stringMode
                 />
               );
             }

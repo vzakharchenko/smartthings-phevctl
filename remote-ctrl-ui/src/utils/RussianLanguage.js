@@ -46,5 +46,5 @@ export const RussianLabels = {
   battery: 'Заряд Батареи',
   updateValue: 'Обновить Текущее Значение',
   loading: 'Подождите идет загрузка...',
-  batteryFactor: 'Множитель батареи',
+  batteryFactory: 'Множитель батареи',
 };

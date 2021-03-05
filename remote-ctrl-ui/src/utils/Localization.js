@@ -49,6 +49,7 @@ const Labels = {
   battery: 'battery',
   updateValue: 'Update Value',
   loading: 'Loading...',
+  batteryFactor: 'Battery Factor',
 };
 
 export function getLabels() {

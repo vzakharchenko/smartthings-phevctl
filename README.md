@@ -36,7 +36,7 @@ docker run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 vassio/smartthi
 ## Server Manual Installation
 ```
 sudo touch /bin/phevctl
-sudo echo "docker run papawattu/phevctl $*">/bin/phevctl
+sudo echo "docker run vassio/phevctl $*">/bin/phevctl
 sudo chmod +x /bin/phevctl
 wget -qO- https://getpm2.com/install.sh | bash
 sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u ${currentUser} --hp ${HOME}

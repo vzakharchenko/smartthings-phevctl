@@ -121,8 +121,13 @@ def phevDevices() {
 
 def updateDevice() {
     def json = request.JSON;
+    debug("update device "+json)
     def presentDevice = getAllDevicesById(json.id)
     presentDevice.update(json.value)
+    if (json.value2 != null){
+        presentDevice.update2(json.value2)
+    }
+
     return [status: "ok"]
 }
 
@@ -201,7 +206,7 @@ def apiHubGet(path, query) {
 }
 
 def debug(message) {
-    def debug = fals;
+    def debug = false;
     if (debug) {
         log.debug message
     }

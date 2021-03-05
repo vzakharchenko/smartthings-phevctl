@@ -15,7 +15,9 @@
 metadata {
     definition (name: "Outlander PHEV Battery", namespace: "vzakharchenko", author: "Василий Захарченко") {
         capability "Battery"
+        capability "Power Source"
         command "update"
+        command "update2"
         command "forceOn"
         command "forceOff"
     }
@@ -32,6 +34,9 @@ metadata {
 // parse events into attributes
 def update(currentValue) {
     sendEvent(name: "battery", value: currentValue)
+}
+def update2(currentValue) {
+    sendEvent(name: "powerSource", value: currentValue == "0" ? 'battery': 'dc')
 }
 
 def forceOn() {

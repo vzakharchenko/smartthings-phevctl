@@ -22,6 +22,7 @@ metadata {
         command "forceOn"
         command "forceOff"
         command "update"
+        command "update2"
         command "markDeviceOnline"
         command "markDeviceOffline"
     }
@@ -75,6 +76,11 @@ def forceOff() {
 }
 
 def update(value) {
+
+}
+
+
+def update2(value) {
 
 }
 

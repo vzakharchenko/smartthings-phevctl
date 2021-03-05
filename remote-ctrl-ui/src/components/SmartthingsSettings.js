@@ -24,6 +24,7 @@ export class SmartthingsSettings extends React.Component {
       loading: false,
       error: '',
       keycloakJson: '',
+      batteryFactory: 1.0,
       isModalVisible: false,
     };
 
@@ -42,6 +43,7 @@ export class SmartthingsSettings extends React.Component {
         keycloakJson,
         language,
         actionTimeout,
+        batteryFactory,
         shard,
       } = this.state;
       this.setState({ loading: true });
@@ -69,6 +71,9 @@ export class SmartthingsSettings extends React.Component {
       }
       if (language) {
         copyConfig.language = language;
+      }
+      if (batteryFactory) {
+        copyConfig.batteryFactory = batteryFactory;
       }
       try {
         let res = await fetchBackend(`/ui/smartthings/check?appId=${smartthingsAppId}&secret=${smartthingsAppSecret}`);
@@ -262,6 +267,7 @@ export class SmartthingsSettings extends React.Component {
         shard: settings.data.smartthings.shard,
         authenticationType: settings.data.connectionType,
         actionTimeout: settings.data.smartthings.timeout,
+        batteryFactory: settings.data.batteryFactory || 1.0,
         language: settings.data.language || 'English',
       });
     }
@@ -299,6 +305,10 @@ export class SmartthingsSettings extends React.Component {
           {
             name: 'language',
             value: settings.data.language,
+          },
+          {
+            name: 'batteryFactory',
+            value: settings.data.batteryFactory || 1.0,
           },
         ];
         return (

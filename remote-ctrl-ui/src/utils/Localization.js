@@ -50,6 +50,7 @@ const Labels = {
   updateValue: 'Update Value',
   loading: 'Loading...',
   batteryFactory: 'Battery Factor',
+  doors: 'Doors Status',
 };
 
 export function getLabels() {

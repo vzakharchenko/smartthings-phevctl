@@ -47,4 +47,5 @@ export const RussianLabels = {
   updateValue: 'Обновить Текущее Значение',
   loading: 'Подождите идет загрузка...',
   batteryFactory: 'Множитель батареи',
+  doors: 'Статус Открытия/Закрытия Дверей',
 };

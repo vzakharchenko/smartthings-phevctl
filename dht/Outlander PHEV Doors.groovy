@@ -14,9 +14,8 @@
  */
 metadata {
     definition (name: "Outlander PHEV Doors", namespace: "vzakharchenko", author: "Василий Захарченко") {
-        capability "Contact Sensor"
-
-        capability "Configuration"
+        capability "Actuator"
+        capability "Lock"
         command "forceOn"
         command "forceOff"
         command "update"
@@ -24,12 +23,19 @@ metadata {
     }
 
 
-    simulator {
-        // TODO: define status and reply messages here
-    }
-
-    tiles {
-        // TODO: define your main and details tiles here
+    tiles(scale: 2) {
+        multiAttributeTile(name:"toggle", type:"generic",  decoration:"flat", width:6, height:4) {
+            tileAttribute ("device.lock", key:"PRIMARY_CONTROL") {
+                attributeState "locked", label:'locked', icon:"st.locks.lock.locked", backgroundColor:"#00A0DC"
+                attributeState "unlocked", icon:"st.locks.lock.unlocked", backgroundColor:"#ffffff"
+                attributeState "unknown", label:"unknown", icon:"st.locks.lock.unknown", backgroundColor:"#ffffff"
+            }
+            tileAttribute("device.displayName", key: "SECONDARY_CONTROL") {
+                attributeState "displayName", label: 'Model:  ${currentValue}'
+            }
+        }
+        main "toggle"
+        details(["toggle"])
     }
 }
 
@@ -41,7 +47,7 @@ def forceOff() {
 
 def update(value) {
     debug("new State = "+value)
-    sendEvent(name: "contact", value: value == 1 ? "closed": "open")
+    sendEvent(name: "lock", value: value == 1 ? "locked": "unlocked", data: [method: "auto", codeId: "1"])
 }
 
 
@@ -55,4 +61,11 @@ def debug(message) {
     if (debug) {
         log.debug message
     }
+}
+
+def lock(){
+}
+
+
+def unlock(){
 }

@@ -6,7 +6,7 @@
 
 ![smartthings.gif](./img/smartthings.gif)
 ![smartthings.gif](./img/smartthings1.gif)
-![Charger.png](./img/Charger.png)
+![Charger.png](./img/Charger.png)![doorLock.png](./img/doorLock.png)
 
 ## Features:
 - switch on/off condition/heater

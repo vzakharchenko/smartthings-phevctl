@@ -13,7 +13,7 @@
  *  for the specific language governing permissions and limitations under the License.
  */
 metadata {
-    definition (name: "Outlander PHEV Battery", namespace: "vzakharchenko", author: "Василий Захарченко") {
+    definition(name: "Outlander PHEV Battery", namespace: "vzakharchenko", author: "Василий Захарченко") {
         capability "Battery"
         capability "Power Source"
         command "update"
@@ -25,7 +25,7 @@ metadata {
     tiles {
 
         valueTile("battery", "device.battery", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "battery", label:'${currentValue}% battery', unit:""
+            state "battery", label: '${currentValue}% battery', unit: "%"
         }
         main "battery"
     }
@@ -33,10 +33,13 @@ metadata {
 
 // parse events into attributes
 def update(currentValue) {
-    sendEvent(name: "battery", value: currentValue)
+    if (Integer.parseInt(currentValue) < 101) {
+        sendEvent(name: "battery", value: currentValue)
+    }
 }
+
 def update2(currentValue) {
-    sendEvent(name: "powerSource", value: currentValue == "0" ? 'battery': 'mains')
+    sendEvent(name: "powerSource", value: currentValue == "0" ? 'battery' : 'mains')
 }
 
 def forceOn() {

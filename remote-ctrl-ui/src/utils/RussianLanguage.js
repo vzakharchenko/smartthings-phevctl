@@ -48,4 +48,5 @@ export const RussianLabels = {
   loading: 'Подождите идет загрузка...',
   batteryFactory: 'Множитель батареи',
   doors: 'Статус Открытия/Закрытия Дверей',
+  forceUpdate: 'Принудительно обновить модуль',
 };

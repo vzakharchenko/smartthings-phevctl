@@ -94,7 +94,7 @@ export class SmartthingsViewDevice extends React.Component {
           render: (text) => (
             <a>
               {
-            (this.state.updatable) ? getLabels().updateValue : getLabels()[text] || text
+            (text === 'testDevice' && this.state.updatable) ? getLabels().updateValue : getLabels()[text] || text
               }
             </a>
           ),
@@ -198,6 +198,7 @@ export class SmartthingsViewDevice extends React.Component {
         deviceLabel: device.deviceLabel,
         deviceId: device.id,
         modelYear: device.modelYear,
+        updatable: device.updatable,
         loadingPage: false,
       });
     }

@@ -136,10 +136,17 @@ def phevAddDevice() {
     def json = request.JSON;
     def presentDevice = getAllDevicesById(json.id)
     if (presentDevice == null) {
-        presentDevice = addChildDevice("vzakharchenko", "battery".equals(json.actionId)? "Outlander PHEV Battery": "Outlander PHEV Action", json.id, null, [label: "${json.deviceLabel}", name: "${json.deviceLabel}"])
-        subscribe(presentDevice, "switch.on", deviceHandler)
+        if ("battery".equals(json.actionId)){
+            presentDevice = addChildDevice("vzakharchenko", "Outlander PHEV Battery", json.id, null, [label: "${json.deviceLabel}", name: "${json.deviceLabel}"])
+        } else if ("doors".equals(json.actionId)){
+            presentDevice = addChildDevice("vzakharchenko",  "Outlander PHEV Doors", json.id, null, [label: "${json.deviceLabel}", name: "${json.deviceLabel}"])
+        }  else {
+            presentDevice = addChildDevice("vzakharchenko", "Outlander PHEV Action", json.id, null, [label: "${json.deviceLabel}", name: "${json.deviceLabel}"])
+
+        }
         presentDevice.markDeviceOnline()
         presentDevice.forceOff();
+        updated();
     }
     return [status: "ok"]
 }

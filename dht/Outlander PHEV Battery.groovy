@@ -33,8 +33,12 @@ metadata {
 
 // parse events into attributes
 def update(currentValue) {
-    if (Integer.parseInt(currentValue) < 101) {
-        sendEvent(name: "battery", value: currentValue)
+    if (Integer.parseInt(currentValue) >5 && Integer.parseInt(currentValue) <101) {
+        if (Integer.parseInt(currentValue) < 10) {
+            sendEvent(name: "battery", value: 0)
+        } else {
+            sendEvent(name: "battery", value: currentValue)
+        }
     }
 }
 

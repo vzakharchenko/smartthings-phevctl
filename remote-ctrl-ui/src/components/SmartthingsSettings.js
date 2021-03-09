@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-  Alert, Button, Image, InputNumber, Select, Table,
+  Alert, Button, Checkbox, Image, InputNumber, Select, Table,
 } from 'antd';
 import Paragraph from 'antd/es/typography/Paragraph';
 import MaskedInput from 'antd-mask-input';
@@ -24,6 +24,7 @@ export class SmartthingsSettings extends React.Component {
       loading: false,
       error: '',
       keycloakJson: '',
+      executeUpdate: true,
       batteryFactory: 1.0,
       isModalVisible: false,
     };
@@ -44,6 +45,7 @@ export class SmartthingsSettings extends React.Component {
         language,
         actionTimeout,
         batteryFactory,
+        executeUpdate,
         shard,
       } = this.state;
       this.setState({ loading: true });
@@ -75,6 +77,7 @@ export class SmartthingsSettings extends React.Component {
       if (batteryFactory) {
         copyConfig.batteryFactory = batteryFactory;
       }
+      copyConfig.smartthings.executeUpdate = executeUpdate;
       try {
         let res = await fetchBackend(`/ui/smartthings/check?appId=${smartthingsAppId}&secret=${smartthingsAppSecret}`);
         let status = JSON.parse(res.data);
@@ -217,6 +220,41 @@ export class SmartthingsSettings extends React.Component {
                 />
               );
             }
+            if (data.name === 'executeUpdate') {
+              return (
+                <Checkbox
+                  checked={this.state.executeUpdate}
+                  onChange={(e) => {
+                    const newState = { changed: true };
+                    newState.executeUpdate = e.target.checked;
+                    this.setState(newState);
+                  }}
+                />
+              );
+            }
+            if (data.name === 'actionTimeout') {
+              return (
+                <InputNumber
+                  style={{
+                    width: 200,
+                  }}
+                  defaultValue={this.state.actionTimeout}
+                  min="0"
+                  max="300000"
+                  step="1000"
+                  onChange={
+                        (newValue) => {
+                          if (newValue) {
+                            const newState = { changed: true };
+                            newState.actionTimeout = newValue;
+                            this.setState(newState);
+                          }
+                        }
+                      }
+                  stringMode
+                />
+              );
+            }
             if (data.name === 'batteryFactory') {
               return (
                 <InputNumber
@@ -292,6 +330,7 @@ export class SmartthingsSettings extends React.Component {
         actionTimeout: settings.data.smartthings.timeout,
         batteryFactory: settings.data.batteryFactory || 1.0,
         language: settings.data.language || 'English',
+        executeUpdate: settings.data.smartthings.executeUpdate,
       });
     }
 
@@ -326,6 +365,10 @@ export class SmartthingsSettings extends React.Component {
             value: settings.data.smartthings.timeout,
           },
           {
+            name: 'executeUpdate',
+            value: settings.data.smartthings.executeUpdate,
+          },
+          {
             name: 'language',
             value: settings.data.language,
           },
@@ -350,8 +393,8 @@ export class SmartthingsSettings extends React.Component {
               loading={loading}
               block
               disabled={!changed}
-              onClick={() => {
-                this.onSaveClick();
+              onClick={async () => {
+                await this.onSaveClick();
               }}
             >
               {getLabels().save || 'Save'}

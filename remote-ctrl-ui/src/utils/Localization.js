@@ -52,6 +52,7 @@ const Labels = {
   batteryFactory: 'Battery Factor',
   doors: 'Doors Status',
   forceUpdate: 'Force Update',
+  executeUpdate: 'Force Update during update values',
 };
 
 export function getLabels() {

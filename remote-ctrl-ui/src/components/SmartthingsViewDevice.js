@@ -117,6 +117,7 @@ export class SmartthingsViewDevice extends React.Component {
                 >
                   <Select.Option value="doors">{getLabels().doors}</Select.Option>
                   <Select.Option value="battery">{getLabels().battery}</Select.Option>
+                  <Select.Option value="hvac">{getLabels().hvac}</Select.Option>
                   <Select.Option value="airconOn">{getLabels().airconOn}</Select.Option>
                   <Select.Option value="airconOff">{getLabels().airconOff}</Select.Option>
                   <Select.Option value="headlightsOn">{getLabels().headlightsOn}</Select.Option>

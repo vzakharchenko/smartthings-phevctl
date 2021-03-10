@@ -20,6 +20,7 @@ metadata {
         command "forceOff"
         command "update"
         command "update2"
+        command "updateall"
     }
 
 
@@ -55,6 +56,10 @@ def update2(value) {
 
 }
 
+
+def updateall(value, value2) {
+
+}
 
 def debug(message) {
     def debug = false;

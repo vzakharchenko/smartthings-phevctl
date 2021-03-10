@@ -124,8 +124,9 @@ def updateDevice() {
     debug("update device "+json)
     def presentDevice = getAllDevicesById(json.id)
     presentDevice.update(json.value)
-    if (json.value2 != null){
+    if (json.value2){
         presentDevice.update2(json.value2)
+        presentDevice.updateall(json.value,json.value2)
     }
 
     return [status: "ok"]
@@ -140,9 +141,10 @@ def phevAddDevice() {
             presentDevice = addChildDevice("vzakharchenko", "Outlander PHEV Battery", json.id, null, [label: "${json.deviceLabel}", name: "${json.deviceLabel}"])
         } else if ("doors".equals(json.actionId)){
             presentDevice = addChildDevice("vzakharchenko",  "Outlander PHEV Doors", json.id, null, [label: "${json.deviceLabel}", name: "${json.deviceLabel}"])
+        } else if ("hvac".equals(json.actionId)){
+            presentDevice = addChildDevice("vzakharchenko",  "Outlander PHEV Thermostat", json.id, null, [label: "${json.deviceLabel}", name: "${json.deviceLabel}"])
         }  else {
             presentDevice = addChildDevice("vzakharchenko", "Outlander PHEV Action", json.id, null, [label: "${json.deviceLabel}", name: "${json.deviceLabel}"])
-
         }
         presentDevice.markDeviceOnline()
         presentDevice.forceOff();
@@ -213,7 +215,7 @@ def apiHubGet(path, query) {
 }
 
 def debug(message) {
-    def debug = false;
+    def debug = true;
     if (debug) {
         log.debug message
     }

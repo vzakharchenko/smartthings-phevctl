@@ -50,4 +50,5 @@ export const RussianLabels = {
   doors: 'Статус Открытия/Закрытия Дверей',
   forceUpdate: 'Принудительно обновить модуль',
   executeUpdate: 'Принудительно обновить перед выполнением',
+  hvac: 'Текущий режим HVAC',
 };

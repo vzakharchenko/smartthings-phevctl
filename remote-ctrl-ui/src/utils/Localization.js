@@ -53,6 +53,7 @@ const Labels = {
   doors: 'Doors Status',
   forceUpdate: 'Force Update',
   executeUpdate: 'Force Update during update values',
+  hvac: 'Thermostat Operating State',
 };
 
 export function getLabels() {

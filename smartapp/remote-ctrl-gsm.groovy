@@ -103,6 +103,13 @@ mappings {
                 POST: "phevOffDevice"
         ]
     }
+
+    path("/smartapp/notification") {
+        action:
+        [
+                POST: "sendNotification"
+        ]
+    }
 }
 
 def phevInit() {
@@ -124,8 +131,9 @@ def updateDevice() {
     debug("update device "+json)
     def presentDevice = getAllDevicesById(json.id)
     presentDevice.update(json.value)
-    if (json.value2 != null){
+    if (json.value2){
         presentDevice.update2(json.value2)
+        presentDevice.updateall(json.value,json.value2)
     }
 
     return [status: "ok"]
@@ -140,9 +148,10 @@ def phevAddDevice() {
             presentDevice = addChildDevice("vzakharchenko", "Outlander PHEV Battery", json.id, null, [label: "${json.deviceLabel}", name: "${json.deviceLabel}"])
         } else if ("doors".equals(json.actionId)){
             presentDevice = addChildDevice("vzakharchenko",  "Outlander PHEV Doors", json.id, null, [label: "${json.deviceLabel}", name: "${json.deviceLabel}"])
+        } else if ("hvac".equals(json.actionId)){
+            presentDevice = addChildDevice("vzakharchenko",  "Outlander PHEV Thermostat", json.id, null, [label: "${json.deviceLabel}", name: "${json.deviceLabel}"])
         }  else {
             presentDevice = addChildDevice("vzakharchenko", "Outlander PHEV Action", json.id, null, [label: "${json.deviceLabel}", name: "${json.deviceLabel}"])
-
         }
         presentDevice.markDeviceOnline()
         presentDevice.forceOff();
@@ -155,6 +164,12 @@ def phevAddDevice() {
 def deleteAddDevice() {
     def json = request.JSON;
     deleteChildDevice(json.id)
+    return [status: "ok"]
+}
+
+def sendNotification(){
+    def json = request.JSON;
+    sendPush(json.message)
     return [status: "ok"]
 }
 

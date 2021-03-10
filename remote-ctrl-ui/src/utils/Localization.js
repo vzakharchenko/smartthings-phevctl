@@ -36,6 +36,7 @@ const Labels = {
   macAddress: 'Outlander PHEV Client Mac Address',
   keycloakJson: 'Securing Applications using keycloak.json',
   testDevice: 'Test Action',
+  testNotification: 'Test Notification',
   actionTimeout: 'Action Timeout',
   language: 'Language',
   modalHelp: 'Where to get ',
@@ -53,6 +54,9 @@ const Labels = {
   doors: 'Doors Status',
   forceUpdate: 'Force Update',
   executeUpdate: 'Force Update during update values',
+  hvac: 'Thermostat Operating State',
+  sendNotification: 'Send Push Notification about Battery Warning',
+  testNotificationLabel: 'Send Push Notification',
 };
 
 export function getLabels() {

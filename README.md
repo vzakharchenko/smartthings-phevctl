@@ -54,7 +54,7 @@ sudo pm2 save
 1. open [https://graph.api.smartthings.com/](https://graph.api.smartthings.com/)
 2. open your location/ or create a new one ![](./img/dht1.png)
 3. open "My Device Handler" and "create New Device Handler"![](./img/dht2.png)
-4. select from code and add [Outlander PHEV Action.groovy](./dht/Outlander PHEV Action.groovy) and [Outlander PHEV Battery.groovy](./dht/Outlander PHEV Battery.groovy)and [Outlander PHEV Doors.groovy](./dht/Outlander PHEV Doors.groovy) ![](./img/dht3.png)
+4. select from code and add [Outlander PHEV Action.groovy](./dht/Outlander PHEV Action.groovy), [Outlander PHEV Battery.groovy](./dht/Outlander PHEV Battery.groovy), [Outlander PHEV Thermostat.groovy](./dht/Outlander PHEV Thermostat.groovy) and [Outlander PHEV Doors.groovy](./dht/Outlander PHEV Doors.groovy) ![](./img/dht3.png)
 5. click save
 
 ### Create SmartApp

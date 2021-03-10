@@ -5,7 +5,7 @@ import {
 import Paragraph from 'antd/es/typography/Paragraph';
 import MaskedInput from 'antd-mask-input';
 import TextArea from 'antd/es/input/TextArea';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { PoweroffOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import Modal from 'antd/es/modal/Modal';
 import { getLabels, setLanguage } from '../utils/Localization';
 import { fetchBackend, sendToBackend } from '../utils/restCalls';
@@ -25,6 +25,7 @@ export class SmartthingsSettings extends React.Component {
       error: '',
       keycloakJson: '',
       executeUpdate: true,
+      sendNotification: true,
       batteryFactory: 1.0,
       isModalVisible: false,
     };
@@ -46,6 +47,7 @@ export class SmartthingsSettings extends React.Component {
         actionTimeout,
         batteryFactory,
         executeUpdate,
+        sendNotification,
         shard,
       } = this.state;
       this.setState({ loading: true });
@@ -78,6 +80,7 @@ export class SmartthingsSettings extends React.Component {
         copyConfig.batteryFactory = batteryFactory;
       }
       copyConfig.smartthings.executeUpdate = executeUpdate;
+      copyConfig.smartthings.sendNotification = sendNotification;
       try {
         let res = await fetchBackend(`/ui/smartthings/check?appId=${smartthingsAppId}&secret=${smartthingsAppSecret}`);
         let status = JSON.parse(res.data);
@@ -232,6 +235,38 @@ export class SmartthingsSettings extends React.Component {
                 />
               );
             }
+            if (data.name === 'sendNotification') {
+              return (
+                <div>
+                  <Checkbox
+                    checked={this.state.sendNotification}
+                    onChange={(e) => {
+                      const newState = { changed: true };
+                      newState.sendNotification = e.target.checked;
+                      this.setState(newState);
+                    }}
+                  >
+                    {getLabels().testNotificationLabel}
+                  </Checkbox>
+                  <br />
+                  <Button
+                    type="primary"
+                    icon={<PoweroffOutlined />}
+                    loading={this.state.loading}
+                    onClick={async () => {
+                      this.setState({ loading: true });
+                      try {
+                        await sendToBackend('/ui/settings/testNotification', 'POST', { message: 'Test Message' });
+                      } finally {
+                        this.setState({ loading: false });
+                      }
+                    }}
+                  >
+                    {getLabels().testNotification}
+                  </Button>
+                </div>
+              );
+            }
             if (data.name === 'actionTimeout') {
               return (
                 <InputNumber
@@ -331,6 +366,7 @@ export class SmartthingsSettings extends React.Component {
         batteryFactory: settings.data.batteryFactory || 1.0,
         language: settings.data.language || 'English',
         executeUpdate: settings.data.smartthings.executeUpdate,
+        sendNotification: settings.data.smartthings.sendNotification,
       });
     }
 
@@ -367,6 +403,10 @@ export class SmartthingsSettings extends React.Component {
           {
             name: 'executeUpdate',
             value: settings.data.smartthings.executeUpdate,
+          },
+          {
+            name: 'sendNotification',
+            value: settings.data.smartthings.sendNotification,
           },
           {
             name: 'language',

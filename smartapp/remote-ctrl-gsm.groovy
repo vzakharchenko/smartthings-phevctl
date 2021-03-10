@@ -103,6 +103,13 @@ mappings {
                 POST: "phevOffDevice"
         ]
     }
+
+    path("/smartapp/notification") {
+        action:
+        [
+                POST: "sendNotification"
+        ]
+    }
 }
 
 def phevInit() {
@@ -157,6 +164,12 @@ def phevAddDevice() {
 def deleteAddDevice() {
     def json = request.JSON;
     deleteChildDevice(json.id)
+    return [status: "ok"]
+}
+
+def sendNotification(){
+    def json = request.JSON;
+    sendPush(json.message)
     return [status: "ok"]
 }
 
@@ -215,7 +228,7 @@ def apiHubGet(path, query) {
 }
 
 def debug(message) {
-    def debug = true;
+    def debug = false;
     if (debug) {
         log.debug message
     }

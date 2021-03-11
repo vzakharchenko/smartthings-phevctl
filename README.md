@@ -6,14 +6,16 @@
 
 ![smartthings.gif](./img/smartthings.gif)
 ![smartthings.gif](./img/smartthings1.gif)
-![Charger.png](./img/Charger.png)![doorLock.png](./img/doorLock.png)
+![Charger.png](./img/Charger.png)![doorLock.png](./img/doorLock.png)![](./img/message1.png)
 
 ## Features:
 - switch on/off condition/heater
+- receive warning message from the remote EV.
 - change mode of air conditioner: heater/cool/windscreen for 10/20/30 mins,
 - show battery level
 - support google home
 - check if doors are closed
+- Thermostat Operating State
 - possibility to control over voice(by Google assistant)
 
 ## Cloud Installation
@@ -109,6 +111,17 @@ default login/password: ```admin/admin```
 ![](./img/keycloak.png)
 
 restart Application
+
+## Thermostat operation state
+![](./img/thermo1.png)
+![](./img/thermo2.png)
+![](./img/thermo3.png)
+
+
+## Push Notification
+![](./img/message3.png)
+![](./img/message1.png)
+![](./img/message2.png)
 
 
 

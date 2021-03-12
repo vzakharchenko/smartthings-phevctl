@@ -456,7 +456,7 @@ export class SmartthingsSettings extends React.Component {
                 closable
               />
             ) : null}
-            <Table columns={this.getColumns()} dataSource={data} />
+            <Table pagination={false} columns={this.getColumns()} dataSource={data} />
             <Button
               type="primary"
               loading={loading}

@@ -25,6 +25,8 @@ export class SmartthingsSettings extends React.Component {
       error: '',
       keycloakJson: '',
       executeUpdate: true,
+      sms: true,
+      smsPassword: '',
       sendNotification: true,
       batteryFactory: 1.0,
       isModalVisible: false,
@@ -48,6 +50,8 @@ export class SmartthingsSettings extends React.Component {
         batteryFactory,
         executeUpdate,
         sendNotification,
+        smsPassword,
+        sms,
         shard,
       } = this.state;
       this.setState({ loading: true });
@@ -78,6 +82,12 @@ export class SmartthingsSettings extends React.Component {
       }
       if (batteryFactory) {
         copyConfig.batteryFactory = batteryFactory;
+      }
+      if (sms) {
+        copyConfig.sms.enabled = sms;
+        if (smsPassword) {
+          copyConfig.sms.password = smsPassword;
+        }
       }
       copyConfig.smartthings.executeUpdate = executeUpdate;
       copyConfig.smartthings.sendNotification = sendNotification;
@@ -313,8 +323,17 @@ export class SmartthingsSettings extends React.Component {
                 />
               );
             }
-            if (data.name === 'shard') {
-              return value;
+            if (data.name === 'sms') {
+              return (
+                <Checkbox
+                  checked={this.state.sms}
+                  onChange={(e) => {
+                    const newState = { changed: true };
+                    newState.sms = e.target.checked;
+                    this.setState(newState);
+                  }}
+                />
+              );
             }
             if (data.name === 'language') {
               return (
@@ -367,12 +386,14 @@ export class SmartthingsSettings extends React.Component {
         language: settings.data.language || 'English',
         executeUpdate: settings.data.smartthings.executeUpdate,
         sendNotification: settings.data.smartthings.sendNotification,
+        sms: settings.data.smartthings.sms.enabled,
+        smsPassword: settings.data.smartthings.sms.password,
       });
     }
 
     render() {
       const {
-        settings, changed, loading, error,
+        settings, changed, loading, error, sms,
       } = this.state;
       if (settings.status === 'OK') {
         const data = [
@@ -416,7 +437,17 @@ export class SmartthingsSettings extends React.Component {
             name: 'batteryFactory',
             value: settings.data.batteryFactory || 1.0,
           },
+          {
+            name: 'sms',
+            value: settings.data.smartthings.sms.enabled,
+          },
         ];
+        if (sms) {
+          data.push({
+            name: 'smsPassword',
+            value: settings.data.smartthings.sms.password,
+          });
+        }
         return (
           <div>
             {error ? (

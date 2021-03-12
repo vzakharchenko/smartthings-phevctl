@@ -57,6 +57,8 @@ const Labels = {
   hvac: 'Thermostat Operating State',
   sendNotification: 'Send Push Notification about Battery Warning',
   testNotificationLabel: 'Send Push Notification',
+  sms: 'SMS API Service',
+  smsPassword: 'SMS Password',
 };
 
 export function getLabels() {

@@ -54,4 +54,6 @@ export const RussianLabels = {
   sendNotification: 'Отправлять сообщения о состоянии батареи',
   testNotification: 'Проверить отправку сообщений',
   testNotificationLabel: 'Отправлять Push Уведомления',
+  sms: 'SMS Сервис',
+  smsPassword: 'SMS Пароль',
 };

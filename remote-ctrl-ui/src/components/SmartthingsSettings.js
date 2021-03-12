@@ -83,11 +83,9 @@ export class SmartthingsSettings extends React.Component {
       if (batteryFactory) {
         copyConfig.batteryFactory = batteryFactory;
       }
-      if (sms) {
-        copyConfig.sms.enabled = sms;
-        if (smsPassword) {
-          copyConfig.sms.password = smsPassword;
-        }
+      copyConfig.smartthings.sms.enabled = sms;
+      if (smsPassword) {
+        copyConfig.smartthings.sms.password = smsPassword;
       }
       copyConfig.smartthings.executeUpdate = executeUpdate;
       copyConfig.smartthings.sendNotification = sendNotification;

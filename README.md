@@ -1,5 +1,5 @@
 # Smartthings Remote control for Outlander PHEV
-
+Smartthings application wrapper over phevctl
 [![Node.js CI](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/build.yml/badge.svg)](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/build.yml)
 [![docker](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/docker.yml/badge.svg)](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/docker.yml)
 [![NPM](https://nodei.co/npm/smartthings-phevctl.png)](https://npmjs.org/package/smartthings-phevctl)
@@ -10,7 +10,8 @@
 
 ## Features:
 - switch on/off condition/heater
-- receive warning message from the remote EV.
+- receive warning message from the remote EV and send it in push Notification.
+- send Notification "Pre A/C has stopped. Possible causes of this are as follows: Door is Open. Main battery level is Low. Drive Battery temperature is Low."
 - change mode of air conditioner: heater/cool/windscreen for 10/20/30 mins,
 - show battery level
 - support google home

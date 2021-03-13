@@ -3,6 +3,7 @@ Smartthings application wrapper over phevctl
 [![Node.js CI](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/build.yml/badge.svg)](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/build.yml)
 [![docker](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/docker.yml/badge.svg)](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/docker.yml)
 [![NPM](https://nodei.co/npm/smartthings-phevctl.png)](https://npmjs.org/package/smartthings-phevctl)
+[![donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://secure.wayforpay.com/button/b7a954a7c7177)
 
 ![smartthings.gif](./img/smartthings.gif)
 ![smartthings.gif](./img/smartthings1.gif)
@@ -17,6 +18,7 @@ Smartthings application wrapper over phevctl
 - support google home
 - check if doors are closed
 - Thermostat Operating State
+- Support SMS if use mikrotik LTE
 - possibility to control over voice(by Google assistant)
 
 ## Cloud Installation

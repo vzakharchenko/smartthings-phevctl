@@ -4,4 +4,5 @@ export const CONTENTS = {
   SmartthingsViewDevice: 'SMARTTHINGS_VIEW_DEVICE',
   AddUser: 'ADD_USER',
   ViewUser: 'VIEW_USER',
+  SMS: 'SMS',
 };

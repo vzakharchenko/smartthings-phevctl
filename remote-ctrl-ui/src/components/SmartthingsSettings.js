@@ -28,6 +28,9 @@ export class SmartthingsSettings extends React.Component {
       sms: true,
       smsPassword: '',
       sendNotification: true,
+      sendSMSNotification: false,
+      smsCar: 'any',
+      useSmartthings: false,
       batteryFactory: 1.0,
       isModalVisible: false,
     };
@@ -52,7 +55,10 @@ export class SmartthingsSettings extends React.Component {
         sendNotification,
         smsPassword,
         sms,
+        sendSMSNotification,
         shard,
+        useSmartthings,
+        smsCar,
       } = this.state;
       this.setState({ loading: true });
       const copyConfig = JSON.parse(JSON.stringify(settings.data));
@@ -87,11 +93,20 @@ export class SmartthingsSettings extends React.Component {
       if (smsPassword) {
         copyConfig.smartthings.sms.password = smsPassword;
       }
+      if (smsCar) {
+        copyConfig.smartthings.sms.smsCar = smsCar;
+        copyConfig.smartthings.sms.sendSMSNotification = sendSMSNotification;
+      }
+      copyConfig.smartthings.useSmartthings = useSmartthings;
       copyConfig.smartthings.executeUpdate = executeUpdate;
       copyConfig.smartthings.sendNotification = sendNotification;
       try {
-        let res = await fetchBackend(`/ui/smartthings/check?appId=${smartthingsAppId}&secret=${smartthingsAppSecret}`);
-        let status = JSON.parse(res.data);
+        let res;
+        let status = { status: 'OK' };
+        if (useSmartthings) {
+          res = await fetchBackend(`/ui/smartthings/check?appId=${smartthingsAppId}&secret=${smartthingsAppSecret}`);
+          status = JSON.parse(res.data);
+        }
         if (status.status === 'OK') {
           res = await sendToBackend('/ui/settings', 'POST', copyConfig);
           status = JSON.parse(res.data);
@@ -321,6 +336,23 @@ export class SmartthingsSettings extends React.Component {
                 />
               );
             }
+            if (data.name === 'smsCar') {
+              return (
+                <Select
+                  style={{ width: 200 }}
+                  onChange={(event) => {
+                    this.setState({
+                      smsCar: event,
+                      changed: true,
+                    });
+                  }}
+                  defaultValue={this.state.smsCar || 'any'}
+                >
+                  <Select.Option value="any">{getLabels().any}</Select.Option>
+                  <Select.Option value="2019">{getLabels().phev2019}</Select.Option>
+                </Select>
+              );
+            }
             if (data.name === 'sms') {
               return (
                 <Checkbox
@@ -328,6 +360,30 @@ export class SmartthingsSettings extends React.Component {
                   onChange={(e) => {
                     const newState = { changed: true };
                     newState.sms = e.target.checked;
+                    this.setState(newState);
+                  }}
+                />
+              );
+            }
+            if (data.name === 'sendSMSNotification') {
+              return (
+                <Checkbox
+                  checked={this.state.sendSMSNotification}
+                  onChange={(e) => {
+                    const newState = { changed: true };
+                    newState.sendSMSNotification = e.target.checked;
+                    this.setState(newState);
+                  }}
+                />
+              );
+            }
+            if (data.name === 'useSmartthings') {
+              return (
+                <Checkbox
+                  checked={this.state.useSmartthings}
+                  onChange={(e) => {
+                    const newState = { changed: true };
+                    newState.useSmartthings = e.target.checked;
                     this.setState(newState);
                   }}
                 />
@@ -385,21 +441,27 @@ export class SmartthingsSettings extends React.Component {
         executeUpdate: settings.data.smartthings.executeUpdate,
         sendNotification: settings.data.smartthings.sendNotification,
         sms: settings.data.smartthings.sms.enabled,
+        smsCar: settings.data.smartthings.sms.smsCar || 'any',
         smsPassword: settings.data.smartthings.sms.password,
+        sendSMSNotification: !!settings.data.smartthings.sms.sendSMSNotification,
       });
     }
 
     render() {
       const {
-        settings, changed, loading, error, sms,
+        settings, changed, useSmartthings, loading, error, sms,
       } = this.state;
       if (settings.status === 'OK') {
-        const data = [
-          {
-            name: 'macAddress',
-            value: settings.data.macAddress,
-          },
-          {
+        const data = [{
+          name: 'macAddress',
+          value: settings.data.macAddress,
+        },
+        {
+          name: 'useSmartthings',
+          value: settings.data.smartthings.useSmartthings,
+        }];
+        if (useSmartthings) {
+          data.push({
             name: 'shard',
             value: settings.data.smartthings.shard,
           },
@@ -411,6 +473,13 @@ export class SmartthingsSettings extends React.Component {
             name: 'smartthingsAppSecret',
             value: settings.data.smartthings.appSecret,
           },
+          {
+            name: 'sendNotification',
+            value: settings.data.smartthings.sendNotification,
+          });
+        }
+
+        data.push(
           {
             name: 'keycloakJson',
             value: '',
@@ -424,10 +493,6 @@ export class SmartthingsSettings extends React.Component {
             value: settings.data.smartthings.executeUpdate,
           },
           {
-            name: 'sendNotification',
-            value: settings.data.smartthings.sendNotification,
-          },
-          {
             name: 'language',
             value: settings.data.language,
           },
@@ -439,11 +504,19 @@ export class SmartthingsSettings extends React.Component {
             name: 'sms',
             value: settings.data.smartthings.sms.enabled,
           },
-        ];
+        );
         if (sms) {
           data.push({
             name: 'smsPassword',
             value: settings.data.smartthings.sms.password,
+          });
+          data.push({
+            name: 'smsCar',
+            value: settings.data.smartthings.sms.smsCar,
+          });
+          data.push({
+            name: 'sendSMSNotification',
+            value: settings.data.smartthings.sms.sendSMSNotification,
           });
         }
         return (

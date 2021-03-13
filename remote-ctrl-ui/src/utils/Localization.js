@@ -59,6 +59,11 @@ const Labels = {
   testNotificationLabel: 'Send Push Notification',
   sms: 'SMS API Service',
   smsPassword: 'SMS Password',
+  phone: 'Authorized mobile phone from which SMS can be sent',
+  mikrotikScript: 'Mikrotik Script',
+  mikrotikScheduler: 'Mikrotik Scheduler',
+  smsCommands: 'List of SMS Commands',
+  smsCar: 'Model Year for SMS',
 };
 
 export function getLabels() {

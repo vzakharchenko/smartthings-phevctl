@@ -5,6 +5,7 @@ import { SmartthingsViewDevice } from './SmartthingsViewDevice';
 import { AddUser } from './AddUser';
 import { ViewUser } from './ViewUser';
 import { CONTENTS } from './Constants';
+import { SmartthingsSMS } from './SmartthingsSMS';
 
 export class RemoteCtrlContentHandler extends React.Component {
   render() {
@@ -21,6 +22,8 @@ export class RemoteCtrlContentHandler extends React.Component {
       return <AddUser reload={reload} />;
     } if (contentPage === CONTENTS.ViewUser) {
       return <ViewUser reload={reload} userId={id} />;
+    } if (contentPage === CONTENTS.SMS) {
+      return <SmartthingsSMS />;
     }
     return null;
   }

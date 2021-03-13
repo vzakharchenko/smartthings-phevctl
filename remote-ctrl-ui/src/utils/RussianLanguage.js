@@ -56,4 +56,9 @@ export const RussianLabels = {
   testNotificationLabel: 'Отправлять Push Уведомления',
   sms: 'SMS Сервис',
   smsPassword: 'SMS Пароль',
+  phone: 'Номер мобильного телефона с которого можно слать СМС',
+  mikrotikScript: 'Mikrotik Script',
+  mikrotikScheduler: 'Mikrotik Scheduler',
+  smsCommands: 'Список поддержуемых SMS операций',
+  smsCar: 'Год Выпуска PHEV в SMS',
 };

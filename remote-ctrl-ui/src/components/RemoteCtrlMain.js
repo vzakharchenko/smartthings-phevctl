@@ -2,7 +2,9 @@ import * as React from 'react';
 import Sider from 'antd/lib/layout/Sider';
 import { Menu, Spin } from 'antd';
 import Layout, { Footer, Header } from 'antd/lib/layout/layout';
-import { AppstoreAddOutlined, DesktopOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  AppstoreAddOutlined, DesktopOutlined, MessageOutlined, UserOutlined,
+} from '@ant-design/icons';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import Title from 'antd/es/typography/Title';
 import { RemoteCtrlContentHandler } from './RemoteCtrlContentHandler';
@@ -55,6 +57,10 @@ export class RemoteCtrlMain extends React.Component {
       this.setState({ selectorPage: CONTENTS.SmartthingsSettings });
     };
 
+    onSMSClick = () => {
+      this.setState({ selectorPage: CONTENTS.SMS });
+    };
+
     onSmartThingsAddDeviceClick = () => {
       this.setState({ selectorPage: CONTENTS.SmartthingsAddDevice });
     };
@@ -98,7 +104,7 @@ export class RemoteCtrlMain extends React.Component {
               >
                 {getLabels().settings}
               </Menu.Item>
-              <SubMenu key="devices" icon={<AppstoreAddOutlined />} title={getLabels().devices} disabled={!(settings && settings.data.smartthings.appId && settings.data.smartthings.appSecret)}>
+              <SubMenu key="devices" icon={<AppstoreAddOutlined />} title={getLabels().devices} disabled={!(settings && settings.data.smartthings.useSmartthings && settings.data.smartthings.appId && settings.data.smartthings.appSecret)}>
                 {(settings && settings.data.smartthings.devices)
                   ? settings.data.smartthings.devices.map((device) => (
                     <Menu.Item
@@ -145,6 +151,18 @@ export class RemoteCtrlMain extends React.Component {
                             </SubMenu>
                           ) : null
 }
+              {
+                    settings && settings.data.smartthings.sms.enabled
+                      ? (
+                        <Menu.Item
+                          key="subSMS"
+                          icon={<MessageOutlined />}
+                          onClick={this.onSMSClick}
+                        >
+                          {getLabels().sms}
+                        </Menu.Item>
+                      ) : null
+                }
             </Menu>
           </Sider>
           <Layout className="site-layout">

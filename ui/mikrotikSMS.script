@@ -1,0 +1,43 @@
+:local phone "PHONE_NUMBER"
+:local applicationHost "CURRENT_HOST"
+:local applicationId "APP_ID"
+:local applicationSecret "APP_SECRET"
+
+foreach i in=[/tool sms inbox find where phone=$phone] do={
+    :local messageText [/tool sms inbox get number=$i message]
+    /tool sms inbox remove number=$i
+    :local encodedMessage
+    :for i from=0 to=([:len $messageText ] - 1) do={
+        :local char [:pick $messageText $i]
+        :if ($char = " ") do={
+           :set $char "%20"
+        }
+        :if ($char = "-") do={
+           :set $char "%2D"
+        }
+        :set encodedMessage ($encodedMessage . $char)
+    }
+    :local appUrl "$applicationHost/$applicationId/$applicationSecret/sms\?command=$encodedMessage"
+ 	/tool fetch url=$appUrl dst-path="sms.txt"
+ 	:local response [/file get "sms.txt" contents]
+ 	/file remove sms.txt;
+ 	:if ([:len $response] >0) do={
+       /tool sms send lte1 $phone message $response
+    }
+}
+
+:local appUrl1 "$applicationHost/$applicationId/$applicationSecret/message1"
+/tool fetch url=$appUrl1 dst-path="message1.txt"
+:local message1 [/file get "message1.txt" contents]
+/file remove message1.txt;
+:if ([:len $message1] >0) do={
+   /tool sms send lte1 $phone message $message1
+}
+
+:local appUrl2 "$applicationHost/$applicationId/$applicationSecret/message2"
+/tool fetch url=$appUrl2 dst-path="message2.txt"
+:local message2 [/file get "message2.txt" contents]
+/file remove message2.txt;
+:if ([:len $message2] >0) do={
+   /tool sms send lte1 $phone message $message2
+}

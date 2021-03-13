@@ -2,6 +2,8 @@ const express = require('express');
 
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { supportedSMSCommands } = require('./lib/SMSBackend');
+const { startSMSApplication } = require('./lib/SMSBackend');
 const { testNotification } = require('./lib/settingManager');
 const { logger } = require('./lib/logger');
 const { testDevice } = require('./lib/settingManager');
@@ -58,6 +60,7 @@ appUI.post('/ui/settings', protect(), cors(corsOptions), (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   saveSetting(req, res);
   startApplication();
+  startSMSApplication();
 });
 
 appUI.post('/ui/settings/deleteUser', protect(), cors(corsOptions), (req, res) => {
@@ -95,7 +98,14 @@ appUI.get('/ui/settings/syncDevices', protect(), cors(corsOptions), async (req, 
   await syncDevice(req, res);
 });
 
+appUI.get('/ui/sms/help', protect(), cors(corsOptions), async (req, res) => {
+  const rc = readConfig();
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify(supportedSMSCommands.map((command) => `phev ${rc.smartthings.sms.password} ${command}`)));
+});
+
 startApplication();
+startSMSApplication();
 appUI.listen(uiPort, () => {
   logger.info(`HTTP smartthings phevctl UI listening on port ${uiPort}`);
   installCrons();

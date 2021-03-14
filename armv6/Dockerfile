@@ -9,7 +9,7 @@ RUN update-ca-certificates --fresh
 RUN apt-get install -y lsb-release
 COPY nodeinstall.sh /opt/nodeinstall.sh
 RUN chmod +x /opt/nodeinstall.sh
-RUN cd /opt/nodeinstall.sh
+RUN /opt/nodeinstall.sh
 RUN npm i pm2 -g
 RUN apt-get -y update && apt-get upgrade -y && apt-get -y install build-essential cmake git
 # install phevctl

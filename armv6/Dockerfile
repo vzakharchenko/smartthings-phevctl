@@ -6,10 +6,9 @@ LABEL name="smartthings-phevctl"
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y curl gnupg2 ca-certificates
 RUN update-ca-certificates --fresh
-RUN apt-get install -y lsb-release sudo
+RUN apt-get install -y lsb-release sudo wget
 RUN usermod -a -G sudo `whoami`
 COPY nodeinstall.sh /opt/nodeinstall.sh
-RUN apt-get purge -y sudo
 RUN chmod +x /opt/nodeinstall.sh
 RUN /opt/nodeinstall.sh
 RUN npm i pm2 -g

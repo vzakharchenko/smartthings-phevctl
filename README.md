@@ -37,6 +37,12 @@ Smartthings application wrapper over phevctl
 7. [Add Smartthings devices](https://github.com/vzakharchenko/smartthings-phevctl#add-a-new-smartthings-device)
 
 ## Server Docker Installation
+- Install docker
+```
+sudo su
+curl -sSL https://get.docker.com | bash
+usermod -aG docker $USER
+```
 - Supported Architectures: amd64,x86-64,arm64,ppc64le,arm/v7
 ```
 docker -d run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 -p 8098:8098 --restart=always vassio/smartthings-phevctl

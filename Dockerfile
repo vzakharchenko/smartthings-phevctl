@@ -8,7 +8,7 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN apt-get update && apt-get install -y curl gnupg2 ca-certificates
 RUN update-ca-certificates --fresh
 RUN apt-get install -y lsb-release
-RUN apt-get update && apt-get install -y python3-distutils
+RUN apt-get update && apt-get install -y python3-distutils libatomic1
 
 ENV NVM_DIR /usr/local/nvm
 ENV NODE_VERSION 14.16.0

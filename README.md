@@ -2,6 +2,7 @@
 Smartthings application wrapper over phevctl
 [![Node.js CI](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/build.yml/badge.svg)](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/build.yml)
 [![docker](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/docker.yml/badge.svg)](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/docker.yml)
+[![docker-armv6](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/docker_armv6.yml/badge.svg)](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/docker_armv6.yml)
 [![NPM](https://nodei.co/npm/smartthings-phevctl.png)](https://npmjs.org/package/smartthings-phevctl)
 [![donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://secure.wayforpay.com/button/b7a954a7c7177)
 

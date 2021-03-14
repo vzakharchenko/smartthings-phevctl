@@ -7,10 +7,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apk update
 RUN apk add curl
 RUN apk add ca-certificates
-RUN apk add --virtual build-dependencies
-RUN build-base
-RUN gcc
-RUN wget
+RUN apk add --virtual build-dependencies  build-base  gcc  wget
 RUN apk add cmake
 RUN apk add git
 

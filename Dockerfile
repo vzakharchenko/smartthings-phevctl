@@ -4,10 +4,23 @@ LABEL author="Vasyl Zakharchenko"
 LABEL email="vaszakharchenko@gmail.com"
 LABEL name="smartthings-phevctl"
 ENV DEBIAN_FRONTEND noninteractive
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN apt-get update && apt-get install -y curl gnupg2 ca-certificates
 RUN update-ca-certificates --fresh
 RUN apt-get install -y lsb-release
-RUN apt-get update && apt-get install -y nodejs npm
+RUN apt-get update && apt-get install -y python3-distutils
+
+ENV NVM_DIR /usr/local/nvm
+ENV NODE_VERSION 14.16.0
+RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
+
+# install node and npm
+RUN source $NVM_DIR/nvm.sh \
+    && nvm install  $NODE_VERSION \
+    && nvm alias default  $NODE_VERSION \
+    && nvm use default
+ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
+ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 RUN npm i pm2 -g
 RUN apt-get -y update && apt-get upgrade -y && apt-get -y install build-essential cmake git
 # install phevctl

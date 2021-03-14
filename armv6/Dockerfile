@@ -6,7 +6,7 @@ LABEL name="smartthings-phevctl"
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y curl gnupg2 ca-certificates
 RUN update-ca-certificates --fresh
-RUN apt-get install -y lsb-release 
+RUN apt-get install -y lsb-release
 RUN npm i pm2 -g
 RUN apt-get -y update && apt-get upgrade -y && apt-get -y install build-essential cmake git
 # install phevctl

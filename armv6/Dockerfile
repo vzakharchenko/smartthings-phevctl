@@ -8,6 +8,8 @@ RUN apk update
 RUN apk add curl
 RUN apk add ca-certificates
 RUN apk add --virtual build-dependencies  build-base  gcc  wget
+RUN apk add build-base python-dev py-pip jpeg-dev zlib-dev
+ENV LIBRARY_PATH=/lib:/usr/lib
 RUN apk add cmake
 RUN apk add git
 

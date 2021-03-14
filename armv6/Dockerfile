@@ -6,7 +6,6 @@ LABEL name="smartthings-phevctl"
 ENV DEBIAN_FRONTEND noninteractive
 RUN apk update
 RUN apk add curl
-RUN apk add gnupg2
 RUN apk add ca-certificates
 RUN apk add build-essential
 RUN apk add cmake

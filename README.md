@@ -53,16 +53,54 @@ echo "{}">/opt/remote-ctrl-gsm.json
 docker -d run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 -p 8098:8098 -v /opt/config/remote-ctrl-gsm.json:/opt/remote-ctrl-gsm.json --restart=always vassio/smartthings-phevctl
 ```
 
+# Raspberry Pi Zero installation
+1. Download [Raspberry Pi OS Lite](https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-32-bit)
+2. write the Raspberry Pi OS image to the SD card using [balenaEtcher](https://www.balena.io/etcher/) or analog
+3. [write empty "ssh" and wpa_supplicant.conf files on sdcard (boot) ](https://desertbot.io/blog/headless-pi-zero-w-wifi-setup-windows)
+4. install phevctl, node and smartthings-phevctl
+```
+sudo su
+apt-get upgrade -y && apt-get -y install build-essential cmake git
+mkdir /opt/phevctl
+cd /opt/phevctl && git clone https://github.com/papawattu/msg-core
+cd /opt/phevctl &&  git clone https://github.com/vzakharchenko/phevcore.git
+cd /opt/phevctl && git clone https://github.com/DaveGamble/cJSON.git
+cd /opt/phevctl && git clone https://github.com/vzakharchenko/phevctl
+cd /opt/phevctl/cJSON && mkdir build && cd build && cmake .. && make && make install
+cd /opt/phevctl/msg-core && mkdir build && cd build && cmake .. && make && make install
+cd /opt/phevctl/phevcore && mkdir build && cd build && cmake .. && make && make install
+cd /opt/phevctl/phevctl && mkdir -p build && cd build && cmake .. && make
+rm -f /usr/bin/phevctl
+ln -sf /opt/phevctl/phevctl/build/phevctl /usr/bin/phevctl
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+nvm install node 10.10.0
+npm i pm2 -g
+env PATH=$PATH:/usr/bin pm2 startup systemd -u root --hp ${HOME}
+pm2 startup -u root
+npm i smartthings-phevctl -g
+pm2 start `npm root -g`/smartthings-phevctl/smartthings-phevctl.js
+pm2 save
+```
+
 ## Server Manual Installation
 ```
-sudo touch /bin/phevctl
-sudo echo "docker run vassio/phevctl $*">/bin/phevctl
-sudo chmod +x /bin/phevctl
+sudo su
+apt-get upgrade -y && apt-get -y install build-essential cmake git
+mkdir /opt/phevctl
+cd /opt/phevctl && git clone https://github.com/papawattu/msg-core
+cd /opt/phevctl &&  git clone https://github.com/vzakharchenko/phevcore.git
+cd /opt/phevctl && git clone https://github.com/DaveGamble/cJSON.git
+cd /opt/phevctl && git clone https://github.com/vzakharchenko/phevctl
+cd /opt/phevctl/cJSON && mkdir build && cd build && cmake .. && make && make install
+cd /opt/phevctl/msg-core && mkdir build && cd build && cmake .. && make && make install
+cd /opt/phevctl/phevcore && mkdir build && cd build && cmake .. && make && make install
+cd /opt/phevctl/phevctl && mkdir -p build && cd build && cmake .. && make
+rm -f /usr/bin/phevctl
 wget -qO- https://getpm2.com/install.sh | bash
-sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u ${currentUser} --hp ${HOME}
-sudo npm i smartthings-phevctl -g
-sudo pm2 start `npm root -g`/smartthings-phevctl/smartthings-phevctl.js
-sudo pm2 save
+env PATH=$PATH:/usr/bin pm2 startup systemd -u ${currentUser} --hp ${HOME}
+npm i smartthings-phevctl -g
+pm2 start `npm root -g`/smartthings-phevctl/smartthings-phevctl.js
+pm2 save
 ```
 
 

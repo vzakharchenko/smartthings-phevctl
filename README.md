@@ -41,9 +41,20 @@ Smartthings application wrapper over phevctl
 ```
 docker run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 -p 8098:8098 vassio/smartthings-phevctl
 ```
+or
+```
+echo "{}">/opt/remote-ctrl-gsm.json
+docker run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 -p 8098:8098 -v /opt/config/remote-ctrl-gsm.json:/opt/remote-ctrl-gsm.json vassio/smartthings-phevctl
+```
+
 - Raspberry Pi Zero: arm/v6
 ```
 docker run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 -p 8098:8098 vassio/smartthings-phevctl@latest-armv6
+```
+or
+```
+echo "{}">/opt/remote-ctrl-gsm.json
+docker run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 -p 8098:8098 -v /opt/config/remote-ctrl-gsm.json:/opt/remote-ctrl-gsm.json vassio/smartthings-phevctl@latest-armv6
 ```
 
 ## Server Manual Installation

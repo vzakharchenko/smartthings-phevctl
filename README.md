@@ -2,7 +2,6 @@
 Smartthings application wrapper over phevctl
 - [![Node.js CI](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/build.yml/badge.svg)](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/build.yml)
 - [![docker](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/docker.yml/badge.svg)](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/docker.yml)
-- [![docker-armv6](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/docker_armv6.yml/badge.svg)](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/docker_armv6.yml)
 - [![NPM](https://nodei.co/npm/smartthings-phevctl.png)](https://npmjs.org/package/smartthings-phevctl)
 - [![donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://secure.wayforpay.com/button/b7a954a7c7177)
 
@@ -39,22 +38,26 @@ Smartthings application wrapper over phevctl
 ## Server Docker Installation
 - Supported Architectures: amd64,x86-64,arm64,ppc64le,arm/v7
 ```
-docker run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 -p 8098:8098 vassio/smartthings-phevctl
+docker -d run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 -p 8098:8098 vassio/smartthings-phevctl
 ```
 or
 ```
 echo "{}">/opt/remote-ctrl-gsm.json
-docker run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 -p 8098:8098 -v /opt/config/remote-ctrl-gsm.json:/opt/remote-ctrl-gsm.json vassio/smartthings-phevctl
+docker -d run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 -p 8098:8098 -v /opt/config/remote-ctrl-gsm.json:/opt/remote-ctrl-gsm.json vassio/smartthings-phevctl
 ```
 
-- Raspberry Pi Zero: arm/v6
+# Raspberry Pi Zero installation
 ```
-docker run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 -p 8098:8098 vassio/smartthings-phevctl@latest-armv6
-```
-or
-```
-echo "{}">/opt/remote-ctrl-gsm.json
-docker run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 -p 8098:8098 -v /opt/config/remote-ctrl-gsm.json:/opt/remote-ctrl-gsm.json vassio/smartthings-phevctl@latest-armv6
+export NODE_VER=15.6.0
+wget -O - https://raw.githubusercontent.com/sdesalas/node-pi-zero/master/install-node-v${NODE_VER}.sh | bash
+sudo touch /bin/phevctl
+sudo echo "docker run vassio/phevctl $*">/bin/phevctl
+sudo chmod +x /bin/phevctl
+npm i pm2 -g
+sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u ${currentUser} --hp ${HOME}
+sudo npm i smartthings-phevctl -g
+sudo pm2 start `npm root -g`/smartthings-phevctl/smartthings-phevctl.js
+sudo pm2 save
 ```
 
 ## Server Manual Installation

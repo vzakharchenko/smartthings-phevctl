@@ -4,11 +4,16 @@ LABEL author="Vasyl Zakharchenko"
 LABEL email="vaszakharchenko@gmail.com"
 LABEL name="smartthings-phevctl"
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get install -y curl gnupg2 ca-certificates
+RUN apk update
+RUN apk add curl
+RUN apk add gnupg2
+RUN apk add ca-certificates
+RUN apk add build-essential
+RUN apk add cmake
+RUN apk add git
+
 RUN update-ca-certificates --fresh
-RUN apt-get install -y lsb-release
 RUN npm i pm2 -g
-RUN apt-get -y update && apt-get upgrade -y && apt-get -y install build-essential cmake git
 # install phevctl
 RUN mkdir /opt/phevctl
 RUN cd /opt/phevctl && git clone https://github.com/papawattu/msg-core

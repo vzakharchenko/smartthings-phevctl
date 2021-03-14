@@ -1,4 +1,4 @@
-name: docker
+name: docker-armv6
 
 on:
   push:

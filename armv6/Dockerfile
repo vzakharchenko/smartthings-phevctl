@@ -1,4 +1,4 @@
-FROM arm32v6/node
+FROM arm32v6/node:15.11-alpine3.13
 MAINTAINER Vasyl Zakharchenko <vaszakharchenko@gmail.com>
 LABEL author="Vasyl Zakharchenko"
 LABEL email="vaszakharchenko@gmail.com"

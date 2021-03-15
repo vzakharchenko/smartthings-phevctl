@@ -57,9 +57,6 @@ def installed() {
 
 def markDeviceOnline() {
     debug("switchStatus: ${device.currentValue('switch')};")
-    if (device.currentValue('switch') == "offline") {
-        apiGet("info", null);
-    }
     setDeviceHealth("online")
 }
 

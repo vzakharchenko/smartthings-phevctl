@@ -17,11 +17,14 @@ metadata {
         capability "Battery"
         capability "Power Source"
         capability "Configuration"
+        capability "Health Check"
         command "update"
         command "update2"
         command "forceOn"
         command "forceOff"
         command "updateall"
+        command "markDeviceOnline"
+        command "markDeviceOffline"
     }
 
     tiles {
@@ -56,4 +59,21 @@ def forceOff() {
 
 def updateall(value, value2) {
 
+}
+
+def markDeviceOnline() {
+    debug("switchStatus: ${device.currentValue('switch')};")
+    setDeviceHealth("online")
+}
+
+def markDeviceOffline() {
+    sendEvent(name: "battery", value: "offline", descriptionText: "The device is offline")
+    setDeviceHealth("offline")
+}
+
+private setDeviceHealth(String healthState) {
+    List validHealthStates = ["online", "offline"]
+    healthState = validHealthStates.contains(healthState) ? healthState : device.currentValue("healthStatus")
+    sendEvent(name: "DeviceWatch-DeviceStatus", value: healthState)
+    sendEvent(name: "healthStatus", value: healthState)
 }

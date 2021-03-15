@@ -33,5 +33,5 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/ppc64le,linux/arm/v7
           push: true
           tags: |
-            vassio/smartthings-phevctl:1.3.5
+            vassio/smartthings-phevctl:1.3.6
             vassio/smartthings-phevctl:latest

@@ -1,4 +1,4 @@
-# Smartthings Remote control for Outlander PHEV
+# Smartthings and SMS Remote control for Outlander PHEV
 Smartthings application wrapper over phevctl
 - [![Node.js CI](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/build.yml/badge.svg)](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/build.yml)
 - [![docker](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/docker.yml/badge.svg)](https://github.com/vzakharchenko/smartthings-phevctl/actions/workflows/docker.yml)
@@ -11,6 +11,8 @@ Smartthings application wrapper over phevctl
 ![Charger.png](./img/Charger.png)![doorLock.png](./img/doorLock.png)![](./img/message1.png)
 
 ## Features:
+- [can work over sms without smartthings](https://github.com/vzakharchenko/smartthings-phevctl/wiki/SMSServiceWithoutSmartthings)
+- [receive PHEV errors over SMS ](https://github.com/vzakharchenko/smartthings-phevctl/wiki/supportedSMSErrorCodes)
 - switch on/off condition/heater
 - receive warning message from the remote EV and send it in push Notification.
 - send Notification "Pre A/C has stopped. Possible causes of this are as follows: Door is Open. Main battery level is Low. Drive Battery temperature is Low."
@@ -20,12 +22,15 @@ Smartthings application wrapper over phevctl
 - check if doors are closed
 - Thermostat Operating State
 - Support SMS if use mikrotik LTE
+- [SMS commands](https://github.com/vzakharchenko/smartthings-phevctl/wiki/supportedSMSCommands)
 - possibility to control over voice(by Google assistant)
 
 ## Cloud Installation
 - [cloud installation](https://github.com/vzakharchenko/remote-ctrl-gsm/blob/master/cloud/README.md)
 - [hetzner cloud](https://github.com/vzakharchenko/remote-ctrl-gsm/wiki/gsm-extender-hetzner-cloud)
 - [scaleway cloud](https://github.com/vzakharchenko/remote-ctrl-gsm/wiki/gsm-extender-scaleway-cloud)
+## Without cloud installation
+- [control over SMS](https://github.com/vzakharchenko/smartthings-phevctl/wiki/SMSServiceWithoutSmartthings)
 
 ## Installation Steps
 1. [Install Server using Docker](https://github.com/vzakharchenko/smartthings-phevctl#server-docker-installation) or  [Manual Installation](https://github.com/vzakharchenko/smartthings-phevctl#server-manual-installation)

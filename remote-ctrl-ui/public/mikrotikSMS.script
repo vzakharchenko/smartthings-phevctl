@@ -18,26 +18,29 @@ foreach i in=[/tool sms inbox find where phone=$phone] do={
         :set encodedMessage ($encodedMessage . $char)
     }
     :local appUrl "$applicationHost/$applicationId/$applicationSecret/sms\?command=$encodedMessage"
- 	/tool fetch url=$appUrl dst-path="sms.txt"
- 	:local response [/file get "sms.txt" contents]
- 	/file remove sms.txt;
- 	:if ([:len $response] >0) do={
-       /tool sms send lte1 $phone message $response
-    }
+ 	:local result [/tool fetch output=user url="$appUrl" as-value ];
+ 	:if ($result->"status" = "finished") do={
+ 	  :if ( $result->"data" !="" ) do={
+ 	     /log info "SMS Service response: $[($result->"data")]"
+         /tool sms send lte1 $phone message "$[($result->"data")]"
+ 	  }
+ 	}
 }
 
 :local appUrl1 "$applicationHost/$applicationId/$applicationSecret/message1"
-/tool fetch url=$appUrl1 dst-path="message1.txt"
-:local message1 [/file get "message1.txt" contents]
-/file remove message1.txt;
-:if ([:len $message1] >0) do={
-   /tool sms send lte1 $phone message $message1
+:local result1 [/tool fetch output=user url=$appUrl1 as-value];
+:if ($result1->"status" = "finished") do={
+  :if ($result1->"data" != "" ) do={
+     /log error "SMS Service error: $[($result1->"data")]"
+     /tool sms send lte1 $phone message "$[($result1->"data")]"
+  }
 }
 
 :local appUrl2 "$applicationHost/$applicationId/$applicationSecret/message2"
-/tool fetch url=$appUrl2 dst-path="message2.txt"
-:local message2 [/file get "message2.txt" contents]
-/file remove message2.txt;
-:if ([:len $message2] >0) do={
-   /tool sms send lte1 $phone message $message2
+:local result2 [/tool fetch url=$appUrl2 as-value output=user];
+:if ($result2->"status" = "finished") do={
+  :if ($result2->"data" != "" ) do={
+     /log error "SMS Service error: $[($result2->"data")]"
+     /tool sms send lte1 $phone message "$[($result2->"data")]"
+  }
 }

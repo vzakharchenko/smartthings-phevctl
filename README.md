@@ -60,7 +60,7 @@ docker -d run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 -p 8098:8098
 4. install phevctl, node and smartthings-phevctl
 ```
 sudo su
-apt-get upgrade -y && apt-get -y install build-essential cmake git
+apt-get upgrade -y && apt-get -y install build-essential cmake git python3-distutils
 mkdir /opt/phevctl
 cd /opt/phevctl && git clone https://github.com/papawattu/msg-core
 cd /opt/phevctl &&  git clone https://github.com/vzakharchenko/phevcore.git
@@ -73,7 +73,9 @@ cd /opt/phevctl/phevctl && mkdir -p build && cd build && cmake .. && make
 rm -f /usr/bin/phevctl
 ln -sf /opt/phevctl/phevctl/build/phevctl /usr/bin/phevctl
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
-nvm install node 10.10.0
+source ~/.bashrc
+nvm install --lts
+# You can go drink coffee)
 npm i pm2 -g
 env PATH=$PATH:/usr/bin pm2 startup systemd -u root --hp ${HOME}
 pm2 startup -u root

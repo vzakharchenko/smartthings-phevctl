@@ -6,6 +6,7 @@ import { AddUser } from './AddUser';
 import { ViewUser } from './ViewUser';
 import { CONTENTS } from './Constants';
 import { SmartthingsSMS } from './SmartthingsSMS';
+import { CronSettings } from './CronSettings';
 
 export class RemoteCtrlContentHandler extends React.Component {
   render() {
@@ -24,6 +25,8 @@ export class RemoteCtrlContentHandler extends React.Component {
       return <ViewUser reload={reload} userId={id} />;
     } if (contentPage === CONTENTS.SMS) {
       return <SmartthingsSMS />;
+    } if (contentPage === CONTENTS.CRON) {
+      return <CronSettings />;
     }
     return null;
   }

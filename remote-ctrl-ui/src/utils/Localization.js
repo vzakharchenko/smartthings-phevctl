@@ -66,6 +66,10 @@ const Labels = {
   smsCar: 'Model Year for SMS',
   useSmartthings: 'Use Smartthings',
   smsCodes: 'SMS Error Codes',
+  cron: 'Cron Jobs',
+  sendSMSNotification: 'Send notification over SMS',
+  updateDevices: 'Update Devices Job',
+  syncDevices: 'sync Devices between local and Smartthings Job',
 };
 
 export function getLabels() {

@@ -64,6 +64,8 @@ const Labels = {
   mikrotikScheduler: 'Mikrotik Scheduler',
   smsCommands: 'List of SMS Commands',
   smsCar: 'Model Year for SMS',
+  useSmartthings: 'Use Smartthings',
+  smsCodes: 'SMS Error Codes',
 };
 
 export function getLabels() {

@@ -13,6 +13,7 @@ export class SmartthingsSMS extends React.Component {
       settings: null,
       mikrotikSMS: null,
       smsCommands: null,
+      smsCodes: null,
       phone: '',
     };
 
@@ -60,16 +61,42 @@ export class SmartthingsSMS extends React.Component {
             if (data.name === 'applicationSecret') {
               return this.state.settings.data.smartthings.sms.secret;
             }
+            if (data.name === 'smsCodes') {
+              return (
+                <Table
+                  columns={[
+                    {
+                      title: 'Code',
+                      dataIndex: 'name',
+                      key: 'name',
+                    }, {
+                      title: 'Description',
+                      dataIndex: 'value',
+                      key: 'value',
+                    }]}
+                  dataSource={
+                         Object.keys(this.state.smsCodes).map((code) => ({
+                           name: code,
+                           value: this.state.smsCodes[code],
+                         }))
+                       }
+                />
+              );
+            }
             if (data.name === 'smsCommands') {
               return (
-                <dev>
-                  {this.state.smsCommands.map((command) => (
-                    <div>
-                      <paragraph>{command}</paragraph>
-                      <br />
-                    </div>
-                  ))}
-                </dev>
+                <Table
+                  columns={[{
+                    title: 'Command',
+                    dataIndex: 'name',
+                    key: 'name',
+                  }]}
+                  dataSource={
+                  this.state.smsCommands.map((command) => ({
+                    name: command,
+                  }))
+                }
+                />
               );
             }
             if (data.name === 'mikrotikScript') {
@@ -116,19 +143,23 @@ export class SmartthingsSMS extends React.Component {
       let settings = null;
       let mikrotikSMS = null;
       let smsCommands = null;
+      let smsCodes = null;
       try {
         const { data } = await fetchBackend('/ui/settings');
         settings = JSON.parse(data);
         const resp = await fetchBackend('/mikrotikSMS.script');
         const respHelp = await fetchBackend('/ui/sms/help');
+        const respCodes = await fetchBackend('/ui/sms/codes');
         mikrotikSMS = resp.data;
         smsCommands = JSON.parse(respHelp.data);
+        smsCodes = JSON.parse(respCodes.data);
       } finally {
         this.setState({
           // eslint-disable-next-line react/no-unused-state
           settings,
           mikrotikSMS,
           smsCommands,
+          smsCodes,
           loadingPage: false,
         });
       }
@@ -163,12 +194,16 @@ export class SmartthingsSMS extends React.Component {
         data.push({
           name: 'mikrotikScript',
           value: 'mikrotikScript',
-        },
-        {
-          name: 'smsCommands',
-          value: 'smsCommands',
         });
       }
+      data.push({
+        name: 'smsCommands',
+        value: 'smsCommands',
+      });
+      data.push({
+        name: 'smsCodes',
+        value: 'smsCodes',
+      });
       return loadingPage ? <spin /> : (
         <div>
           <Table columns={this.getColumns()} dataSource={data} />

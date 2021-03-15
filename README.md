@@ -178,6 +178,3 @@ restart Application
 ![](./img/message3.png)
 ![](./img/message1.png)
 ![](./img/message2.png)
-
-
-

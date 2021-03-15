@@ -443,6 +443,7 @@ export class SmartthingsSettings extends React.Component {
         sms: settings.data.smartthings.sms.enabled,
         smsCar: settings.data.smartthings.sms.smsCar || 'any',
         smsPassword: settings.data.smartthings.sms.password,
+        useSmartthings: settings.data.smartthings.useSmartthings,
         sendSMSNotification: !!settings.data.smartthings.sms.sendSMSNotification,
       });
     }

@@ -1,6 +1,7 @@
 const express = require('express');
 
 const cors = require('cors');
+
 const bodyParser = require('body-parser');
 const { supportedSMSCommands } = require('./lib/SMSBackend');
 const { startSMSApplication } = require('./lib/SMSBackend');
@@ -14,6 +15,7 @@ const { addDevice } = require('./lib/settingManager');
 const { saveKeycloakJson } = require('./lib/smartthingsManager');
 const { checkSmartthings } = require('./lib/smartthingsManager');
 const { startApplication } = require('./lib/ServiceBackend');
+const { getLabels } = require('./lib/Localization');
 const {
   getSettings, saveSetting, deleteUser, deleteDevice,
 } = require('./lib/settingManager');
@@ -102,6 +104,20 @@ appUI.get('/ui/sms/help', protect(), cors(corsOptions), async (req, res) => {
   const rc = readConfig();
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify(supportedSMSCommands.map((command) => `phev ${rc.smartthings.sms.password} ${command}`)));
+});
+
+appUI.get('/ui/sms/codes', protect(), cors(corsOptions), async (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({
+    topbattwarminginfo_plugin_1: getLabels().topbattwarminginfo_plugin_1,
+    topbattwarminginfo_plugin_2: getLabels().topbattwarminginfo_plugin_1,
+    topbattwarminginfo_warm_1: getLabels().topbattwarminginfo_warm_1,
+    topbattwarminginfo_warm_2: getLabels().topbattwarminginfo_warm_2,
+    topbattwarminginfo_stop_1: getLabels().topbattwarminginfo_stop_1,
+    topbattwarminginfo_stop_2: getLabels().topbattwarminginfo_stop_2,
+    topbattwarminginfo: getLabels().topbattwarminginfo,
+    errACinfo: getLabels().errACinfo,
+  }));
 });
 
 startApplication();

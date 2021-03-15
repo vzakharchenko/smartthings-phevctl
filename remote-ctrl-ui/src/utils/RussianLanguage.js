@@ -61,4 +61,6 @@ export const RussianLabels = {
   mikrotikScheduler: 'Mikrotik Scheduler',
   smsCommands: 'Список поддержуемых SMS операций',
   smsCar: 'Год Выпуска PHEV в SMS',
+  useSmartthings: 'Использовать Smartthings',
+  smsCodes: 'SMS Коды Ошибок',
 };

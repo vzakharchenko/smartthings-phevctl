@@ -3,7 +3,7 @@ import Sider from 'antd/lib/layout/Sider';
 import { Menu, Spin } from 'antd';
 import Layout, { Footer, Header } from 'antd/lib/layout/layout';
 import {
-  AppstoreAddOutlined, DesktopOutlined, MessageOutlined, UserOutlined,
+  AppstoreAddOutlined, DesktopOutlined, MessageOutlined, ScheduleOutlined, UserOutlined,
 } from '@ant-design/icons';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import Title from 'antd/es/typography/Title';
@@ -59,6 +59,10 @@ export class RemoteCtrlMain extends React.Component {
 
     onSMSClick = () => {
       this.setState({ selectorPage: CONTENTS.SMS });
+    };
+
+    onCRONClick = () => {
+      this.setState({ selectorPage: CONTENTS.CRON });
     };
 
     onSmartThingsAddDeviceClick = () => {
@@ -163,6 +167,13 @@ export class RemoteCtrlMain extends React.Component {
                         </Menu.Item>
                       ) : null
                 }
+              <Menu.Item
+                key="subCron"
+                icon={<ScheduleOutlined />}
+                onClick={this.onCRONClick}
+              >
+                {getLabels().cron}
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout className="site-layout">

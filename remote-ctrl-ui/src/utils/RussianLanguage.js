@@ -63,4 +63,6 @@ export const RussianLabels = {
   smsCar: 'Год Выпуска PHEV в SMS',
   useSmartthings: 'Использовать Smartthings',
   smsCodes: 'SMS Коды Ошибок',
+  cron: 'Cron задания',
+  sendSMSNotification: 'Отправлять нотификацию через СМС',
 };

@@ -5,4 +5,5 @@ export const CONTENTS = {
   AddUser: 'ADD_USER',
   ViewUser: 'VIEW_USER',
   SMS: 'SMS',
+  CRON: 'CRON',
 };

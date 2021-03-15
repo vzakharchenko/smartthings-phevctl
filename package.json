@@ -19,7 +19,9 @@
     "mitsubishi",
     "outlanderPhev",
     "outlander-phev",
-    "phevctl"
+    "phevctl",
+    "mikrotik",
+    "sms"
   ],
   "author": "vzakharchenko",
   "license": "Apache-2.0",

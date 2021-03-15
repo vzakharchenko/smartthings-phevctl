@@ -16,11 +16,15 @@ metadata {
     definition (name: "Outlander PHEV Doors", namespace: "vzakharchenko", author: "Василий Захарченко") {
         capability "Actuator"
         capability "Lock"
+        capability "Health Check"
         command "forceOn"
         command "forceOff"
         command "update"
         command "update2"
         command "updateall"
+        command "markDeviceOnline"
+        command "markDeviceOffline"
+
     }
 
 
@@ -73,4 +77,21 @@ def lock(){
 
 
 def unlock(){
+}
+
+def markDeviceOnline() {
+    debug("switchStatus: ${device.currentValue('switch')};")
+    setDeviceHealth("online")
+}
+
+def markDeviceOffline() {
+    sendEvent(name: "battery", value: "offline", descriptionText: "The device is offline")
+    setDeviceHealth("offline")
+}
+
+private setDeviceHealth(String healthState) {
+    List validHealthStates = ["online", "offline"]
+    healthState = validHealthStates.contains(healthState) ? healthState : device.currentValue("healthStatus")
+    sendEvent(name: "DeviceWatch-DeviceStatus", value: healthState)
+    sendEvent(name: "healthStatus", value: healthState)
 }

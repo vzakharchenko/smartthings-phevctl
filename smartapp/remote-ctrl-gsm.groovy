@@ -64,6 +64,7 @@ def initialize() {
     def devices = getAllDevices().each {
         subscribe(it, "switch.on", deviceHandler);
     }
+    runEvery1Hour(handlerOnline)
 }
 
 mappings {
@@ -113,12 +114,31 @@ mappings {
 }
 
 def phevInit() {
+    updateState();
     return [status: "ok"]
 }
 
+def handlerOnline() {
+    def timeout = 1000 * 60 * 30;
+    def curTime = new Date().getTime();
+    getAllDevices().each {
+        def activeDate = state.lastcheck;
+        if ((curTime - timeout) > activeDate) {
+            it.markDeviceOffline();
+            debug("PHEV offline ${curTime - timeout} > ${activeDate} ")
+        } else {
+            it.markDeviceOnline();
+            debug("PHEV online  ${curTime - timeout} < ${activeDate} ")
+        }
+    }
+}
 
+def updateState(){
+    state.lastcheck = new Date().getTime();
+}
 
 def phevDevices() {
+    updateState();
     def deviceList = [];
     def devices = getAllDevices().each {
         deviceList.push([id: it.getDeviceNetworkId(), label: it.label ])
@@ -127,6 +147,8 @@ def phevDevices() {
 }
 
 def updateDevice() {
+    updateState();
+    handlerOnline();
     def json = request.JSON;
     debug("update device "+json)
     def presentDevice = getAllDevicesById(json.id)
@@ -141,6 +163,7 @@ def updateDevice() {
 
 
 def phevAddDevice() {
+    updateState();
     def json = request.JSON;
     def presentDevice = getAllDevicesById(json.id)
     if (presentDevice == null) {
@@ -162,12 +185,14 @@ def phevAddDevice() {
 
 
 def deleteAddDevice() {
+    updateState();
     def json = request.JSON;
     deleteChildDevice(json.id)
     return [status: "ok"]
 }
 
 def sendNotification(){
+    updateState();
     def json = request.JSON;
     sendPush(json.message)
     return [status: "ok"]
@@ -175,6 +200,7 @@ def sendNotification(){
 
 
 def phevOffDevice() {
+    updateState();
     def json = request.JSON;
     debug("json=${json}");
     def presentDevice = getAllDevicesById(json.id);
@@ -183,6 +209,7 @@ def phevOffDevice() {
 }
 
 def getAllDevicesById(id) {
+    updateState();
     def device;
     def devices = getAllDevices().each {
         if (it.getDeviceNetworkId() == id) {

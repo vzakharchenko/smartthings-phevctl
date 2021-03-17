@@ -68,5 +68,5 @@ export const RussianLabels = {
   theft: 'Активирована ли штатная охранная система сигнализации в ETACS?',
   Yes: 'Да',
   No: 'Нет',
-  useCloud: 'активна Настройка  "Setup my devices without cloud" в Smartthings Smartapp',
+  useCloud: 'отключена Настройка  "Setup my devices without cloud" в Smartthings Smartapp',
 };

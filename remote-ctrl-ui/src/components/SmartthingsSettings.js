@@ -33,6 +33,7 @@ export class SmartthingsSettings extends React.Component {
       useSmartthings: false,
       batteryFactory: 1.0,
       isModalVisible: false,
+      theft: false,
     };
 
     async componentDidMount() {
@@ -59,6 +60,7 @@ export class SmartthingsSettings extends React.Component {
         shard,
         useSmartthings,
         smsCar,
+        theft,
       } = this.state;
       this.setState({ loading: true });
       const copyConfig = JSON.parse(JSON.stringify(settings.data));
@@ -98,6 +100,7 @@ export class SmartthingsSettings extends React.Component {
         copyConfig.smartthings.sms.sendSMSNotification = sendSMSNotification;
       }
       copyConfig.smartthings.useSmartthings = useSmartthings;
+      copyConfig.theft = theft;
       copyConfig.smartthings.executeUpdate = executeUpdate;
       copyConfig.smartthings.sendNotification = sendNotification;
       try {
@@ -365,6 +368,18 @@ export class SmartthingsSettings extends React.Component {
                 />
               );
             }
+            if (data.name === 'theft') {
+              return (
+                <Checkbox
+                  checked={this.state.theft}
+                  onChange={(e) => {
+                    const newState = { changed: true };
+                    newState.theft = e.target.checked;
+                    this.setState(newState);
+                  }}
+                />
+              );
+            }
             if (data.name === 'sendSMSNotification') {
               return (
                 <Checkbox
@@ -438,6 +453,7 @@ export class SmartthingsSettings extends React.Component {
         actionTimeout: settings.data.smartthings.timeout,
         batteryFactory: settings.data.batteryFactory || 1.0,
         language: settings.data.language || 'English',
+        theft: settings.data.theft,
         executeUpdate: settings.data.smartthings.executeUpdate,
         sendNotification: settings.data.smartthings.sendNotification,
         sms: settings.data.smartthings.sms.enabled,
@@ -456,6 +472,9 @@ export class SmartthingsSettings extends React.Component {
         const data = [{
           name: 'macAddress',
           value: settings.data.macAddress,
+        }, {
+          name: 'theft',
+          value: settings.data.theft,
         },
         {
           name: 'useSmartthings',

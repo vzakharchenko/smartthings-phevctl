@@ -64,6 +64,7 @@ export class SmartthingsSMS extends React.Component {
             if (data.name === 'smsCodes') {
               return (
                 <Table
+                  pagination={false}
                   columns={[
                     {
                       title: 'Code',
@@ -86,6 +87,7 @@ export class SmartthingsSMS extends React.Component {
             if (data.name === 'smsCommands') {
               return (
                 <Table
+                  pagination={false}
                   columns={[{
                     title: 'Command',
                     dataIndex: 'name',
@@ -206,7 +208,7 @@ export class SmartthingsSMS extends React.Component {
       });
       return loadingPage ? <spin /> : (
         <div>
-          <Table columns={this.getColumns()} dataSource={data} />
+          <Table pagination={false} columns={this.getColumns()} dataSource={data} />
         </div>
       );
     }

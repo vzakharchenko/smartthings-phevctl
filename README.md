@@ -12,6 +12,7 @@ SMS and Smartthings application wrapper over phevctl
 ## Features:
 - [can work over sms without smartthings](https://github.com/vzakharchenko/smartthings-phevctl/wiki/SMSServiceWithoutSmartthings)
 - [receive PHEV errors over SMS ](https://github.com/vzakharchenko/smartthings-phevctl/wiki/supportedSMSErrorCodes)
+- [receive Theft Alarm Notifications (if the theft alarm is enabled in the ETACS ) ](https://github.com/vzakharchenko/smartthings-phevctl/wiki/supportedSMSErrorCodes#theft-alarm-codes)
 - switch on/off condition/heater
 - receive warning message from the remote EV and send it in push Notification.
 - send Notification "Pre A/C has stopped. Possible causes of this are as follows: Door is Open. Main battery level is Low. Drive Battery temperature is Low."
@@ -30,9 +31,13 @@ SMS and Smartthings application wrapper over phevctl
 - [scaleway cloud](https://github.com/vzakharchenko/remote-ctrl-gsm/wiki/gsm-extender-scaleway-cloud)
 ## Without cloud installation
 - [control over SMS](https://github.com/vzakharchenko/smartthings-phevctl/wiki/SMSServiceWithoutSmartthings)
+## Outlander PHEV Registration
+- First need to register your phone on the original application [Android](https://play.google.com/store/apps/details?id=com.inventec.iMobile2) or [Apple](https://apps.apple.com/ua/app/outlander-phev-remote-ctrl/id1107478931?l=ru) or (Modified application)[https://github.com/vzakharchenko/remote-ctrl-gsm]
+- [start Smartthings-phevctl Server](https://github.com/vzakharchenko/smartthings-phevctl#installation-steps)
+- open server and enter your phone mac.
 
 ## Installation Steps
-1. [Install Server using Docker](https://github.com/vzakharchenko/smartthings-phevctl#server-docker-installation) or  [Manual Installation](https://github.com/vzakharchenko/smartthings-phevctl#server-manual-installation)
+1. [Install Server using Docker](https://github.com/vzakharchenko/smartthings-phevctl#server-docker-installation) or [raspberry Pi zero](https://github.com/vzakharchenko/smartthings-phevctl#raspberry-pi-zero-installation) or  [Manual Installation](https://github.com/vzakharchenko/smartthings-phevctl#server-manual-installation)
 2. [create Device Handler](https://github.com/vzakharchenko/smartthings-phevctl#create-custom-dht)
 3. [create smartapp](https://github.com/vzakharchenko/smartthings-phevctl#create-smartapp)
 4. [Configure smartthings application on android or apple](https://github.com/vzakharchenko/smartthings-phevctl#configure-smartthings-application)

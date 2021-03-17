@@ -13,6 +13,7 @@ export class CronSettings extends React.Component {
       error: '',
       updateDevices: '',
       syncDevices: '',
+      cloudDevices: '',
       loading: false,
     };
 
@@ -25,6 +26,7 @@ export class CronSettings extends React.Component {
         settings,
         updateDevices,
         syncDevices,
+        cloudDevices,
       } = this.state;
       this.setState({ loading: true });
       const copyConfig = JSON.parse(JSON.stringify(settings.data));
@@ -33,6 +35,9 @@ export class CronSettings extends React.Component {
       }
       if (syncDevices) {
         copyConfig.cron.syncDevices = syncDevices;
+      }
+      if (cloudDevices) {
+        copyConfig.cron.cloudDevices = cloudDevices;
       }
       try {
         const res = await sendToBackend('/ui/settings', 'POST', copyConfig);
@@ -91,6 +96,7 @@ export class CronSettings extends React.Component {
         settings,
         updateDevices: settings.data.cron.updateDevices,
         syncDevices: settings.data.cron.syncDevices,
+        cloudDevices: settings.data.cron.cloudDevices,
       });
     }
 
@@ -107,6 +113,12 @@ export class CronSettings extends React.Component {
           name: 'syncDevices',
           value: settings.data.cron.syncDevices,
         }];
+        if (!settings.data.smartthings.useCloud) {
+          data.push({
+            name: 'cloudDevices',
+            value: settings.data.cron.syncDevices,
+          });
+        }
         return (
           <div>
             {error ? (

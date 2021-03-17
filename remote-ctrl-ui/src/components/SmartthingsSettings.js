@@ -31,6 +31,7 @@ export class SmartthingsSettings extends React.Component {
       sendSMSNotification: false,
       smsCar: 'any',
       useSmartthings: false,
+      useCloud: false,
       batteryFactory: 1.0,
       isModalVisible: false,
       theft: false,
@@ -404,6 +405,9 @@ export class SmartthingsSettings extends React.Component {
                 />
               );
             }
+            if (data.name === 'useCloud') {
+              return this.state.useCloud ? getLabels().Yes : getLabels().No;
+            }
             if (data.name === 'language') {
               return (
                 <Select
@@ -460,6 +464,7 @@ export class SmartthingsSettings extends React.Component {
         smsCar: settings.data.smartthings.sms.smsCar || 'any',
         smsPassword: settings.data.smartthings.sms.password,
         useSmartthings: settings.data.smartthings.useSmartthings,
+        useCloud: settings.data.smartthings.useCloud,
         sendSMSNotification: !!settings.data.smartthings.sms.sendSMSNotification,
       });
     }
@@ -479,6 +484,10 @@ export class SmartthingsSettings extends React.Component {
         {
           name: 'useSmartthings',
           value: settings.data.smartthings.useSmartthings,
+        },
+        {
+          name: 'useCloud',
+          value: settings.data.smartthings.useCloud,
         }];
         if (useSmartthings) {
           data.push({

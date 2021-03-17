@@ -23,14 +23,30 @@ SMS and Smartthings application wrapper over phevctl
 - Thermostat Operating State
 - Support SMS if use mikrotik LTE
 - [SMS commands](https://github.com/vzakharchenko/smartthings-phevctl/wiki/supportedSMSCommands)
-- possibility to control over voice(by Google assistant)
+
+
+## comparison of installation types
+
+| Installation Type                                                           | Execute action(heating/cooling/headlights and etc...)  | Smartthings Hub required | Internet connection required | can send/receive SMS | MikroTik LtAP mini LTE kit must be installed | Raspberry Pi must be installed | Send Push Notifications |
+|-----------------------------------------------------------------------------|--------------------------------------------------------|----------------------|------------------------------|----------------------|----------------------------------------------|--------------------------------|-------------------------|
+| Cloud Installation (run smartthings-phevctl on the cloud)                   | Immediately                                            | No                   | Yes                          | No                   | Yes                                          | No                             | Yes                     |
+| Cloud Installation with rapberry Pi(Cloud is forwarded smartthings-phevctl) | Immediately                                            | No                   | No                           | Yes                  | Yes                                          | Yes                            | Yes                     |
+| Сontrol over SMS without smartthings                                        | 1-2 minutes delay                                      | No                   | No                           | Yes                  | Yes                                          | Yes                            | No                     |
+| Local Network Installation(under NAT)                                       | Immediately                                            | Yes                  | Yes                          | No                   | Yes                                          | No                             | Yes                     |
+| Run without cloud and without Smartthings Hub                               | 2-5 minutes delay                                      | No                   | No                           | Yes                  | Yes                                          | Yes                            | Yes                     |
+
+
 
 ## Cloud Installation
 - [cloud installation](https://github.com/vzakharchenko/remote-ctrl-gsm/blob/master/cloud/README.md)
 - [hetzner cloud](https://github.com/vzakharchenko/remote-ctrl-gsm/wiki/gsm-extender-hetzner-cloud)
 - [scaleway cloud](https://github.com/vzakharchenko/remote-ctrl-gsm/wiki/gsm-extender-scaleway-cloud)
 ## Without cloud installation
-- [control over SMS](https://github.com/vzakharchenko/smartthings-phevctl/wiki/SMSServiceWithoutSmartthings)
+- [control over SMS without smartthings](https://github.com/vzakharchenko/smartthings-phevctl/wiki/SMSServiceWithoutSmartthings)
+- [Local Network Installation(under NAT)](https://github.com/vzakharchenko/smartthings-phevctl#local-network-installationunder-nat)
+- [Run without cloud and without Smartthings Hub](https://github.com/vzakharchenko/smartthings-phevctl#run-without-cloud-and-without-smartthings-hub)
+
+
 ## Outlander PHEV Registration
 - First need to register your phone on the original application [Android](https://play.google.com/store/apps/details?id=com.inventec.iMobile2) or [Apple](https://apps.apple.com/ua/app/outlander-phev-remote-ctrl/id1107478931?l=ru) or (Modified application)[https://github.com/vzakharchenko/remote-ctrl-gsm]
 - [start Smartthings-phevctl Server](https://github.com/vzakharchenko/smartthings-phevctl#installation-steps)
@@ -161,6 +177,10 @@ pm2 save
 ## Local Network Installation(under NAT)
 - install [Smartthings Hub)[https://www.samsung.com/us/smart-home/smartthings/hubs/] on location.
 - during installation smartapp select hub. ![](./img/smartapp10.png)
+
+## Run without cloud and without Smartthings Hub
+- [Configure Smartthings application without cloud and hub](https://github.com/vzakharchenko/smartthings-phevctl#configure-smartthings-application)
+- during installation smartapp select "Setup my devices without cloud". ![](./img/nocloud.png)
 
 # Authentication
 ## Local authentication (default)

@@ -31,8 +31,11 @@ preferences {
     section("Setup my device with this Port") {
         input "port", "number", multiple: false, required: true
     }
-    section("Setup my device with smartthings hub (optional)") {
+    section("Setup my devices with smartthings hub (optional)") {
         input "hub", "capability.hub", multiple: false, required: false
+    }
+    section("Setup my devices without cloud") {
+        input(name: "withoutCloud", type: 'bool', required: false, defaultValue:false)
     }
 }
 
@@ -64,7 +67,7 @@ def initialize() {
     def devices = getAllDevices().each {
         subscribe(it, "switch.on", deviceHandler);
     }
-    runEvery1Hour(handlerOnline)
+    runEvery15Minutes(handlerOnline)
 }
 
 mappings {
@@ -98,6 +101,12 @@ mappings {
                 GET: "phevDevices"
         ]
     }
+    path("/smartapp/statusDevices") {
+        action:
+        [
+                GET: "phevGetStatusDevices"
+        ]
+    }
     path("/smartapp/offDevice") {
         action:
         [
@@ -115,11 +124,11 @@ mappings {
 
 def phevInit() {
     updateState();
-    return [status: "ok"]
+    return [status: "ok", useCloud: withoutCloud == null || !withoutCloud]
 }
 
 def handlerOnline() {
-    def timeout = 1000 * 60 * 30;
+    def timeout = 1000 * 60 * 20;
     def curTime = new Date().getTime();
     getAllDevices().each {
         def activeDate = state.lastcheck;
@@ -135,6 +144,7 @@ def handlerOnline() {
 
 def updateState(){
     state.lastcheck = new Date().getTime();
+// state.lastcheck = 0;
 }
 
 def phevDevices() {
@@ -142,6 +152,19 @@ def phevDevices() {
     def deviceList = [];
     def devices = getAllDevices().each {
         deviceList.push([id: it.getDeviceNetworkId(), label: it.label ])
+    }
+    return [devices: deviceList]
+}
+
+
+def phevGetStatusDevices() {
+    updateState();
+    handlerOnline();
+    def deviceList = [];
+    def devices = getAllDevices().each {
+        def st = it.currentState("switch");
+        debug("switch "+st)
+        deviceList.push([id: it.getDeviceNetworkId(), label: it.label, status: st  ])
     }
     return [devices: deviceList]
 }
@@ -225,6 +248,9 @@ def getAllDevices() {
 
 
 def deviceHandler(evt) {
+    if (withoutCloud != null && withoutCloud){
+        return;
+    }
     if (hub){
         apiHubGet("/${app.id}/${state.accessToken}/execute?deviceId=${evt.getDevice().getDeviceNetworkId()}",null)
     } else {

@@ -27,4 +27,5 @@ jobs:
     - run: npm i
     - run: cd remote-ctrl-ui && yarn install
     - run: cd remote-ctrl-ui && yarn run lint
+    - run: cd remote-ctrl-ui && yarn build:prod
     - run: npm run lint

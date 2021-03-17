@@ -66,4 +66,7 @@ export const RussianLabels = {
   cron: 'Cron задания',
   sendSMSNotification: 'Отправлять нотификацию через СМС',
   theft: 'Активирована ли штатная охранная система сигнализации в ETACS?',
+  Yes: 'Да',
+  No: 'Нет',
+  useCloud: 'отключена Настройка  "Setup my devices without cloud" в Smartthings Smartapp',
 };

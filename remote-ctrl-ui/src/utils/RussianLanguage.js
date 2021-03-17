@@ -65,4 +65,5 @@ export const RussianLabels = {
   smsCodes: 'SMS Коды Ошибок',
   cron: 'Cron задания',
   sendSMSNotification: 'Отправлять нотификацию через СМС',
+  theft: 'Активирована ли штатная охранная система сигнализации в ETACS?',
 };

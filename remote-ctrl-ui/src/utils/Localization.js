@@ -70,6 +70,7 @@ const Labels = {
   sendSMSNotification: 'Send notification over SMS',
   updateDevices: 'Update Devices Job',
   syncDevices: 'sync Devices between local and Smartthings Job',
+  theft: 'Theft alarm system activated in ETACS ',
 };
 
 export function getLabels() {

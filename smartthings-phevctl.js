@@ -26,7 +26,6 @@ const {
 const config = readConfig();
 const { uiPort } = config.server || { port: 8099, uiPort: 8080 };
 
-let app;
 const appUI = express();
 appUI.use(bodyParser.json());
 appUI.use(bodyParser.urlencoded({ extended: true }));
@@ -117,6 +116,12 @@ appUI.get('/ui/sms/codes', protect(), cors(corsOptions), async (req, res) => {
     topbattwarminginfo_stop_2: getLabels().topbattwarminginfo_stop_2,
     topbattwarminginfo: getLabels().topbattwarminginfo,
     errACinfo: getLabels().errACinfo,
+    err1intrusion: getLabels().err1intrusion,
+    err1movement: getLabels().err1movement,
+    err1perimeter: getLabels().err1perimeter,
+    err1ignition: getLabels().err1ignition,
+    err1silent: getLabels().err1silent,
+    err1other: getLabels().err1other,
   }));
 });
 
@@ -128,5 +133,5 @@ appUI.listen(uiPort, () => {
 });
 
 process.on('exit', () => {
-  app.stop();
+  appUI.stop();
 });

@@ -27,7 +27,7 @@ SMS and Smartthings application wrapper over phevctl
 
 ## comparison of installation types
 
-| Installation Type                                                           | Execute actions(heating/cooling/headlights and etc...) | need Smartthings Hub | Internet connection required | can send/receive SMS | MikroTik LtAP mini LTE kit must be installed | Raspberry Pi must be installed | Send Push Notifications |
+| Installation Type                                                           | Execute action(heating/cooling/headlights and etc...)  | Smartthings Hub required | Internet connection required | can send/receive SMS | MikroTik LtAP mini LTE kit must be installed | Raspberry Pi must be installed | Send Push Notifications |
 |-----------------------------------------------------------------------------|--------------------------------------------------------|----------------------|------------------------------|----------------------|----------------------------------------------|--------------------------------|-------------------------|
 | Cloud Installation (run smartthings-phevctl on the cloud)                   | Immediately                                            | No                   | Yes                          | No                   | Yes                                          | No                             | Yes                     |
 | Cloud Installation with rapberry Pi(Cloud is forwarded smartthings-phevctl) | Immediately                                            | No                   | No                           | Yes                  | Yes                                          | Yes                            | Yes                     |

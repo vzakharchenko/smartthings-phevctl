@@ -12,7 +12,7 @@ SMS and Smartthings application wrapper over phevctl
 ## Features:
 - [can work over sms without smartthings](https://github.com/vzakharchenko/smartthings-phevctl/wiki/SMSServiceWithoutSmartthings)
 - [receive PHEV errors over SMS ](https://github.com/vzakharchenko/smartthings-phevctl/wiki/supportedSMSErrorCodes)
-- [receive Theft Alarm Notifications (if the theft alarm is enabled in the ETACS ) ](https://github.com/vzakharchenko/smartthings-phevctl/wiki/supportedSMSErrorCodes)
+- [receive Theft Alarm Notifications (if the theft alarm is enabled in the ETACS ) ](https://github.com/vzakharchenko/smartthings-phevctl/wiki/supportedSMSErrorCodes#theft-alarm-codes)
 - switch on/off condition/heater
 - receive warning message from the remote EV and send it in push Notification.
 - send Notification "Pre A/C has stopped. Possible causes of this are as follows: Door is Open. Main battery level is Low. Drive Battery temperature is Low."

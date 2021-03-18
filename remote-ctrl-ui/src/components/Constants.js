@@ -6,4 +6,5 @@ export const CONTENTS = {
   ViewUser: 'VIEW_USER',
   SMS: 'SMS',
   CRON: 'CRON',
+  NOTIFICATION: 'NOTIFICATION',
 };

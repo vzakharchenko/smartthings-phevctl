@@ -3,7 +3,8 @@ import Sider from 'antd/lib/layout/Sider';
 import { Menu, Spin } from 'antd';
 import Layout, { Footer, Header } from 'antd/lib/layout/layout';
 import {
-  AppstoreAddOutlined, DesktopOutlined, MessageOutlined, ScheduleOutlined, UserOutlined,
+  AppstoreAddOutlined, DesktopOutlined, MessageOutlined,
+  NotificationOutlined, ScheduleOutlined, UserOutlined,
 } from '@ant-design/icons';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import Title from 'antd/es/typography/Title';
@@ -59,6 +60,10 @@ export class RemoteCtrlMain extends React.Component {
 
     onSMSClick = () => {
       this.setState({ selectorPage: CONTENTS.SMS });
+    };
+
+    onNotificationClick = () => {
+      this.setState({ selectorPage: CONTENTS.NOTIFICATION });
     };
 
     onCRONClick = () => {
@@ -164,6 +169,19 @@ export class RemoteCtrlMain extends React.Component {
                           onClick={this.onSMSClick}
                         >
                           {getLabels().sms}
+                        </Menu.Item>
+                      ) : null
+                }
+              {
+                    settings && (settings.data.smartthings.sms.sendSMSNotification
+                        || settings.data.smartthings.sendNotification)
+                      ? (
+                        <Menu.Item
+                          key="subNotification"
+                          icon={<NotificationOutlined />}
+                          onClick={this.onNotificationClick}
+                        >
+                          {getLabels().notification}
                         </Menu.Item>
                       ) : null
                 }

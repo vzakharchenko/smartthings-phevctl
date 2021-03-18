@@ -56,6 +56,7 @@ const Labels = {
   executeUpdate: 'Force Update during update values',
   hvac: 'Thermostat Operating State',
   sendNotification: 'Send Push Notification about Battery Warning',
+  notification: 'Notification',
   testNotificationLabel: 'Send Push Notification',
   sms: 'SMS API Service',
   smsPassword: 'SMS Password',
@@ -75,6 +76,14 @@ const Labels = {
   Yes: 'Yes',
   No: 'No',
   useCloud: 'disabled setting "Setup my devices without cloud" in Smartthings SmartApp',
+  both: 'Both',
+  onlySMS: 'SMS',
+  onlyPush: 'PUSH',
+  none: 'None',
+  code: 'Code',
+  description: 'Description',
+  name: 'Name',
+  value: 'Value',
 };
 
 export function getLabels() {

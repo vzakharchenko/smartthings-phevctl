@@ -88,7 +88,7 @@ export class SmartthingsViewDevice extends React.Component {
     getColumns() {
       return [
         {
-          title: 'Name',
+          title: getLabels().name,
           dataIndex: 'name',
           key: 'name',
           render: (text) => (
@@ -100,7 +100,7 @@ export class SmartthingsViewDevice extends React.Component {
           ),
         },
         {
-          title: 'Value',
+          title: getLabels().value,
           dataIndex: 'value',
           key: 'value',
           render: (text, data) => {

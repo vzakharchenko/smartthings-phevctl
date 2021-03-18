@@ -24,13 +24,13 @@ export class SmartthingsSMS extends React.Component {
     getColumns() {
       return [
         {
-          title: 'Name',
+          title: getLabels().name,
           dataIndex: 'name',
           key: 'name',
           render: (text) => <a>{getLabels()[text] || text}</a>,
         },
         {
-          title: 'Value',
+          title: getLabels().value,
           dataIndex: 'value',
           key: 'value',
           render: (text, data) => {
@@ -67,11 +67,11 @@ export class SmartthingsSMS extends React.Component {
                   pagination={false}
                   columns={[
                     {
-                      title: 'Code',
+                      title: getLabels().code,
                       dataIndex: 'name',
                       key: 'name',
                     }, {
-                      title: 'Description',
+                      title: getLabels().description,
                       dataIndex: 'value',
                       key: 'value',
                     }]}
@@ -89,7 +89,7 @@ export class SmartthingsSMS extends React.Component {
                 <Table
                   pagination={false}
                   columns={[{
-                    title: 'Command',
+                    title: 'Commands',
                     dataIndex: 'name',
                     key: 'name',
                   }]}
@@ -201,10 +201,6 @@ export class SmartthingsSMS extends React.Component {
       data.push({
         name: 'smsCommands',
         value: 'smsCommands',
-      });
-      data.push({
-        name: 'smsCodes',
-        value: 'smsCodes',
       });
       return loadingPage ? <spin /> : (
         <div>

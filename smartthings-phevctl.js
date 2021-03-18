@@ -107,22 +107,12 @@ appUI.get('/ui/sms/help', protect(), cors(corsOptions), async (req, res) => {
 
 appUI.get('/ui/sms/codes', protect(), cors(corsOptions), async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({
-    topbattwarminginfo_plugin_1: getLabels().topbattwarminginfo_plugin_1,
-    topbattwarminginfo_plugin_2: getLabels().topbattwarminginfo_plugin_1,
-    topbattwarminginfo_warm_1: getLabels().topbattwarminginfo_warm_1,
-    topbattwarminginfo_warm_2: getLabels().topbattwarminginfo_warm_2,
-    topbattwarminginfo_stop_1: getLabels().topbattwarminginfo_stop_1,
-    topbattwarminginfo_stop_2: getLabels().topbattwarminginfo_stop_2,
-    topbattwarminginfo: getLabels().topbattwarminginfo,
-    errACinfo: getLabels().errACinfo,
-    err1intrusion: getLabels().err1intrusion,
-    err1movement: getLabels().err1movement,
-    err1perimeter: getLabels().err1perimeter,
-    err1ignition: getLabels().err1ignition,
-    err1silent: getLabels().err1silent,
-    err1other: getLabels().err1other,
-  }));
+  const rc = JSON.parse(JSON.stringify(readConfig()));
+  const notifications = {};
+  Object.keys(rc.notifications).map((n) => n).forEach((v) => {
+    notifications[v] = getLabels()[v] || v;
+  });
+  res.end(JSON.stringify(notifications));
 });
 
 startApplication();

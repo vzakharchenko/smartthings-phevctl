@@ -1,19 +1,17 @@
 import * as React from 'react';
 import {
-  Alert, Button, Table,
+  Alert, Button, Select, Table,
 } from 'antd';
-import Paragraph from 'antd/es/typography/Paragraph';
-import { getLabels, setLanguage } from '../utils/Localization';
+import { getLabels } from '../utils/Localization';
 import { fetchBackend, sendToBackend } from '../utils/restCalls';
 
-export class CronSettings extends React.Component {
+export class NotificationSettings extends React.Component {
     state = {
       settings: {},
       changed: false,
       error: '',
-      updateDevices: '',
-      syncDevices: '',
-      cloudDevices: '',
+      smsCodes: null,
+      notifications: null,
       loading: false,
     };
 
@@ -24,21 +22,11 @@ export class CronSettings extends React.Component {
     async onSaveClick() {
       const {
         settings,
-        updateDevices,
-        syncDevices,
-        cloudDevices,
+        notifications,
       } = this.state;
       this.setState({ loading: true });
       const copyConfig = JSON.parse(JSON.stringify(settings.data));
-      if (updateDevices) {
-        copyConfig.cron.updateDevices = updateDevices;
-      }
-      if (syncDevices) {
-        copyConfig.cron.syncDevices = syncDevices;
-      }
-      if (cloudDevices) {
-        copyConfig.cron.cloudDevices = cloudDevices;
-      }
+      copyConfig.notifications = notifications;
       try {
         const res = await sendToBackend('/ui/settings', 'POST', copyConfig);
         const status = JSON.parse(res.data);
@@ -58,32 +46,41 @@ export class CronSettings extends React.Component {
     getColumns() {
       return [
         {
-          title: getLabels().name,
+          title: getLabels().code,
           dataIndex: 'name',
           key: 'name',
-          render: (text) => <a>{getLabels()[text] || text}</a>,
+          render: (text) => <a>{text}</a>,
+        },
+        {
+          title: getLabels().description,
+          dataIndex: 'description',
+          key: 'description',
+          render: (text) => <a>{text}</a>,
         },
         {
           title: getLabels().value,
-          dataIndex: 'value',
-          key: 'value',
-          render: (text, data) => {
-            const value = this.state[data.name];
-            return (
-              <Paragraph editable={{
-                onChange: (newValue) => {
-                  if (newValue) {
-                    const newState = { changed: true };
-                    newState[data.name] = newValue;
-                    this.setState(newState);
-                  }
-                },
+          dataIndex: 'description',
+          key: 'description',
+          render: (text, data) => (
+            <Select
+              style={{ width: 200 }}
+              defaultValue={this.state.notifications[data.name]}
+              onChange={(event) => {
+                if (event) {
+                  const newState = { changed: true };
+                  this.state.notifications[data.name] = event;
+                  newState.notifications = this.state.notifications;
+                  this.setState(newState);
+                }
               }}
-              >
-                {value}
-              </Paragraph>
-            );
-          },
+            >
+              <Select.Option value="both">{getLabels().both}</Select.Option>
+              <Select.Option value="sms">{getLabels().onlySMS}</Select.Option>
+              <Select.Option value="push">{getLabels().onlyPush}</Select.Option>
+              <Select.Option value="none">{getLabels().none}</Select.Option>
+
+            </Select>
+          ),
         },
       ];
     }
@@ -91,34 +88,28 @@ export class CronSettings extends React.Component {
     async reload() {
       const { data } = await fetchBackend('/ui/settings');
       const settings = JSON.parse(data);
-      setLanguage(settings.data.language || 'English');
+      const respCodes = await fetchBackend('/ui/sms/codes');
+      const smsCodes = JSON.parse(respCodes.data);
       this.setState({
         settings,
-        updateDevices: settings.data.cron.updateDevices,
-        syncDevices: settings.data.cron.syncDevices,
-        cloudDevices: settings.data.cron.cloudDevices,
+        smsCodes,
+        notifications: settings.data.notifications,
       });
     }
 
     render() {
       const {
-        settings, changed, loading, error,
+        settings, changed, loading, error, smsCodes, notifications,
       } = this.state;
-      if (settings.status === 'OK') {
-        const data = [{
-          name: 'updateDevices',
-          value: settings.data.cron.updateDevices,
-        },
-        {
-          name: 'syncDevices',
-          value: settings.data.cron.syncDevices,
-        }];
-        if (!settings.data.smartthings.useCloud) {
+      if (settings.status === 'OK' && smsCodes != null) {
+        const data = [];
+        Object.keys(notifications).forEach((nk) => {
           data.push({
-            name: 'cloudDevices',
-            value: settings.data.cron.syncDevices,
+            name: nk,
+            status: notifications[nk],
+            description: smsCodes[nk],
           });
-        }
+        });
         return (
           <div>
             {error ? (

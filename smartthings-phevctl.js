@@ -115,6 +115,37 @@ appUI.get('/ui/sms/codes', protect(), cors(corsOptions), async (req, res) => {
   res.end(JSON.stringify(notifications));
 });
 
+if (config.connectionType === 'keycloak') {
+  appUI.get('/ui/keycloak/roles', protect(), cors(corsOptions), async (req, res) => {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    // req.kauth.grant.access_token.content.realm_access resource_access .roles
+    if (!req.kauth
+        && !req.kauth.grant
+        && !req.kauth.grant.access_token
+        && !req.kauth.grant.access_token.content) {
+      throw new Error('Only Keycloak access is allowed');
+    }
+    const roles = [];
+    const { content } = req.kauth.grant.access_token;
+    if (content.realm_access && content.realm_access.roles) {
+      content.realm_access.roles.forEach((r) => {
+        roles.push(`realm:${r}`);
+      });
+    }
+    if (content.resource_access) {
+      Object.keys(content.resource_access).forEach((clientId) => {
+        const clientRoles = content.resource_access[clientId].roles;
+        if (clientRoles) {
+          clientRoles.forEach((r) => {
+            roles.push(`${clientId}:${r}`);
+          });
+        }
+      });
+    }
+    res.end(JSON.stringify(roles));
+  });
+}
+
 startApplication();
 startSMSApplication();
 appUI.listen(uiPort, () => {

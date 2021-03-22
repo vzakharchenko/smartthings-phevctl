@@ -196,7 +196,9 @@ default login/password: ```admin/admin```
 ![](./img/keycloak.png)
 
 restart Application
-
+## Keycloak authorization
+![](./img/authorization.png)
+restart Application
 ## Thermostat operation state
 ![](./img/thermo1.png)
 ![](./img/thermo2.png)

@@ -84,6 +84,9 @@ const Labels = {
   description: 'Description',
   name: 'Name',
   value: 'Value',
+  role: 'Authorization Role',
+  noneRole: 'Authorization is disabled',
+  logout: 'Logout',
 };
 
 export function getLabels() {

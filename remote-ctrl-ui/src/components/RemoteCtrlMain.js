@@ -3,7 +3,8 @@ import Sider from 'antd/lib/layout/Sider';
 import { Menu, Spin } from 'antd';
 import Layout, { Footer, Header } from 'antd/lib/layout/layout';
 import {
-  AppstoreAddOutlined, DesktopOutlined, MessageOutlined,
+  AppstoreAddOutlined, DesktopOutlined,
+  LogoutOutlined, MessageOutlined,
   NotificationOutlined, ScheduleOutlined, UserOutlined,
 } from '@ant-design/icons';
 import SubMenu from 'antd/lib/menu/SubMenu';
@@ -104,7 +105,6 @@ export class RemoteCtrlMain extends React.Component {
       ) : (
         <Layout style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
-            <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
               <Menu.Item
                 key="1"
@@ -192,6 +192,21 @@ export class RemoteCtrlMain extends React.Component {
               >
                 {getLabels().cron}
               </Menu.Item>
+              {
+                  settings && settings.data.connectionType === 'keycloak'
+                    ? (
+                      <Menu.Item
+                        key="subLogout"
+                        icon={<LogoutOutlined />}
+                        onClick={() => {
+                          window.location.href = '/logout';
+                        }}
+                      >
+                        {getLabels().logout}
+                      </Menu.Item>
+                    ) : null
+                }
+
             </Menu>
           </Sider>
           <Layout className="site-layout">

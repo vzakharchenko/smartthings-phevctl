@@ -78,4 +78,7 @@ export const RussianLabels = {
   description: 'Описание',
   name: 'Название',
   value: 'Значение',
+  role: 'Авторизационная Роль',
+  noneRole: 'Без Авторизации',
+  logout: 'Выйти',
 };

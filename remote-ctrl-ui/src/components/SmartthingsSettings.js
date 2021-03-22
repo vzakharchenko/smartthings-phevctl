@@ -35,6 +35,8 @@ export class SmartthingsSettings extends React.Component {
       batteryFactory: 1.0,
       isModalVisible: false,
       theft: false,
+      role: '',
+      roles: [],
     };
 
     async componentDidMount() {
@@ -62,6 +64,7 @@ export class SmartthingsSettings extends React.Component {
         useSmartthings,
         smsCar,
         theft,
+        role,
       } = this.state;
       this.setState({ loading: true });
       const copyConfig = JSON.parse(JSON.stringify(settings.data));
@@ -99,6 +102,9 @@ export class SmartthingsSettings extends React.Component {
       if (smsCar) {
         copyConfig.smartthings.sms.smsCar = smsCar;
         copyConfig.smartthings.sms.sendSMSNotification = sendSMSNotification;
+      }
+      if (role) {
+        copyConfig.role = role;
       }
       copyConfig.smartthings.useSmartthings = useSmartthings;
       copyConfig.theft = theft;
@@ -248,6 +254,23 @@ export class SmartthingsSettings extends React.Component {
                   placeholder="Keycloak Json"
                   autoSize={{ minRows: 3, maxRows: 5 }}
                 />
+              );
+            }
+            if (data.name === 'role') {
+              return (
+                <Select
+                  style={{ width: 200 }}
+                  onChange={(event) => {
+                    this.setState({
+                      role: event,
+                      changed: true,
+                    });
+                  }}
+                  defaultValue={this.state.role || 'none'}
+                >
+                  {this.state.roles.map((r) => <Select.Option value={r}>{r}</Select.Option>)}
+                  <Select.Option value="none">{getLabels().noneRole}</Select.Option>
+                </Select>
               );
             }
             if (data.name === 'executeUpdate') {
@@ -444,6 +467,11 @@ export class SmartthingsSettings extends React.Component {
     async reload() {
       const { data } = await fetchBackend('/ui/settings');
       const settings = JSON.parse(data);
+      let roles = [];
+      if (settings.data.connectionType === 'keycloak') {
+        const res = await fetchBackend('/ui/keycloak/roles');
+        roles = JSON.parse(res.data);
+      }
       setLanguage(settings.data.language || 'English');
       this.setState({
         settings,
@@ -465,13 +493,15 @@ export class SmartthingsSettings extends React.Component {
         smsPassword: settings.data.smartthings.sms.password,
         useSmartthings: settings.data.smartthings.useSmartthings,
         useCloud: settings.data.smartthings.useCloud,
+        role: settings.data.role,
+        roles,
         sendSMSNotification: !!settings.data.smartthings.sms.sendSMSNotification,
       });
     }
 
     render() {
       const {
-        settings, changed, useSmartthings, loading, error, sms,
+        settings, changed, useSmartthings, loading, error, sms, role,
       } = this.state;
       if (settings.status === 'OK') {
         const data = [{
@@ -513,27 +543,35 @@ export class SmartthingsSettings extends React.Component {
             name: 'keycloakJson',
             value: '',
           },
-          {
-            name: 'actionTimeout',
-            value: settings.data.smartthings.timeout,
-          },
-          {
-            name: 'executeUpdate',
-            value: settings.data.smartthings.executeUpdate,
-          },
-          {
-            name: 'language',
-            value: settings.data.language,
-          },
-          {
-            name: 'batteryFactory',
-            value: settings.data.batteryFactory || 1.0,
-          },
-          {
-            name: 'sms',
-            value: settings.data.smartthings.sms.enabled,
-          },
         );
+        if (settings.data.connectionType === 'keycloak') {
+          data.push(
+            {
+              name: 'role',
+              value: role,
+            },
+          );
+        }
+        data.push({
+          name: 'actionTimeout',
+          value: settings.data.smartthings.timeout,
+        },
+        {
+          name: 'executeUpdate',
+          value: settings.data.smartthings.executeUpdate,
+        },
+        {
+          name: 'language',
+          value: settings.data.language,
+        },
+        {
+          name: 'batteryFactory',
+          value: settings.data.batteryFactory || 1.0,
+        },
+        {
+          name: 'sms',
+          value: settings.data.smartthings.sms.enabled,
+        });
         if (sms) {
           data.push({
             name: 'smsPassword',

@@ -71,7 +71,7 @@ function connectAuthentication(server) {
 
 function protect() {
   if (keycloak) {
-    return keycloak.protect();
+    return keycloak.protect(readConfig().role);
   }
   return ensureLoggedIn('/login');
 }

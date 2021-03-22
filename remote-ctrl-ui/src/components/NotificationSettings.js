@@ -74,9 +74,9 @@ export class NotificationSettings extends React.Component {
                 }
               }}
             >
-              <Select.Option value="both">{getLabels().both}</Select.Option>
-              <Select.Option value="sms">{getLabels().onlySMS}</Select.Option>
-              <Select.Option value="push">{getLabels().onlyPush}</Select.Option>
+              <Select.Option disabled={!this.state.settings.data.smartthings.sendNotification && !this.state.settings.data.smartthings.sms.enabled && !this.state.settings.data.smartthings.sms.sendSMSNotification} value="both">{getLabels().both}</Select.Option>
+              <Select.Option disabled={!this.state.settings.data.smartthings.sms.enabled && !this.state.settings.data.smartthings.sms.sendSMSNotification} value="sms">{getLabels().onlySMS}</Select.Option>
+              <Select.Option disabled={!this.state.settings.data.smartthings.sendNotification} value="push">{getLabels().onlyPush}</Select.Option>
               <Select.Option value="none">{getLabels().none}</Select.Option>
 
             </Select>
@@ -107,7 +107,7 @@ export class NotificationSettings extends React.Component {
           data.push({
             name: nk,
             status: notifications[nk],
-            description: smsCodes[nk],
+            description: smsCodes[nk] || getLabels()[nk],
           });
         });
         return (

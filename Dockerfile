@@ -22,7 +22,7 @@ RUN cd /opt/phevctl/phevcore && mkdir build && cd build && cmake .. && make && m
 RUN cd /opt/phevctl/phevctl && mkdir -p build && cd build && cmake .. && make
 RUN ln -sf /opt/phevctl/phevctl/build/phevctl /usr/bin/phevctl
 # Bundle APP files
-RUN npm i smartthings-phevctl@1.5.1 -g
+RUN npm i smartthings-phevctl@1.5.2 -g
 # Install app dependencies
 ENV NPM_CONFIG_LOGLEVEL warn
 

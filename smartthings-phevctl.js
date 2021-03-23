@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 
 const bodyParser = require('body-parser');
+const { killAll } = require('./lib/executeService');
 const { supportedSMSCommands } = require('./lib/SMSBackend');
 const { startSMSApplication } = require('./lib/SMSBackend');
 const { testNotification } = require('./lib/settingManager');
@@ -153,6 +154,7 @@ appUI.listen(uiPort, () => {
   installCrons();
 });
 
-process.on('exit', () => {
-  appUI.stop();
+process.on('exit', async () => {
+  await killAll();
+  appUI.close();
 });

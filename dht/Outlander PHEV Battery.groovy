@@ -13,7 +13,7 @@
  *  for the specific language governing permissions and limitations under the License.
  */
 metadata {
-    definition (name: "Outlander PHEV Battery", namespace: "vzakharchenko", author: "Василий Захарченко") {
+    definition(name: "Outlander PHEV Battery", namespace: "vzakharchenko", author: "Василий Захарченко") {
         capability "Battery"
         capability "Power Source"
         capability "Configuration"
@@ -30,7 +30,7 @@ metadata {
     tiles {
 
         valueTile("battery", "device.battery", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
-            state "battery", label:'${currentValue}% battery', unit:""
+            state "battery", label: '${currentValue}% battery', unit: ""
         }
         main "battery"
     }
@@ -38,17 +38,21 @@ metadata {
 
 // parse events into attributes
 def update(currentValue) {
-    if (Integer.parseInt(currentValue) >5 && Integer.parseInt(currentValue) <101){
-        if (Integer.parseInt(currentValue) <10){
+    debug("currentValue=" + currentValue);
+    def level = currentValue.value;
+    debug("currentLevel=" + new String(level));
+    if (Integer.valueOf(level) > 5 && Integer.valueOf(level) < 101) {
+        if (Integer.valueOf(level) < 10) {
             sendEvent(name: "battery", value: 0)
-        }  else{
-            sendEvent(name: "battery", value: currentValue)
+        } else {
+            sendEvent(name: "battery", value: level)
         }
     }
 
 }
+
 def update2(currentValue) {
-    sendEvent(name: "powerSource", value: currentValue == "0" ? 'battery': 'mains')
+    sendEvent(name: "powerSource", value: currentValue == "0" ? 'battery' : 'mains')
 }
 
 def forceOn() {
@@ -62,7 +66,6 @@ def updateall(value, value2) {
 }
 
 def markDeviceOnline() {
-    debug("switchStatus: ${device.currentValue('switch')};")
     setDeviceHealth("online")
 }
 
@@ -76,4 +79,12 @@ private setDeviceHealth(String healthState) {
     healthState = validHealthStates.contains(healthState) ? healthState : device.currentValue("healthStatus")
     sendEvent(name: "DeviceWatch-DeviceStatus", value: healthState)
     sendEvent(name: "healthStatus", value: healthState)
+}
+
+
+def debug(message) {
+    def debug = false;
+    if (debug) {
+        log.debug message
+    }
 }

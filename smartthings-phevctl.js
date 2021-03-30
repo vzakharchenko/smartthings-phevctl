@@ -28,6 +28,7 @@ const config = readConfig();
 const { uiPort } = config.server || { port: 8099, uiPort: 8080 };
 
 const appUI = express();
+appUI.set('trust proxy', () => true);
 appUI.use(bodyParser.json());
 appUI.use(bodyParser.urlencoded({ extended: true }));
 const corsOptions = {

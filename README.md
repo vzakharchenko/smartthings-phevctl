@@ -209,3 +209,15 @@ restart Application
 ![](./img/message3.png)
 ![](./img/message1.png)
 ![](./img/message2.png)
+
+# EVSE Charging
+
+- Slow charging(slowCharge.sh)
+```
+curl --header "application/x-www-form-urlencoded"   --request POST   --data 'cur_set=7&charge_start=1&adaptive_mode_status=1&adaptive_mode_voltage=220&timer=0&timer_start=0'   http://192.168.4.1/ajax
+```
+- Normal charging(fastCharge.sh)
+
+```
+curl --header "application/x-www-form-urlencoded"   --request POST   --data 'cur_set=16&charge_start=1&adaptive_mode_status=0&adaptive_mode_voltage=220&timer=0&timer_start=0'   http://192.168.4.1/ajax
+```

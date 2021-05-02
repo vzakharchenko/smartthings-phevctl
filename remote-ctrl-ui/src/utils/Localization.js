@@ -87,6 +87,8 @@ const Labels = {
   role: 'Authorization Role',
   noneRole: 'Authorization is disabled',
   logout: 'Logout',
+  evseSlow: 'EVSE Slow Charge',
+  evseFastCharge: 'EVSE Fast Charge',
 };
 
 export function getLabels() {

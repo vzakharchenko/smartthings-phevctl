@@ -22,6 +22,7 @@ SMS and Smartthings application wrapper over phevctl
 - check if doors are closed
 - Thermostat Operating State
 - Support SMS if use mikrotik LTE
+- support wifi EVSE (Electric Vehicle (EV) Charging Stations)
 - [SMS commands](https://github.com/vzakharchenko/smartthings-phevctl/wiki/supportedSMSCommands)
 
 
@@ -210,7 +211,10 @@ restart Application
 ![](./img/message1.png)
 ![](./img/message2.png)
 
-# EVSE Charging
+# EVSE Electric Vehicle (EV) Charging Stations
+
+## Scripts for [energy star charging stations](https://energy-star.com.ua/)
+![](./img/pr2-large.jpg)
 
 - Slow charging(slowCharge.sh)
 ```
@@ -226,7 +230,27 @@ curl --header "application/x-www-form-urlencoded"   --request POST   --data 'cur
 ```
 curl --header "application/x-www-form-urlencoded"   --request POST   --data 'cur_set=7&charge_start=0&adaptive_mode_status=1&adaptive_mode_voltage=220&timer=0&timer_start=0'   http://192.168.4.1/ajax
 ```
-# add authorization for EVSE Charging
+
+- Mikrotik Configuration
+```
+/interface wireless security-profiles
+add authentication-types=wpa2-psk group-ciphers=tkip mode=dynamic-keys name=EVSE supplicant-identity=MikroTik unicast-ciphers=tkip wpa-pre-shared-key=<EVSE_PASSWORD> wpa2-pre-shared-key=<EVSE_PASSWORD>
+/interface wireless
+set [ find default-name=wlan1 ] disabled=no frequency=2447 mode=station-pseudobridge name=EVSE_CHARGER security-profile=EVSE ssid=<EVSE_SSID>
+
+/interface bridge
+add dhcp-snooping=yes fast-forward=no igmp-snooping=yes name=bridgeEVSE
+/interface bridge port
+add bridge=bridgeEVSE broadcast-flood=no edge=no-discover interface=EVSE_CHARGER multicast-router=disabled trusted=yes unknown-multicast-flood=no unknown-unicast-flood=no
+/interface bridge settings
+set allow-fast-path=no
+
+/ip dhcp-client
+add add-default-route=no disabled=no interface=bridgeCar use-peer-dns=no use-peer-ntp=no
+add add-default-route=no disabled=no interface=bridgeEVSE use-peer-dns=no use-peer-ntp=no
+```
+
+## add authorization for EVSE Charging
 
 - start proxy application
 ```
@@ -279,17 +303,8 @@ Keycloak security role:
 ```
 {
  "evseServer": {
-  "/": "https://192.168.4.1",
-  "style.css": "https://192.168.4.1/style.css",
-  "es.js": "https://192.168.4.1/es.js",
-  "ajax": "https://192.168.4.1/ajax"
- },
- "users": [
-  {
-   "id": "0",
-   "username": "admin",
-   "password": "admin"
-  }
+  ...
+ }
  ],
  "port": 8011,
  "role":"<KEYCLOAK_REALM>:<KEYCLOAK_CLIENT>"

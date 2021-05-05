@@ -81,6 +81,7 @@ export const RussianLabels = {
   role: 'Авторизационная Роль',
   noneRole: 'Без Авторизации',
   logout: 'Выйти',
-  evseSlow: 'EVSE Медленая Зарядка',
-  evseFastCharge: 'EVSE Быстрая Зарядка',
+  evseSlow: 'EVSE Медленая зарядка',
+  evseFastCharge: 'EVSE Быстрая зарядка',
+  evseDisableCharge: 'EVSE Отключить зарядку ',
 };

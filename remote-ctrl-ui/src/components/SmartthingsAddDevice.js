@@ -90,6 +90,7 @@ export class SmartthingsAddDevice extends React.Component {
                   <Select.Option value="forceUpdate">{getLabels().forceUpdate}</Select.Option>
                   <Select.Option value="evseSlow">{getLabels().evseSlow}</Select.Option>
                   <Select.Option value="evseFastCharge">{getLabels().evseFastCharge}</Select.Option>
+                  <Select.Option value="evseDisableCharge">{getLabels().evseDisableCharge}</Select.Option>
                 </Select>
               );
             }

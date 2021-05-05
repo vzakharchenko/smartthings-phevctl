@@ -7,11 +7,10 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const { ensureLoggedIn } = require('connect-ensure-login');
 const passportLocal = require('passport-local');
-const { readConfig } = require('./lib/env');
 
 let keycloak = null;
 
-function connectAuthentication(server) {
+function connectAuthentication(server, config) {
   if (fs.existsSync(`${process.env.HOME}/.remote-ctrl-gsm/keycloak.json`) || fs.existsSync('/opt/config/keycloak.json')) {
     const memoryStore = new session.MemoryStore();
 
@@ -49,7 +48,7 @@ function connectAuthentication(server) {
 
   passport.use(new LocalStrategy(
     ((username, password, done) => {
-      const { users } = readConfig();
+      const { users } = config;
       if (users) {
         const user = users.find((u) => u.username === username && u.password === password);
         if (user) {
@@ -69,9 +68,9 @@ function connectAuthentication(server) {
   return 'local';
 }
 
-function protect() {
+function protect(config) {
   if (keycloak) {
-    return keycloak.protect(readConfig().role);
+    return keycloak.protect(config.role);
   }
   return ensureLoggedIn('/login');
 }

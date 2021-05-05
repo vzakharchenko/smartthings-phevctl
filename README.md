@@ -22,7 +22,7 @@ SMS and Smartthings application wrapper over phevctl
 - check if doors are closed
 - Thermostat Operating State
 - Support SMS if use mikrotik LTE
-- support wifi EVSE (Electric Vehicle (EV) Charging Stations)
+- [support wifi EVSE (Electric Vehicle (EV) Charging Stations)](#evse-electric-vehicle-ev-charging-stations)
 - [SMS commands](https://github.com/vzakharchenko/smartthings-phevctl/wiki/supportedSMSCommands)
 
 
@@ -306,7 +306,6 @@ Keycloak security role:
   ...
  }
  ],
- "port": 8011,
  "role":"<KEYCLOAK_REALM>:<KEYCLOAK_CLIENT>"
 }
 ```

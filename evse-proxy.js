@@ -1,6 +1,7 @@
 const express = require('express');
 
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const { fetchData, sendData } = require('./lib/restCalls');
 const { readEVSEConfig } = require('./lib/env');
 
@@ -11,6 +12,7 @@ const {
 } = require('./authenticationConnection');
 
 const appUI = express();
+appUI.use(bodyParser.urlencoded({ extended: true }));
 
 appUI.set('trust proxy', () => true);
 
@@ -33,11 +35,15 @@ appUI.get('/*', protect(evseConfig), cors(corsOptions), async (req, res) => {
   const curConfig = readEVSEConfig();
   try {
     let path = '/';
-    if (req.originalUrl !== '/') {
-      path = req.originalUrl[0] === '/' ? req.originalUrl.substring(1) : req.originalUrl;
+    if (req.params[0] !== '') {
+      path = req.params[0] === '/' ? req.params[0].substring(1) : req.params[0];
+    }
+    let query = '';
+    if (req.query) {
+      query = Object.keys(req.query).map((k) => `${k}=${req.query[k]}`).join('&');
     }
     const url = curConfig.evseServer[path];
-    const resp = await fetchData(`${url || (curConfig.evseServer['/'] + req.originalUrl)}`);
+    const resp = await fetchData(`${url || (`${curConfig.evseServer['/']}/${path}`)}${query ? `?${query}` : ''}`);
     res.status(200).send(resp.data);
   } catch (e) {
     logger.error(e);
@@ -52,11 +58,16 @@ appUI.post('/*', protect(evseConfig), cors(corsOptions), async (req, res) => {
   const curConfig = readEVSEConfig();
   try {
     let path = '/';
-    if (req.originalUrl !== '/') {
-      path = req.originalUrl[0] === '/' ? req.originalUrl.substring(1) : req.originalUrl;
+    if (req.params[0] !== '') {
+      path = req.params[0] === '/' ? req.params[0].substring(1) : req.params[0];
+    }
+    let query = '';
+    if (req.query) {
+      query = Object.keys(req.query).map((k) => `${k}=${req.query[k]}`).join('&');
     }
     const url = curConfig.evseServer[path];
-    const resp = await sendData(`${url || (curConfig.evseServer['/'] + req.originalUrl)}`, 'POST', bodyToText(req.body));
+    const resp = await sendData(`${url || (`${curConfig.evseServer['/']}/${path}`)}${query ? `?${query}` : ''}`,
+      'POST', bodyToText(req.body));
     res.status(200).send(resp.data);
   } catch (e) {
     logger.error(e);
@@ -65,5 +76,7 @@ appUI.post('/*', protect(evseConfig), cors(corsOptions), async (req, res) => {
 });
 
 appUI.listen(evseConfig.port || 8011, () => {
-  logger.info(`HTTP smartthings phevctl UI listening on port ${evseConfig.port || 8011}`);
+  logger.info(
+    `HTTP smartthings phevctl UI listening on port ${evseConfig.port || 8011}`,
+  );
 });

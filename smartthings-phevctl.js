@@ -43,71 +43,71 @@ const corsOptions = {
 
 appUI.use(cors(corsOptions));
 
-const connectionType = connectAuthentication(appUI);
+const connectionType = connectAuthentication(appUI, config);
 config.connectionType = connectionType;
 saveConfig(config);
 
-appUI.use('/', protect(), cors(corsOptions), express.static(`${__dirname}/ui`));
+appUI.use('/', protect(config), cors(corsOptions), express.static(`${__dirname}/ui`));
 
-appUI.get('/ui/settings', protect(), cors(corsOptions), async (req, res) => {
+appUI.get('/ui/settings', protect(config), cors(corsOptions), async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   await getSettings(req, res);
 });
 
-appUI.get('/ui/smartthings/check', protect(), cors(corsOptions), async (req, res) => {
+appUI.get('/ui/smartthings/check', protect(config), cors(corsOptions), async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   await checkSmartthings(req, res);
 });
 
-appUI.post('/ui/settings', protect(), cors(corsOptions), (req, res) => {
+appUI.post('/ui/settings', protect(config), cors(corsOptions), (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   saveSetting(req, res);
   startApplication();
   startSMSApplication();
 });
 
-appUI.post('/ui/settings/deleteUser', protect(), cors(corsOptions), (req, res) => {
+appUI.post('/ui/settings/deleteUser', protect(config), cors(corsOptions), (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   deleteUser(req, res);
 });
 
-appUI.post('/ui/settings/saveKeycloak', protect(), cors(corsOptions), async (req, res) => {
+appUI.post('/ui/settings/saveKeycloak', protect(config), cors(corsOptions), async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   await saveKeycloakJson(req, res);
 });
 
-appUI.post('/ui/settings/deleteDevice', protect(), cors(corsOptions), async (req, res) => {
+appUI.post('/ui/settings/deleteDevice', protect(config), cors(corsOptions), async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   await deleteDevice(req, res);
 });
 
-appUI.post('/ui/settings/addDevice', protect(), cors(corsOptions), async (req, res) => {
+appUI.post('/ui/settings/addDevice', protect(config), cors(corsOptions), async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   await addDevice(req, res);
 });
 
-appUI.post('/ui/settings/testDevice', protect(), cors(corsOptions), async (req, res) => {
+appUI.post('/ui/settings/testDevice', protect(config), cors(corsOptions), async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   await testDevice(req, res);
 });
 
-appUI.post('/ui/settings/testNotification', protect(), cors(corsOptions), async (req, res) => {
+appUI.post('/ui/settings/testNotification', protect(config), cors(corsOptions), async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   await testNotification(req, res);
 });
 
-appUI.get('/ui/settings/syncDevices', protect(), cors(corsOptions), async (req, res) => {
+appUI.get('/ui/settings/syncDevices', protect(config), cors(corsOptions), async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   await syncDevice(req, res);
 });
 
-appUI.get('/ui/sms/help', protect(), cors(corsOptions), async (req, res) => {
+appUI.get('/ui/sms/help', protect(config), cors(corsOptions), async (req, res) => {
   const rc = readConfig();
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify(supportedSMSCommands.map((command) => `phev ${rc.smartthings.sms.password} ${command}`)));
 });
 
-appUI.get('/ui/sms/codes', protect(), cors(corsOptions), async (req, res) => {
+appUI.get('/ui/sms/codes', protect(config), cors(corsOptions), async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   const rc = JSON.parse(JSON.stringify(readConfig()));
   const notifications = {};
@@ -118,7 +118,7 @@ appUI.get('/ui/sms/codes', protect(), cors(corsOptions), async (req, res) => {
 });
 
 if (config.connectionType === 'keycloak') {
-  appUI.get('/ui/keycloak/roles', protect(), cors(corsOptions), async (req, res) => {
+  appUI.get('/ui/keycloak/roles', protect(config), cors(corsOptions), async (req, res) => {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     // req.kauth.grant.access_token.content.realm_access resource_access .roles
     if (!req.kauth

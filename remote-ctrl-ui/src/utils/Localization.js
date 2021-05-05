@@ -89,6 +89,7 @@ const Labels = {
   logout: 'Logout',
   evseSlow: 'EVSE Slow Charge',
   evseFastCharge: 'EVSE Fast Charge',
+  evseDisableCharge: 'EVSE Disable Charger',
 };
 
 export function getLabels() {

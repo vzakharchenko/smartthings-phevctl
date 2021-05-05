@@ -134,6 +134,9 @@ export class SmartthingsViewDevice extends React.Component {
                   <Select.Option value="heating20Mins">{getLabels().heating20Mins}</Select.Option>
                   <Select.Option value="heating30Mins">{getLabels().heating30Mins}</Select.Option>
                   <Select.Option value="forceUpdate">{getLabels().forceUpdate}</Select.Option>
+                  <Select.Option value="evseSlow">{getLabels().evseSlow}</Select.Option>
+                  <Select.Option value="evseFastCharge">{getLabels().evseFastCharge}</Select.Option>
+                  <Select.Option value="evseDisableCharge">{getLabels().evseDisableCharge}</Select.Option>
                 </Select>
               );
             }

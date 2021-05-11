@@ -8,7 +8,7 @@
     "@testing-library/jest-dom": "5.12.0",
     "@testing-library/react": "11.2.6",
     "@testing-library/user-event": "13.1.8",
-    "antd": "4.15.4",
+    "antd": "4.15.5",
     "antd-mask-input": "0.1.15",
     "axios": "0.21.1",
     "js-cookie": "2.2.1",

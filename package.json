@@ -1,6 +1,6 @@
 {
   "name": "smartthings-phevctl",
-  "version": "1.6.0",
+  "version": "1.6.2",
   "description": "smartthings remote ctrl",
   "main": "smartthings-phevctl.js",
   "scripts": {
@@ -30,17 +30,17 @@
   },
   "homepage": "https://github.com/vzakharchenko/smartthings-phevctl#readme",
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.24.0",
     "body-parser": "^1.19.0",
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "cron": "^1.8.2",
     "express": "^4.17.1",
-    "express-session": "^1.17.1",
-    "keycloak-connect": "^14.0.0",
+    "express-session": "^1.17.2",
+    "keycloak-connect": "^15.0.2",
     "mkdirp": "^1.0.4",
-    "passport": "^0.4.1",
+    "passport": "^0.5.0",
     "passport-local": "^1.0.0",
     "querystring": "^0.2.1",
     "uuid": "^8.3.2",
@@ -48,12 +48,12 @@
   },
   "devDependencies": {
     "babel-eslint": "10.1.0",
-    "eslint": "7.29.0",
+    "eslint": "7.26.0",
     "eslint-config": "0.3.0",
     "eslint-config-airbnb": "18.2.1",
-    "eslint-plugin-import": "2.23.4",
+    "eslint-plugin-import": "2.25.2",
     "eslint-plugin-jsx-a11y": "6.4.1",
-    "eslint-plugin-react": "7.24.0",
+    "eslint-plugin-react": "7.26.1",
     "eslint-plugin-react-native": "3.11.0"
   },
   "eslintConfig": {

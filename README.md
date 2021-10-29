@@ -83,7 +83,7 @@ docker -d run --name=smartthings-phevctl  -p 8080:8080 -p 8099:8099 -p 8098:8098
 1. Download [Raspberry Pi OS Lite](https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-32-bit)
 2. write the Raspberry Pi OS image to the SD card using [balenaEtcher](https://www.balena.io/etcher/) or analog
 3. [write empty "ssh" and wpa_supplicant.conf files on sdcard (boot) ](https://desertbot.io/blog/headless-pi-zero-w-wifi-setup-windows)
-4. install phevctl, node and smartthings-phevctl
+4. install phevctl, node(>=12) and smartthings-phevctl
 ```
 sudo su
 apt-get upgrade -y && apt-get -y install build-essential cmake git python3-distutils

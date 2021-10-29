@@ -1,0 +1,6 @@
+*.list
+package-lock.json
+.idea
+huawei
+remote-ctrl-ui/node_modules
+node_modules

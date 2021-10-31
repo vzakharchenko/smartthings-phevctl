@@ -4,7 +4,7 @@ phone="+111111111111"
 applicationHost="http://localhost:8098"
 applicationId="XXXXXXXX-YYYY-AAA-BBBB-CCCCCCCCCCC"
 applicationSecret="XXXXXXXX-YYYY-AAAA-BBBB-CCCCCCCCCCC"
-
+password="Your Password"
 #Send SMS
 MESSAGE=`curl -s --noproxy "*" "$applicationHost/$applicationId/$applicationSecret/message1"`
 
@@ -18,5 +18,6 @@ if [[ "x${MESSAGE}" == "x" ]]; then
 exit 0;
 fi
 
-/usr/local/bin/e3372h_320 sendSMS --phone="${phone}" --message="${MESSAGE}" --url=192.168.8.1
+
+/usr/local/bin/huawei-hilink sendSMS --phone="${phone}" --message="${MESSAGE}" --url=192.168.89.1 --password="${password}"
 

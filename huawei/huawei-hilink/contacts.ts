@@ -14,8 +14,8 @@ export async function readMessagesAndSendMessage(url: string,
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < json.length; i++) {
       const message = json[i];
-      await restCalls.fetchData(`${url}/${applicationId}/${applicationSecret}/sms?command=${message.content[0]}`, 'GET');
-      console.info(`message ${message.content[0]} from ${message.phone[0]} sent`)
+      await restCalls.fetchData(`${url}/${applicationId}/${applicationSecret}/sms?command=${encodeURIComponent(message.content[0])}`, 'GET');
+      console.info(`message ${message.content[0]} from ${message.phone[0]} sent`);
     }
   }
 }

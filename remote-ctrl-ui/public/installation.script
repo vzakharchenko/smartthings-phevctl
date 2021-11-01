@@ -1,0 +1,19 @@
+sudo npm i huawei-phevctl -g
+sudo npm i  huawei-hilink -g
+
+mkdir -p /opt/modem/
+
+touch /opt/modem/sendSMS.sh
+touch /opt/modem/recieveSMS.sh
+chmod +x /opt/modem/sendSMS.sh
+chmod +x /opt/modem/recieveSMS.sh
+
+#create crontab
+crontab -l > mycron
+#echo new cron into cron file
+echo "*/1 * * * * /opt/modem/sendSMS.sh >> /opt/modem/sendSMS.log 2>&1" >> mycron
+echo "*/1 * * * * /opt/modem/recieveSMS.sh >> /opt/modem/recieveSMS.log 2>&1" >> mycron
+#install new cron file
+crontab mycron
+rm mycron
+

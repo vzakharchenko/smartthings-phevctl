@@ -26,6 +26,7 @@ export class SmartthingsSettings extends React.Component {
       keycloakJson: '',
       executeUpdate: true,
       sms: true,
+      smsType: 'none',
       smsPassword: '',
       sendNotification: true,
       sendSMSNotification: false,
@@ -59,6 +60,7 @@ export class SmartthingsSettings extends React.Component {
         sendNotification,
         smsPassword,
         sms,
+        smsType,
         sendSMSNotification,
         shard,
         useSmartthings,
@@ -96,6 +98,9 @@ export class SmartthingsSettings extends React.Component {
         copyConfig.batteryFactory = batteryFactory;
       }
       copyConfig.smartthings.sms.enabled = sms;
+      if (smsType) {
+        copyConfig.smartthings.sms.smsType = smsType;
+      }
       if (smsPassword) {
         copyConfig.smartthings.sms.password = smsPassword;
       }
@@ -380,6 +385,24 @@ export class SmartthingsSettings extends React.Component {
                 </Select>
               );
             }
+            if (data.name === 'smsType') {
+              return (
+                <Select
+                  style={{ width: 200 }}
+                  onChange={(event) => {
+                    this.setState({
+                      smsType: event,
+                      changed: true,
+                    });
+                  }}
+                  defaultValue={this.state.smsType || 'none'}
+                >
+                  <Select.Option value="none">{getLabels().noneSMS}</Select.Option>
+                  <Select.Option value="mikrotik">{getLabels().mikrotikSMS}</Select.Option>
+                  <Select.Option value="huaweiHiLink">{getLabels().huaweiHiLinkSMS}</Select.Option>
+                </Select>
+              );
+            }
             if (data.name === 'sms') {
               return (
                 <Checkbox
@@ -489,6 +512,7 @@ export class SmartthingsSettings extends React.Component {
         executeUpdate: settings.data.smartthings.executeUpdate,
         sendNotification: settings.data.smartthings.sendNotification,
         sms: settings.data.smartthings.sms.enabled,
+        smsType: settings.data.smartthings.sms.smsType,
         smsCar: settings.data.smartthings.sms.smsCar || 'any',
         smsPassword: settings.data.smartthings.sms.password,
         useSmartthings: settings.data.smartthings.useSmartthings,
@@ -573,6 +597,10 @@ export class SmartthingsSettings extends React.Component {
           value: settings.data.smartthings.sms.enabled,
         });
         if (sms) {
+          data.push({
+            name: 'smsType',
+            value: settings.data.smartthings.sms.smsType || 'none',
+          });
           data.push({
             name: 'smsPassword',
             value: settings.data.smartthings.sms.password,

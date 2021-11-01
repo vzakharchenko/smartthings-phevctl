@@ -21,14 +21,14 @@ SMS and Smartthings application wrapper over phevctl
 - support google home
 - check if doors are closed
 - Thermostat Operating State
-- Support SMS if use mikrotik LTE
+- Support SMS if use mikrotik LTE/huawei e3372h-320(CL4E3372HM)
 - [support wifi EVSE (Electric Vehicle (EV) Charging Stations)](#evse-electric-vehicle-ev-charging-stations)
 - [SMS commands](https://github.com/vzakharchenko/smartthings-phevctl/wiki/supportedSMSCommands)
 
 
 ## comparison of installation types
 
-| Installation Type                                                           | Execute action(heating/cooling/headlights and etc...)  | Smartthings Hub required | Internet connection required | can send/receive SMS | MikroTik LtAP mini LTE kit must be installed | Raspberry Pi must be installed | Send Push Notifications |
+| Installation Type                                                           | Execute action(heating/cooling/headlights and etc...)  | Smartthings Hub required | Internet connection required | can send/receive SMS | huawei e3372h-320(CL4E3372HM) / MikroTik LtAP mini LTE kit  | Raspberry Pi must be installed | Send Push Notifications |
 |-----------------------------------------------------------------------------|--------------------------------------------------------|----------------------|------------------------------|----------------------|----------------------------------------------|--------------------------------|-------------------------|
 | Cloud Installation (run smartthings-phevctl on the cloud)                   | Immediately                                            | No                   | Yes                          | No                   | Yes                                          | No                             | Yes                     |
 | Cloud Installation with rapberry Pi(Cloud is forwarded smartthings-phevctl) | Immediately                                            | No                   | No                           | Yes                  | Yes                                          | Yes                            | Yes                     |

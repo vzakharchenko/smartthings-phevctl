@@ -90,4 +90,7 @@ export const RussianLabels = {
   evseSlow: 'EVSE Медленая зарядка',
   evseFastCharge: 'EVSE Быстрая зарядка',
   evseDisableCharge: 'EVSE Отключить зарядку ',
+  noneUPS: 'Нет',
+  ups: 'Источник бесперебойного питания',
+  upsMenu: 'ИБП',
 };

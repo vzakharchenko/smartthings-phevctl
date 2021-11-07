@@ -7,4 +7,5 @@ export const CONTENTS = {
   SMS: 'SMS',
   CRON: 'CRON',
   NOTIFICATION: 'NOTIFICATION',
+  UPS: 'UPS',
 };

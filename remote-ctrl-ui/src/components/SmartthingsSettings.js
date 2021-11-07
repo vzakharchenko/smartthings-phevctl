@@ -37,6 +37,7 @@ export class SmartthingsSettings extends React.Component {
       isModalVisible: false,
       theft: false,
       role: '',
+      ups: 'none',
       roles: [],
     };
 
@@ -61,6 +62,8 @@ export class SmartthingsSettings extends React.Component {
         smsPassword,
         sms,
         smsType,
+        ups,
+        upsMaxTimeHours,
         sendSMSNotification,
         shard,
         useSmartthings,
@@ -110,6 +113,10 @@ export class SmartthingsSettings extends React.Component {
       }
       if (role) {
         copyConfig.role = role;
+      }
+      if (ups) {
+        copyConfig.ups = ups;
+        copyConfig.upsMaxTimeHours = upsMaxTimeHours;
       }
       copyConfig.smartthings.useSmartthings = useSmartthings;
       copyConfig.theft = theft;
@@ -468,6 +475,43 @@ export class SmartthingsSettings extends React.Component {
                 </Select>
               );
             }
+            if (data.name === 'ups') {
+              return (
+                <Select
+                  style={{ width: 200 }}
+                  onChange={(event) => {
+                    this.setState({
+                      ups: event,
+                      changed: true,
+                    });
+                  }}
+                  defaultValue={this.state.ups || 'none'}
+                >
+                  <Select.Option value="none">{getLabels().noneUPS}</Select.Option>
+                  <Select.Option value="ups1">{getLabels().UPS1}</Select.Option>
+                </Select>
+              );
+            }
+            if (data.name === 'upsMaxTimeHours') {
+              return (
+                <Select
+                  style={{ width: 200 }}
+                  onChange={(event) => {
+                    this.setState({
+                      upsMaxTimeHours: event,
+                      changed: true,
+                    });
+                  }}
+                  defaultValue={this.state.upsMaxTimeHours || '8'}
+                >
+                  <Select.Option value="1">{getLabels().ups1H}</Select.Option>
+                  <Select.Option value="4">{getLabels().ups4H}</Select.Option>
+                  <Select.Option value="8">{getLabels().ups8H}</Select.Option>
+                  <Select.Option value="24">{getLabels().ups1D}</Select.Option>
+                  <Select.Option value="48">{getLabels().ups2D}</Select.Option>
+                </Select>
+              );
+            }
             return (
               <Paragraph editable={{
                 onChange: (newValue) => {
@@ -518,6 +562,8 @@ export class SmartthingsSettings extends React.Component {
         useSmartthings: settings.data.smartthings.useSmartthings,
         useCloud: settings.data.smartthings.useCloud,
         role: settings.data.role,
+        ups: settings.data.ups,
+        upsMaxTimeHours: settings.data.upsMaxTimeHours,
         roles,
         sendSMSNotification: !!settings.data.smartthings.sms.sendSMSNotification,
       });
@@ -614,6 +660,17 @@ export class SmartthingsSettings extends React.Component {
             value: settings.data.smartthings.sms.sendSMSNotification,
           });
         }
+        data.push({
+          name: 'ups',
+          value: settings.data.ups,
+        });
+        if (settings.data.ups && settings.data.ups !== 'none') {
+          data.push({
+            name: 'upsMaxTimeHours',
+            value: settings.data.upsMaxTimeHours,
+          });
+        }
+
         return (
           <div>
             {error ? (

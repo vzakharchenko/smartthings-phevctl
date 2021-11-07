@@ -8,6 +8,7 @@ import { CONTENTS } from './Constants';
 import { SmartthingsSMS } from './SmartthingsSMS';
 import { CronSettings } from './CronSettings';
 import { NotificationSettings } from './NotificationSettings';
+import { SmartthingsUPS } from './SmartthingsUPS';
 
 export class RemoteCtrlContentHandler extends React.Component {
   render() {
@@ -26,6 +27,8 @@ export class RemoteCtrlContentHandler extends React.Component {
       return <ViewUser reload={reload} userId={id} />;
     } if (contentPage === CONTENTS.SMS) {
       return <SmartthingsSMS />;
+    } if (contentPage === CONTENTS.UPS) {
+      return <SmartthingsUPS />;
     } if (contentPage === CONTENTS.CRON) {
       return <CronSettings />;
     } if (contentPage === CONTENTS.NOTIFICATION) {

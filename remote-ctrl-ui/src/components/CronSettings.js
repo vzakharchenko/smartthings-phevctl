@@ -14,6 +14,7 @@ export class CronSettings extends React.Component {
       updateDevices: '',
       syncDevices: '',
       cloudDevices: '',
+      shutdown: '',
       loading: false,
     };
 
@@ -27,6 +28,7 @@ export class CronSettings extends React.Component {
         updateDevices,
         syncDevices,
         cloudDevices,
+        shutdown,
       } = this.state;
       this.setState({ loading: true });
       const copyConfig = JSON.parse(JSON.stringify(settings.data));
@@ -38,6 +40,9 @@ export class CronSettings extends React.Component {
       }
       if (cloudDevices) {
         copyConfig.cron.cloudDevices = cloudDevices;
+      }
+      if (shutdown) {
+        copyConfig.cron.shutdown = shutdown;
       }
       try {
         const res = await sendToBackend('/ui/settings', 'POST', copyConfig);
@@ -97,6 +102,7 @@ export class CronSettings extends React.Component {
         updateDevices: settings.data.cron.updateDevices,
         syncDevices: settings.data.cron.syncDevices,
         cloudDevices: settings.data.cron.cloudDevices,
+        shutdown: settings.data.cron.shutdown,
       });
     }
 
@@ -117,6 +123,12 @@ export class CronSettings extends React.Component {
           data.push({
             name: 'cloudDevices',
             value: settings.data.cron.syncDevices,
+          });
+        }
+        if (settings.data.ups && settings.data.ups !== 'none') {
+          data.push({
+            name: 'shutdown',
+            value: settings.data.cron.shutdown,
           });
         }
         return (

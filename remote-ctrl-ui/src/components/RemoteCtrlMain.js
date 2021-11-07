@@ -63,6 +63,10 @@ export class RemoteCtrlMain extends React.Component {
       this.setState({ selectorPage: CONTENTS.SMS });
     };
 
+    onUPSClick = () => {
+      this.setState({ selectorPage: CONTENTS.UPS });
+    };
+
     onNotificationClick = () => {
       this.setState({ selectorPage: CONTENTS.NOTIFICATION });
     };
@@ -169,6 +173,18 @@ export class RemoteCtrlMain extends React.Component {
                           onClick={this.onSMSClick}
                         >
                           {getLabels().sms}
+                        </Menu.Item>
+                      ) : null
+                }
+              {
+                    settings && settings.data.ups && settings.data.ups !== 'none'
+                      ? (
+                        <Menu.Item
+                          key="subUPS"
+                          icon={<MessageOutlined />}
+                          onClick={this.onUPSClick}
+                        >
+                          {getLabels().upsMenu}
                         </Menu.Item>
                       ) : null
                 }

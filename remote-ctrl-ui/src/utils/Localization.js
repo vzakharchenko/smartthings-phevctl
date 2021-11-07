@@ -98,6 +98,18 @@ const Labels = {
   evseSlow: 'EVSE Slow Charge',
   evseFastCharge: 'EVSE Fast Charge',
   evseDisableCharge: 'EVSE Disable Charger',
+  noneUPS: 'None',
+  UPS1: 'UPS HAT waveshare',
+  ups: 'Uninterruptible Power Supply',
+  upsMenu: 'UPS',
+  installation: 'Installation script',
+  INA219: 'content of /opt/ups/INA219.py',
+  ups_sh: 'content of /opt/ups/ups.sh',
+  ups1H: '1 Hour',
+  ups4H: '4 Hour',
+  ups8H: '8 Hour',
+  ups1D: '1 Day',
+  ups2D: '2 Day',
 };
 
 export function getLabels() {

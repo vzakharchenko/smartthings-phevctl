@@ -63,7 +63,7 @@ appUI.get('/ui/smartthings/check', protect(config), cors(corsOptions), async (re
 appUI.get('/ui/ups/info', protect(config), cors(corsOptions), async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   const info = { timeToShutDown: await timeToShutDown() };
-  res.end(JSON.stringify(upsInfo ? { ...upsInfo, ...info } : { ...info, ...{} }));
+  res.end(JSON.stringify(upsInfo ? { ...upsInfo.data, ...info } : { ...info, ...{} }));
 });
 
 appUI.post('/ui/settings', protect(config), cors(corsOptions), (req, res) => {

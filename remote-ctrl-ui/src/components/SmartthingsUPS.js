@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Table } from 'antd';
+import { Card, Table } from 'antd';
+import moment from 'moment';
 import Paragraph from 'antd/es/typography/Paragraph';
 import TextArea from 'antd/es/input/TextArea';
 import { getLabels } from '../utils/Localization';
@@ -13,10 +14,19 @@ export class SmartthingsUPS extends React.Component {
       installation: null,
       INA219: null,
       ups_sh: null,
+      upsInfo: {
+        loadVoltage: undefined,
+        current: undefined,
+        power: undefined,
+        percent: undefined,
+        timeToShutDown: undefined,
+      },
     };
 
     async componentDidMount() {
       await this.reload();
+      const comp = this;
+      setInterval(() => { comp.loadData(comp); }, 10000);
     }
 
     getColumns() {
@@ -62,6 +72,19 @@ export class SmartthingsUPS extends React.Component {
                 />
               );
             }
+            if (data.name === 'upsInfo') {
+              return (
+                <div>
+                  <Card title="Battery Info" style={{ width: 300 }}>
+                    <p>{`Load Voltage: ${this.state.upsInfo.loadVoltage}`}</p>
+                    <p>{`Current: ${this.state.upsInfo.current}`}</p>
+                    <p>{`Percent: ${this.state.upsInfo.percent}`}</p>
+                    <p>{`Power: ${this.state.upsInfo.power}`}</p>
+                    <p>{`Time to Shutdown: ${this.msToTime(this.state.upsInfo.timeToShutDown)}`}</p>
+                  </Card>
+                </div>
+              );
+            }
             return (
               <Paragraph editable={{
                 onChange: (newValue) => {
@@ -79,6 +102,25 @@ export class SmartthingsUPS extends React.Component {
           },
         },
       ];
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    msToTime(duration) {
+      const tempTime = moment.duration(duration);
+      return `${tempTime.months() > 0 ? `${tempTime.months()} months:` : ''}${tempTime.days() > 0 ? `${tempTime.days()} days:` : ''}${tempTime.hours() > 0 ? `${tempTime.hours() % 24} hours:` : ''}${tempTime.minutes() > 0 ? `${tempTime.minutes()} mins:` : ''}${tempTime.seconds() > 0 ? `${tempTime.seconds()} secs` : ''}`;
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    async loadData(comp) {
+      try {
+        const upsInfoResp = await fetchBackend('/ui/ups/info');
+        comp.setState({
+          upsInfo: JSON.parse(upsInfoResp.data),
+        });
+      } catch (e) {
+      // eslint-disable-next-line no-console
+        console.log(e);
+      }
     }
 
     currentHost() {
@@ -102,6 +144,7 @@ export class SmartthingsUPS extends React.Component {
         INA219 = respINA219.data;
         const upsSHResp = await fetchBackend('/ups/ups.sh');
         upsSH = upsSHResp.data;
+        await this.loadData(this);
       } finally {
         this.setState({
           // eslint-disable-next-line react/no-unused-state
@@ -116,12 +159,16 @@ export class SmartthingsUPS extends React.Component {
 
     render() {
       const {
-        loadingPage,
+        loadingPage, upsInfo,
       } = this.state;
 
       const data = [
       ];
       if (!loadingPage) {
+        data.push({
+          name: 'upsInfo',
+          value: upsInfo,
+        });
         data.push({
           name: 'installation',
           value: 'installation',

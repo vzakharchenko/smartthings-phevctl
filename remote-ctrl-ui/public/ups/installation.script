@@ -1,11 +1,3 @@
 sudo touch /opt/ups/INA219.py
 sudo touch /opt/ups/ups.sh
 chmod +x /opt/ups/ups.sh
-
-#write out current crontab
-crontab -l > upscron
-#echo new cron into cron file
-echo "@reboot rm -f /tmp/ups" >> upscron
-#install new cron file
-crontab upscron
-rm upscron

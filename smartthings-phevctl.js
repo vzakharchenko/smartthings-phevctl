@@ -23,6 +23,7 @@ const {
 const {
   connectAuthentication, protect,
 } = require('./authenticationConnection');
+const { upsInfo, timeToShutDown } = require('./lib/shutdownService');
 
 const config = readConfig();
 const { uiPort } = config.server || { port: 8099, uiPort: 8080 };
@@ -57,6 +58,12 @@ appUI.get('/ui/settings', protect(config), cors(corsOptions), async (req, res) =
 appUI.get('/ui/smartthings/check', protect(config), cors(corsOptions), async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   await checkSmartthings(req, res);
+});
+
+appUI.get('/ui/ups/info', protect(config), cors(corsOptions), async (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  const info = { timeToShutDown: await timeToShutDown() };
+  res.end(JSON.stringify(upsInfo ? { ...upsInfo, ...info } : { ...info, ...{} }));
 });
 
 appUI.post('/ui/settings', protect(config), cors(corsOptions), (req, res) => {

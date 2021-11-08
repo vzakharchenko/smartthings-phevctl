@@ -36,6 +36,8 @@ export class SmartthingsSettings extends React.Component {
       batteryFactory: 1.0,
       isModalVisible: false,
       theft: false,
+      upsMaxTimeHours: 8,
+      upsMinValue: -0.14,
       role: '',
       ups: 'none',
       roles: [],
@@ -64,6 +66,7 @@ export class SmartthingsSettings extends React.Component {
         smsType,
         ups,
         upsMaxTimeHours,
+        upsMinValue,
         sendSMSNotification,
         shard,
         useSmartthings,
@@ -117,6 +120,7 @@ export class SmartthingsSettings extends React.Component {
       if (ups) {
         copyConfig.ups = ups;
         copyConfig.upsMaxTimeHours = upsMaxTimeHours;
+        copyConfig.upsMinValue = upsMinValue;
       }
       copyConfig.smartthings.useSmartthings = useSmartthings;
       copyConfig.theft = theft;
@@ -512,6 +516,29 @@ export class SmartthingsSettings extends React.Component {
                 </Select>
               );
             }
+            if (data.name === 'upsMinValue') {
+              return (
+                <InputNumber
+                  style={{
+                    width: 200,
+                  }}
+                  defaultValue={this.state.upsMinValue}
+                  min="-1"
+                  max="0"
+                  step="0.01"
+                  onChange={
+                              (newValue) => {
+                                if (newValue) {
+                                  const newState = { changed: true };
+                                  newState.upsMinValue = newValue;
+                                  this.setState(newState);
+                                }
+                              }
+                          }
+                  stringMode
+                />
+              );
+            }
             return (
               <Paragraph editable={{
                 onChange: (newValue) => {
@@ -564,6 +591,7 @@ export class SmartthingsSettings extends React.Component {
         role: settings.data.role,
         ups: settings.data.ups,
         upsMaxTimeHours: settings.data.upsMaxTimeHours,
+        upsMinValue: settings.data.upsMinValue,
         roles,
         sendSMSNotification: !!settings.data.smartthings.sms.sendSMSNotification,
       });
@@ -668,6 +696,10 @@ export class SmartthingsSettings extends React.Component {
           data.push({
             name: 'upsMaxTimeHours',
             value: settings.data.upsMaxTimeHours,
+          });
+          data.push({
+            name: 'upsMinValue',
+            value: settings.data.upsMinValue,
           });
         }
 

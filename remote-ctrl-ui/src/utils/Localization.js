@@ -101,6 +101,7 @@ const Labels = {
   noneUPS: 'None',
   UPS1: 'UPS HAT waveshare',
   ups: 'Uninterruptible Power Supply',
+  upsMinValue: 'Power minimum value',
   upsMenu: 'UPS',
   installation: 'Installation script',
   INA219: 'content of /opt/ups/INA219.py',

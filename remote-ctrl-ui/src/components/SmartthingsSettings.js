@@ -510,6 +510,9 @@ export class SmartthingsSettings extends React.Component {
                 >
                   <Select.Option value="1">{getLabels().ups1H}</Select.Option>
                   <Select.Option value="4">{getLabels().ups4H}</Select.Option>
+                  <Select.Option value="5">{getLabels().ups5H}</Select.Option>
+                  <Select.Option value="6">{getLabels().ups6H}</Select.Option>
+                  <Select.Option value="7">{getLabels().ups7H}</Select.Option>
                   <Select.Option value="8">{getLabels().ups8H}</Select.Option>
                   <Select.Option value="24">{getLabels().ups1D}</Select.Option>
                   <Select.Option value="48">{getLabels().ups2D}</Select.Option>

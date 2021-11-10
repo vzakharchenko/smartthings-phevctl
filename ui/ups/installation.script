@@ -1,3 +1,24 @@
 sudo touch /opt/ups/INA219.py
 sudo touch /opt/ups/ups.sh
 chmod +x /opt/ups/ups.sh
+
+echo "#!/bin/bash" >  /opt/script/gpio.sh
+echo "echo \"21\" > /sys/class/gpio/export">>  /opt/script/gpio.sh
+echo "echo \"out\" > /sys/class/gpio/gpio21/direction">>  /opt/script/gpio.sh
+echo "echo \"0\" > /sys/class/gpio/gpio21/value">>  /opt/script/gpio.sh
+
+echo "#!/bin/bash" >  /opt/script/gpio.sh
+echo "echo \"1\" > /sys/class/gpio/gpio21/value">>  /opt/script/gpio.sh
+
+
+echo "[Unit]"> /etc/systemd/system/gpio.service
+echo "Description=Run Scripts at Start and Stop">> /etc/systemd/system/gpio.service
+echo "[Service]">> /etc/systemd/system/gpio.service
+echo "Type=oneshot">> /etc/systemd/system/gpio.service
+echo "RemainAfterExit=true">> /etc/systemd/system/gpio.service
+echo "ExecStart=/opt/script/gpio.sh">> /etc/systemd/system/gpio.service
+echo "ExecStop=/opt/script/shutdown.sh">> /etc/systemd/system/gpio.service
+echo "[Install]">> /etc/systemd/system/gpio.service
+echo "WantedBy=multi-user.target">> /etc/systemd/system/gpio.service
+
+systemctl enable gpio

@@ -95,4 +95,12 @@ export const RussianLabels = {
   upsMenu: 'ИБП',
   upsInfo: 'Информация от UPS',
   upsMinValue: 'Минимальное значение при котором батарея считается что заряжается',
+  ups1H: '1 Час',
+  ups4H: '4 Часа',
+  ups5H: '5 Часов',
+  ups6H: '6 Часов',
+  ups7H: '7 Часов',
+  ups8H: '8 Часов',
+  ups1D: '1 день',
+  ups2D: '2 дня',
 };

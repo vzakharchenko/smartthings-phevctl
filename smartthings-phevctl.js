@@ -46,7 +46,9 @@ appUI.use(cors(corsOptions));
 
 const connectionType = connectAuthentication(appUI, config);
 config.connectionType = connectionType;
-saveConfig(config);
+if (!config.isExists) {
+  saveConfig(config);
+}
 
 appUI.use('/', protect(config), cors(corsOptions), express.static(`${__dirname}/ui`));
 

@@ -60,11 +60,13 @@ function connectAuthentication(server, config) {
   ));
   server.use('/login', express.static(`${__dirname}/login`));
 
-  server.post('/login',
+  server.post(
+    '/login',
     passport.authenticate('local', { failureRedirect: '/login' }),
     (req, res) => {
       res.redirect('/');
-    });
+    },
+  );
   return 'local';
 }
 

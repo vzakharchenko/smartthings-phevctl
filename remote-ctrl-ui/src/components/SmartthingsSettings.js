@@ -188,8 +188,7 @@ export class SmartthingsSettings extends React.Component {
                   <Modal
                     title={getLabels().modalHelp + getLabels()[text] || text}
                     visible={this.state.isModalVisible}
-                    onCancel={(
-                    ) => { this.setState({ isModalVisible: false }); }}
+                    onCancel={() => { this.setState({ isModalVisible: false }); }}
                     footer={[
                       <Button
                         key="ok"
@@ -640,22 +639,24 @@ export class SmartthingsSettings extends React.Component {
           value: settings.data.smartthings.useCloud,
         }];
         if (useSmartthings) {
-          data.push({
-            name: 'shard',
-            value: settings.data.smartthings.shard,
-          },
-          {
-            name: 'smartthingsAppId',
-            value: settings.data.smartthings.appId,
-          },
-          {
-            name: 'smartthingsAppSecret',
-            value: settings.data.smartthings.appSecret,
-          },
-          {
-            name: 'sendNotification',
-            value: settings.data.smartthings.sendNotification,
-          });
+          data.push(
+            {
+              name: 'shard',
+              value: settings.data.smartthings.shard,
+            },
+            {
+              name: 'smartthingsAppId',
+              value: settings.data.smartthings.appId,
+            },
+            {
+              name: 'smartthingsAppSecret',
+              value: settings.data.smartthings.appSecret,
+            },
+            {
+              name: 'sendNotification',
+              value: settings.data.smartthings.sendNotification,
+            },
+          );
         }
 
         data.push(
@@ -672,26 +673,28 @@ export class SmartthingsSettings extends React.Component {
             },
           );
         }
-        data.push({
-          name: 'actionTimeout',
-          value: settings.data.smartthings.timeout,
-        },
-        {
-          name: 'executeUpdate',
-          value: settings.data.smartthings.executeUpdate,
-        },
-        {
-          name: 'language',
-          value: settings.data.language,
-        },
-        {
-          name: 'batteryFactory',
-          value: settings.data.batteryFactory || 1.0,
-        },
-        {
-          name: 'sms',
-          value: settings.data.smartthings.sms.enabled,
-        });
+        data.push(
+          {
+            name: 'actionTimeout',
+            value: settings.data.smartthings.timeout,
+          },
+          {
+            name: 'executeUpdate',
+            value: settings.data.smartthings.executeUpdate,
+          },
+          {
+            name: 'language',
+            value: settings.data.language,
+          },
+          {
+            name: 'batteryFactory',
+            value: settings.data.batteryFactory || 1.0,
+          },
+          {
+            name: 'sms',
+            value: settings.data.smartthings.sms.enabled,
+          },
+        );
         if (sms) {
           data.push({
             name: 'smsType',

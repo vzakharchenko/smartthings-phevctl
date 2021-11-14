@@ -45,7 +45,6 @@ export class SmartthingsGPIO extends React.Component {
         const status = JSON.parse(res.data);
         if (status.status === 'OK') {
           const event = { changed: false };
-          await this.props.reload();
           await this.reload();
           this.setState(event);
         } else {
@@ -118,6 +117,7 @@ export class SmartthingsGPIO extends React.Component {
                   }}
                   defaultValue={this.state.edgeShutdown || '0'}
                 >
+                  <Select.Option value="3">{getLabels().none}</Select.Option>
                   <Select.Option value="0">{getLabels().risingEdge}</Select.Option>
                   <Select.Option value="1">{getLabels().fallingEdge}</Select.Option>
                   <Select.Option value="2">{getLabels().eitherEdge}</Select.Option>

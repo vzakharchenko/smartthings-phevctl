@@ -127,6 +127,14 @@ const Labels = {
   pullUpDownShutdown: 'pull Up or Down',
   edgeShutdown: 'Edge',
   levelShutdown: 'Logic Level',
+  reboot: 'Reboot device',
+  halt: 'Shutdown device',
+  upgrade: 'upgrade smartthings phevctl',
+  shutdown2H: 'Shutdown device after 2 hours',
+  shutdown5H: 'Shutdown device after 5 hours',
+  shutdown8H: 'Shutdown device after 8 hours',
+  shutdown1D: 'Shutdown device after 1 day',
+  shutdown2D: 'Shutdown device after 2 days',
 };
 
 export function getLabels() {

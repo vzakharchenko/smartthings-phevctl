@@ -109,7 +109,7 @@ export class SmartthingsViewDevice extends React.Component {
               return (
                 <Select
                   defaultValue={this.state.actionId}
-                  style={{ width: 200 }}
+                  style={{ width: 600 }}
                   disabled={this.state.updatable}
                   onChange={(event) => {
                     this.onActionChange(event);
@@ -137,6 +137,13 @@ export class SmartthingsViewDevice extends React.Component {
                   <Select.Option value="evseSlow">{getLabels().evseSlow}</Select.Option>
                   <Select.Option value="evseFastCharge">{getLabels().evseFastCharge}</Select.Option>
                   <Select.Option value="evseDisableCharge">{getLabels().evseDisableCharge}</Select.Option>
+                  <Select.Option value="reboot">{getLabels().reboot}</Select.Option>
+                  <Select.Option value="halt">{getLabels().halt}</Select.Option>
+                  <Select.Option value="upgrade">{getLabels().upgrade}</Select.Option>
+                  <Select.Option value="shutdown2H">{getLabels().shutdown2H}</Select.Option>
+                  <Select.Option value="shutdown5H">{getLabels().shutdown5H}</Select.Option>
+                  <Select.Option value="shutdown1D">{getLabels().shutdown1D}</Select.Option>
+                  <Select.Option value="shutdown2D">{getLabels().shutdown2D}</Select.Option>
                 </Select>
               );
             }

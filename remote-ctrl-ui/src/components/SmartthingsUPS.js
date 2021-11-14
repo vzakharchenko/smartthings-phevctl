@@ -12,6 +12,7 @@ export class SmartthingsUPS extends React.Component {
       // eslint-disable-next-line react/no-unused-state
       settings: null,
       installation: null,
+      installation2: null,
       INA219: null,
       ups_sh: null,
       upsInfo: {
@@ -47,7 +48,9 @@ export class SmartthingsUPS extends React.Component {
                 <TextArea
                   autoSize={{ minRows: 5, maxRows: 100 }}
                   value={
-                  this.state.installation
+                    this.state.settings.data.ups === 'ups1'
+                      ? this.state.installation
+                      : this.state.installation2
                 }
                 />
               );
@@ -76,10 +79,16 @@ export class SmartthingsUPS extends React.Component {
               return (
                 <div>
                   <Card title="Battery Info" style={{ width: 300 }}>
-                    <p>{`Load Voltage: ${this.state.upsInfo.loadVoltage}`}</p>
-                    <p>{`Current: ${this.state.upsInfo.current}`}</p>
-                    <p>{`Percent: ${this.state.upsInfo.percent}`}</p>
-                    <p>{`Power: ${this.state.upsInfo.power}`}</p>
+                    { this.state.settings.data.ups === 'ups1'
+                      ? (
+                        <div>
+                          <p>{`Load Voltage: ${this.state.upsInfo.loadVoltage}`}</p>
+                          <p>{`Current: ${this.state.upsInfo.current}`}</p>
+                          <p>{`Percent: ${this.state.upsInfo.percent}`}</p>
+                          <p>{`Power: ${this.state.upsInfo.power}`}</p>
+                        </div>
+                      )
+                      : ''}
                     <p>{`Time to Shutdown: ${this.msToTime(this.state.upsInfo.timeToShutDown)}`}</p>
                   </Card>
                 </div>
@@ -133,6 +142,7 @@ export class SmartthingsUPS extends React.Component {
       });
       let settings = null;
       let installation = null;
+      let installation2 = null;
       let INA219 = null;
       let upsSH = null;
       try {
@@ -140,6 +150,8 @@ export class SmartthingsUPS extends React.Component {
         settings = JSON.parse(data);
         const respInst = await fetchBackend('/ups/installation.script');
         installation = respInst.data;
+        const respInst2 = await fetchBackend('/ups/installation2.script');
+        installation2 = respInst2.data;
         const respINA219 = await fetchBackend('/ups/INA219.py');
         INA219 = respINA219.data;
         const upsSHResp = await fetchBackend('/ups/ups.sh');
@@ -150,6 +162,7 @@ export class SmartthingsUPS extends React.Component {
           // eslint-disable-next-line react/no-unused-state
           settings,
           installation,
+          installation2,
           INA219,
           ups_sh: upsSH,
           loadingPage: false,
@@ -159,7 +172,7 @@ export class SmartthingsUPS extends React.Component {
 
     render() {
       const {
-        loadingPage, upsInfo,
+        loadingPage, upsInfo, settings,
       } = this.state;
 
       const data = [
@@ -169,18 +182,27 @@ export class SmartthingsUPS extends React.Component {
           name: 'upsInfo',
           value: upsInfo,
         });
-        data.push({
-          name: 'installation',
-          value: 'installation',
-        });
-        data.push({
-          name: 'INA219',
-          value: 'INA219',
-        });
-        data.push({
-          name: 'ups_sh',
-          value: 'ups_sh',
-        });
+
+        if (settings.data.ups === 'ups2') {
+          data.push({
+            name: 'installation',
+            value: 'installation2',
+          });
+        }
+        if (settings.data.ups === 'ups1') {
+          data.push({
+            name: 'INA219',
+            value: 'INA219',
+          });
+          data.push({
+            name: 'ups_sh',
+            value: 'ups_sh',
+          });
+          data.push({
+            name: 'installation',
+            value: 'installation',
+          });
+        }
       }
 
       return loadingPage ? <spin /> : (

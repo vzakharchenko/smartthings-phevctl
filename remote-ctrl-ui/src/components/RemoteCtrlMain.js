@@ -67,6 +67,10 @@ export class RemoteCtrlMain extends React.Component {
       this.setState({ selectorPage: CONTENTS.UPS });
     };
 
+    onGPIOClick = () => {
+      this.setState({ selectorPage: CONTENTS.GPIO });
+    };
+
     onNotificationClick = () => {
       this.setState({ selectorPage: CONTENTS.NOTIFICATION });
     };
@@ -176,7 +180,15 @@ export class RemoteCtrlMain extends React.Component {
                         </Menu.Item>
                       ) : null
                 }
+              <Menu.Item
+                key="subGPIO"
+                icon={<MessageOutlined />}
+                onClick={this.onGPIOClick}
+              >
+                {getLabels().gpioMenu}
+              </Menu.Item>
               {
+
                     settings && settings.data.ups && settings.data.ups !== 'none'
                       ? (
                         <Menu.Item

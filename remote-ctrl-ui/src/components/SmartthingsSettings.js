@@ -40,6 +40,7 @@ export class SmartthingsSettings extends React.Component {
       upsMinValue: -0.14,
       role: '',
       ups: 'none',
+      gpio: false,
       roles: [],
     };
 
@@ -73,6 +74,7 @@ export class SmartthingsSettings extends React.Component {
         smsCar,
         theft,
         role,
+        gpio,
       } = this.state;
       this.setState({ loading: true });
       const copyConfig = JSON.parse(JSON.stringify(settings.data));
@@ -121,6 +123,9 @@ export class SmartthingsSettings extends React.Component {
         copyConfig.ups = ups;
         copyConfig.upsMaxTimeHours = upsMaxTimeHours;
         copyConfig.upsMinValue = upsMinValue;
+      }
+      if (gpio) {
+        copyConfig.gpio.enabled = true;
       }
       copyConfig.smartthings.useSmartthings = useSmartthings;
       copyConfig.theft = theft;
@@ -492,6 +497,7 @@ export class SmartthingsSettings extends React.Component {
                   defaultValue={this.state.ups || 'none'}
                 >
                   <Select.Option value="none">{getLabels().noneUPS}</Select.Option>
+                  <Select.Option value="ups2">{getLabels().UPS2}</Select.Option>
                   <Select.Option value="ups1">{getLabels().UPS1}</Select.Option>
                 </Select>
               );
@@ -539,6 +545,18 @@ export class SmartthingsSettings extends React.Component {
                               }
                           }
                   stringMode
+                />
+              );
+            }
+            if (data.name === 'gpio') {
+              return (
+                <Checkbox
+                  checked={this.state.gpio}
+                  onChange={(e) => {
+                    const newState = { changed: true };
+                    newState.gpio = e.target.checked;
+                    this.setState(newState);
+                  }}
                 />
               );
             }
@@ -597,6 +615,7 @@ export class SmartthingsSettings extends React.Component {
         upsMinValue: settings.data.upsMinValue,
         roles,
         sendSMSNotification: !!settings.data.smartthings.sms.sendSMSNotification,
+        gpio: !!settings.data.gpio.enabled,
       });
     }
 
@@ -692,6 +711,10 @@ export class SmartthingsSettings extends React.Component {
           });
         }
         data.push({
+          name: 'gpio',
+          value: settings.data.gpio.enabled,
+        });
+        data.push({
           name: 'ups',
           value: settings.data.ups,
         });
@@ -700,10 +723,12 @@ export class SmartthingsSettings extends React.Component {
             name: 'upsMaxTimeHours',
             value: settings.data.upsMaxTimeHours,
           });
-          data.push({
-            name: 'upsMinValue',
-            value: settings.data.upsMinValue,
-          });
+          if (settings.data.ups === 'ups1') {
+            data.push({
+              name: 'upsMinValue',
+              value: settings.data.upsMinValue,
+            });
+          }
         }
 
         return (

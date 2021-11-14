@@ -8,4 +8,5 @@ export const CONTENTS = {
   CRON: 'CRON',
   NOTIFICATION: 'NOTIFICATION',
   UPS: 'UPS',
+  GPIO: 'GPIO',
 };

@@ -1,6 +1,6 @@
 {
   "name": "smartthings-phevctl",
-  "version": "1.8.8",
+  "version": "1.8.9",
   "description": "smartthings remote ctrl",
   "main": "smartthings-phevctl.js",
   "scripts": {
@@ -42,6 +42,7 @@
     "mkdirp": "^1.0.4",
     "passport": "^0.5.0",
     "passport-local": "^1.0.0",
+    "pigpio": "^3.3.1",
     "querystring": "^0.2.1",
     "uuid": "^8.3.2",
     "winston": "^3.3.3"

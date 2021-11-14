@@ -95,6 +95,8 @@ export const RussianLabels = {
   upsMenu: 'ИБП',
   upsInfo: 'Информация от UPS',
   upsMinValue: 'Минимальное значение при котором батарея считается что заряжается',
+  UPS2: 'Автоматическое отключение по таймеру',
+  upsMaxTimeHours: 'Время до выключения устройства',
   ups1H: '1 Час',
   ups4H: '4 Часа',
   ups5H: '5 Часов',
@@ -103,4 +105,5 @@ export const RussianLabels = {
   ups8H: '8 Часов',
   ups1D: '1 день',
   ups2D: '2 дня',
+  gpioMenu: 'GPIO',
 };

@@ -159,6 +159,15 @@ if (config.connectionType === 'keycloak') {
 
 startApplication();
 startSMSApplication();
+if (config.gpio.enabled) {
+  try {
+    // eslint-disable-next-line global-require
+    const { initGPIO } = require('./lib/gpioService');
+    initGPIO(config);
+  } catch (e) {
+    console.error('gpioService does not started', e);
+  }
+}
 appUI.listen(uiPort, () => {
   logger.info(`HTTP smartthings phevctl UI listening on port ${uiPort}`);
   installCrons();
